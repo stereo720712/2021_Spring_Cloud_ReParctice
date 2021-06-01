@@ -1,0 +1,1 @@
+document.writeln("<center><a target=\'_blank\' href=\'https://s.tb.cn/c.0uN0Db\'><img src=\'https://gd3.alicdn.com/imgextra/i2/47666225/O1CN01NaaDV01vr6BldT40H_!!47666225.jpg_400x400.jpg\' width=400 height=400></a></center>");

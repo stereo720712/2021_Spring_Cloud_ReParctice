@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="" lang="zh-CN"><head>
+	<meta name="360-site-verification" content="e343ac8439d15b8393d3ced719a965ee">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="text/javascript" async="" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/analytics.js"></script><script async="" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-86041274-3');
+</script>
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<title>在代理环境下在CentOS 7上构建Docker的注意事项 | 码农家园</title>
+<meta name="description" content="当时是一条备忘录，因为我有时在工作时在代理环境下构建了docker-docker-compose环境。该环境使用CentOS7。 操作系统安装后立即从干净状态开始CentOS代理设置...">
+<meta name="keywords" content="在代理环境下在CentOS 7上构建Docker的注意事项">
+<link rel="shortcut icon" href="https://www.codenong.com/wp-content/themes/Nana/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.codenong.com/wp-content/themes/Nana/images/favicon.png">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.codenong.com/xmlrpc.php">
+<!--[if lt IE 9]><script src="https://www.codenong.com/wp-content/themes/Nana/js/html5-css3.js"></script><![endif]-->
+<link rel="stylesheet" id="nfgc-main-style-css" href="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/style.css" type="text/css" media="all">
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/jquery.js"></script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/scrollmonitor.js"></script>
+	<script>jQuery(document).ready(
+	function(jQuery){
+	jQuery('.collapseButton').click(function(){
+		jQuery(this).parent().parent().find('.xContent').slideToggle('slow');
+	});
+});</script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/gg.htm"></script>
+<!--[if IE]>
+<div class="tixing"><strong>温馨提示：感谢您访问本站，经检测您使用的浏览器为IE浏览器，为了获得更好的浏览体验，请使用极速模式或Chrome、Firefox等其他浏览器。</strong>
+</div>
+<![endif]-->
+<link rel="stylesheet" id="font-awesome-four-css" href="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/font-awesome.css" type="text/css" media="all">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="stylesheet" id="highlight-css" href="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/highlight.css" type="text/css" media="all">
+<link rel="stylesheet" id="codecolorer-css" href="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/codecolorer.css" type="text/css" media="screen">
+<script type="text/javascript">
+/* <![CDATA[ */
+var wpl_ajax_url = "https:\/\/www.codenong.com\/wp-admin\/admin-ajax.php";
+/* ]]> */
+</script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/script.js"></script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/fancybox.js"></script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/comments-ajax.js"></script>
+<link rel="canonical" href="https://www.codenong.com/a33c625d1472b0ab2e16/">
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+
+<style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
+<body class="post-template-default single single-post postid-3098461 single-format-standard">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+	<nav id="top-header">
+		<div class="top-nav">
+			
+				</div>
+	</nav><!-- #top-header -->
+<div id="middle-header">
+
+</div>
+	<div id="menu-box" class="shadow">
+		<div id="top-menu">
+			
+				<hgroup class="logo-site">
+				<h1 class="site-title">
+					<a href="https://www.codenong.com/">
+						码农家园
+					</a>
+				</h1>
+			</hgroup><!-- .logo-site -->			<div id="site-nav-wrap">
+				<div id="sidr-close"><a href="https://www.codenong.com/#sidr-close" class="toggle-sidr-close">关闭</a>
+			</div>
+			
+			<nav id="site-nav" class="main-nav">
+				<a href="#sidr-main" id="navigation-toggle" class="bars">导航</a>	
+									
+								
+			</nav>	
+			</div><!-- #site-nav-wrap -->
+		</div><!-- #top-menu -->
+	</div><!-- #menu-box -->
+</header><!-- #masthead -->
+
+<div id="content" class="site-content fixed shadow">	
+	<div class="clear"></div>
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+							<article id="post-3098461" class="post-3098461 post type-post status-publish format-standard hentry category-uncategorized">
+					<header class="entry-header">
+						<h1 class="entry-title">在代理环境下在CentOS 7上构建Docker的注意事项</h1>
+						<div class="single_info">
+							
+							<span class="date"><i class="fa fa-calendar"></i>&nbsp;2021-02-19&nbsp;</span><br>
+<span class="archive-tag"></span>
+							<span class="views"></span>
+							
+								
+					
+					
+					
+							<span class="edit"></span>
+						</div>		
+					</header><!-- .entry-header -->
+
+					<div id="ad_sg" class="ad-pc">
+</div>										<div class="entry-content">
+						<div class="single-content">			
+							<p></p><center> <script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/c1.js"></script><center><a target="_blank" href="https://s.tb.cn/c.0uN0Db"><img src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/O1CN01NaaDV01vr6BldT40H_47666225.jpg" width="400" height="400"></a></center>
+</center><p></p>
+<p>当时是一条备忘录，因为我有时在工作时在代理环境下构建了docker-docker-compose环境。该环境使用CentOS7。 </p>
+<p>操作系统安装后立即从干净状态开始</p>
+<h2>
+CentOS代理设置</h2>
+<p>参照此处设置以下内容</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">$ vi /etc/profile</div></td></tr></tbody></table></div>
+<p>将以下内容写到最底行</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br>3<br>4<br>5<br>6<br>7<br></div></td><td><div class="text codecolorer">PROXY="http://&lt;user&gt;:&lt;pass&gt;@&lt;proxy_host&gt;:&lt;proxy_port&gt;" # proxyサーバのドメインとポートを指定<br>
+export http_proxy=$PROXY<br>
+export HTTP_PROXY=$PROXY<br>
+export https_proxy=$PROXY<br>
+export HTTPS_PROXY=$PROXY<br>
+export NO_PROXY=localhost<br>
+export no_proxy=localhost</div></td></tr></tbody></table></div>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer"># source /etc/profile</div></td></tr></tbody></table></div>
+<p>暂时，请更新并检查代理是否通过</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer"># yum update</div></td></tr></tbody></table></div>
+<h2>
+安装docker </h2>
+<p></p><center> <script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/c2.js"></script></center><p></p>
+<p>查看官方网站并按照步骤</p>
+<p> https://docs.docker.com/install/linux/docker-ce/centos/ </p>
+<p>按以下顺序执行以下命令：</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br></div></td><td><div class="text codecolorer"># yum remove docker \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-client \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-client-latest \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-common \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-latest \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-latest-logrotate \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-logrotate \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-selinux \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-engine-selinux \<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; docker-engine</div></td></tr></tbody></table></div>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br>3<br></div></td><td><div class="text codecolorer"># yum install -y yum-utils \<br>
+&nbsp; device-mapper-persistent-data \<br>
+&nbsp; lvm2</div></td></tr></tbody></table></div>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br>3<br></div></td><td><div class="text codecolorer"># yum-config-manager \<br>
+&nbsp; &nbsp; --add-repo \<br>
+&nbsp; &nbsp; https://download.docker.com/linux/centos/docker-ce.repo</div></td></tr></tbody></table></div>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer"># yum install docker-ce</div></td></tr></tbody></table></div>
+<p>检查是否已安装</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer">$ docker -v<br>
+Docker version 17.12.1-ce, build 7390fc6</div></td></tr></tbody></table></div>
+<h3>
+docker代理设置</h3>
+<p>参照此处设置</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer"># mkdir /etc/systemd/system/docker.service.d<br>
+# vim /etc/systemd/system/docker.service.d/http-proxy.conf</div></td></tr></tbody></table></div>
+<p>添加以下内容</p>
+<p>/etc/systemd/system/docker.service.d/http-proxy.conf</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer">[Service]<br>
+Environment="HTTP_PROXY=http://&lt;user&gt;:&lt;pass&gt;@&lt;proxy_host&gt;:&lt;proxy_port&gt;"
+ 
+"HTTPS_PROXY=http://&lt;user&gt;:&lt;pass&gt;@&lt;proxy_host&gt;:&lt;proxy_port&gt;"
+ "NO_PROXY=localhost"</div></td></tr></tbody></table></div>
+<p>通过执行以下</p>
+<p>进行申请</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer">$ systemctl daemon-reload<br>
+$ systemctl restart docker</div></td></tr></tbody></table></div>
+<h3>
+不安全的电阻设置</h3>
+<p>在Docker上使用内部私有存储库时，如果该存储库是未加密的http通信，则除非该存储库以不安全的方式注册，否则无法提取容器映像，因此请访问官方网站。铅&gt;</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer"># vim /etc/docker/daemon.json</div></td></tr></tbody></table></div>
+<p>添加以下内容</p>
+<p>/etc/docker/daemon.json</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br>3<br></div></td><td><div class="text codecolorer">{<br>
+&nbsp; "insecure-registries" : ["&lt;private_docker_registry_host&gt;:&lt;port&gt;"]<br>
+}</div></td></tr></tbody></table></div>
+<p>通过执行以下</p>
+<p>进行申请</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">$ service docker restart</div></td></tr></tbody></table></div>
+<p></p><center> <script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/c3.js"></script></center><p></p>
+<h3>
+docker自动启动设置</h3>
+<p>对于CentOS7，该守护进程由systemctl控制，因此，如果执行以下命令，则Docker将在系统启动时自动启动</p>
+<p>参考</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">systemctl enable docker.service</div></td></tr></tbody></table></div>
+<h2>
+安装docker-compose </h2>
+<p>根据官方网站https://docs.docker.com/compose/install/#install-compose </p>
+<p>上的步骤进行安装</p>
+<p>按以下顺序执行以下命令：</p>
+<p> curl代理设置。参考</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">$ vim ~/.curlrc</div></td></tr></tbody></table></div>
+<p>添加以下内容</p>
+<p>?/ .curlrc</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer">proxy-user = "&lt;user&gt;:&lt;pass&gt;"<br>
+proxy = "http://&lt;proxy_host&gt;:&lt;proxy_port&gt;"</div></td></tr></tbody></table></div>
+<p>安装docker-compose可执行文件。 </p>
+<p>将版本从此处重写为最新的</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">sudo
+ curl -L 
+https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname
+ -s`-`uname -m` -o /usr/local/bin/docker-compose</div></td></tr></tbody></table></div>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer">sudo chmod +x /usr/local/bin/docker-compose</div></td></tr></tbody></table></div>
+<p>检查是否已正确安装</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br>2<br></div></td><td><div class="text codecolorer">$ docker-compose --version<br>
+docker-compose version 1.19.0, build 9e633ef</div></td></tr></tbody></table></div>
+<h2>
+启动docker swarm模式</h2>
+<p>使用docker swarm时，执行以下操作以打开swarm模式。 (这一次，在单个主机环境中运行swarm)</p>
+<div class="codecolorer-container text dawn" style="overflow:auto;white-space:nowrap;width:100%;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br></div></td><td><div class="text codecolorer"># docker swarm init</div></td></tr></tbody></table></div>
+<p>或更多</p>
+																								
+						</div>
+						<script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/ce.htm"></script>
+						<div class="clear"></div>
+						
+						<div class="social-main">
+					<div class="clear"></div>
+</div>												<div class="clear"></div>
+					</div><!-- .entry-content -->
+				</article><!-- #post -->
+														
+					<div class="ad-pc ad-site">
+			</div>					
+				
+												
+					</main><!-- .site-main -->
+	</div><!-- .content-area -->
+	<div id="sidebar" class="widget-area">			
+	<div class="sidebar-roll follow"></div>
+						<aside id="text-3" class="widget widget_text">			<div class="textwidget"><p><script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/ce.htm"></script></p>
+</div>
+		<div class="clear"></div></aside>				<div class="sidebar-roll follow">
+				<aside id="text-2" class="widget widget_text">			<div class="textwidget"><p><script src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/auto.htm"></script></p>
+</div>
+		<div class="clear"></div></aside>				</div>
+			</div>
+</div>	<div class="clear"></div>
+</div><!-- .site-content -->
+<div id="footer" alog-group="log-footer">
+<div class="foot">
+	
+<div class="ps">
+<div class="p p2">
+
+<div class="clear"></div>
+<div class="site-info">			
+			Copyright ©&nbsp; 码农家园		</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<div class="tools">
+    <a class="tools_top" title="返回顶部"></a>
+            
+    </div>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/superfish.js"></script>
+<script type="text/javascript" src="%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9C%A8CentOS%207%E4%B8%8A%E6%9E%84%E5%BB%BADocker%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%20%E7%A0%81%E5%86%9C%E5%AE%B6%E5%9B%AD_files/wp-embed.js"></script>
+
+
+
+
+<div id="sidr-main" class="sidr left"><div class="sidr-inner"><a href="https://www.codenong.com/#sidr-close" class="sidr-class-toggle-sidr-close">关闭</a>
+			</div><div class="sidr-inner">
+				<a href="#sidr-main" id="sidr-id-navigation-toggle" class="sidr-class-bars">导航</a>	
+									
+								
+			</div></div></body></html>
+<!-- Dynamic page generated in 0.233 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2021-03-14 12:34:18 -->
+<!-- super cache -->

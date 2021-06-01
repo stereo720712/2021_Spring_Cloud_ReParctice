@@ -1,0 +1,80 @@
+.container-fluid {
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+.container-fluid .center {
+    display: inline-flex;
+    padding: unset;
+}
+.container-fluid .center ul {
+    margin: 0 auto;
+    padding-inline-start: unset;
+}
+.container-fluid .center li {
+    list-style: none;
+}
+.container-fluid .footer-logo{
+    width: 19rem;
+}
+.container-fluid .center ul span{
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+.container-fluid .copyright a{
+    color: rgb(191, 191, 191);
+    font-size: 12px;
+}
+footer{
+    padding: 0;
+}
+.article-list .media .media-body .article-intro {
+    height: 5rem;
+    line-height: 1.6rem;
+    -webkit-line-clamp: 3;
+}
+.article-list .media .media-left a {
+    width: 15rem;
+}
+.article-list .media .media-body .article-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panel-blockimg{
+    padding: 1rem;
+}
+
+.article-item .media .media-body .article-title a {
+    color: #313131;
+    font-size: 14px;
+    vertical-align: bottom;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+	text-decoration:none
+}
+
+.article-list .media-body .article-tag {
+    position: unset;
+    clear: both;
+}
+.article-list .media-body .article-tag .right{
+    display: inline-block;
+    float: right;
+}
+.show-view{
+	display: inline-flex;
+    width: 100%;
+}
+.show-view .view-info{
+	width: 50%;
+    display: block;
+    text-align: center;
+}
+
+.center  {
+  text-align: center;
+}
