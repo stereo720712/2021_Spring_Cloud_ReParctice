@@ -6,6 +6,7 @@
 ## Main platform Spring Cloud 
    #### cas
    #### gateway
+   #### config server
    #### application servivce demo1
    #### message comsumer 1
    #### message producer 1
