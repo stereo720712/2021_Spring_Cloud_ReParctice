@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>專題六 - Docker 容器基礎實做</title>
+	<link href="%E5%B0%88%E9%A1%8C%E5%85%AD%20-%20Docker%20%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A4%8E%E5%AF%A6%E5%81%9A_files/style.css" rel="stylesheet">
+</head>
+<body><a id="top"></a>
+<div class="page">
+
+<header>
+	<img src="%E5%B0%88%E9%A1%8C%E5%85%AD%20-%20Docker%20%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A4%8E%E5%AF%A6%E5%81%9A_files/header_server1.jpg" alt="Linux伺服器" style="float:left; height: 130px;">
+	<img src="%E5%B0%88%E9%A1%8C%E5%85%AD%20-%20Docker%20%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A4%8E%E5%AF%A6%E5%81%9A_files/header_server2.jpg" alt="Linux伺服器" style="float:right; height: 130px;">
+	<h2 style="text-align: center; font-size: 20pt; padding-top: 40px; text-shadow: 2px 1px 0px black; color: #FFCCBF; font-family: '標楷體'">資工所專業課程上課教材</h2>
+</header>
+<nav>
+	<ul>
+		<li><a href="http://dic.vbird.tw/network_project/">課程首頁</a></li>
+		<li class="active"><a href="http://dic.vbird.tw/network_project/list.php">課程內容介紹</a></li>
+		<li><a href="#">習題偵測腳本</a></li>
+		<li><a href="#">前往鳥哥網站</a></li>
+		<li><a href="http://dic.vbird.tw/network_project/oldpage/">其他舊版教材</a></li>
+		<li><a href="http://dic.vbird.tw/">鳥哥的教學網站</a></li>
+	</ul>
+</nav>
+<div class="here">
+資工所專業課程
+ &gt; 課程內容  &gt; 專題六 - Docker 容器基礎實做 </div>
+<div class="page2">
+<div class="subnav">
+	<ul>
+			<li><a href="http://dic.vbird.tw/network_project/unit01.php">專題一 - 虛擬機器主機系統安裝與伺服器穩定性測試</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit02.php">專題二 - 實體主機母系統 (Host) 的安全強化設計</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit03.php">專題三 - 虛擬機器的啟用與效能調整</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit04.php">專題四 - 虛擬機器的網路設計與大量佈建</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit05.php">專題五 - 建立 rootfs 的無磁碟 Linux 系統環境</a></li>
+	<li class="active"><a href="http://dic.vbird.tw/network_project/unit06.php">專題六 - 以 rootfs 備份、復原系統，以 grub4dos 處理多重選單</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit07.php">專題七 - 以虛擬機器模擬 EFU 取代 BIOS 環境</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/unit08.php">專題八 - 軟體編譯行為</a></li>
+
+	<li><a href="http://dic.vbird.tw/network_project/zzunit15.php">專題十五 - 其他 (未完、待續)</a></li>
+
+	<li><a href="http://dic.vbird.tw/network_project/zindex.php">雲端資訊系統課程</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit01.php">使用 git 進行版控 - 基礎操作</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit02.php">使用 git 進行版控 - 分支與簡易合併</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit03.php">使用 git 進行版控 - 多人共同開發之容器設定</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit04.php">使用 git 進行版控 - 專題報告</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit05.php">使用 Ansible 進行快速佈署 - 環境設定與 ad hoc</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit06.php">使用 Ansible 進行快速佈署 - playbook 初探</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit07.php">使用 Ansible 進行快速佈署 - 善用 playbook 變數</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit08.php">使用 Ansible 進行快速佈署 - 迴圈, 條件控制, 錯誤排除等功能</a></li>
+
+
+	<li><a href="http://dic.vbird.tw/network_project/zunit92.php">使用 Ansible 進行快速佈署 - 綜合練習</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit10.php">使用 Docker 容器</a></li>
+	<li><a href="http://dic.vbird.tw/network_project/zunit11.php">使用 Docker 容器 - 管理倉儲</a></li>
+
+	<li><a href="http://dic.vbird.tw/network_project/zunitex2.php">碩班期末考</a></li>
+
+
+
+	</ul>
+
+</div>
+<div class="content">
+
+<h2 class="mytitle">專題六 - Docker 容器基礎實做</h2>
+<h6 class="lastdate">上次更新日期 2019/04/08</h6>
+<div class="abstract">
+	<p>除了虛擬機器 (VM) 之外，其實目前還有很多輕量級的虛擬化技術存在，例如所謂的容器 (container) 技術！
+	在 Linux 上面有個名為 docker 的容器技術，可以讓我們很輕鬆的就完成許多的軟體佈署，而且不會浪費很多的系統資源，
+	相當有趣！</p>
+</div>
+
+
+<h3>Docker 基礎</h3>
+<div class="block1">
+
+	<ol class="orilist">
+		<li>什麼是 container (容器)：
+		<ol class="minlist" type="a">
+			<li>根據維基百科 (wiki) 對於 container 的說明，在容器出現之前，我們稱為『作業系統層虛擬化 
+			(Operating system-level virtualization)』，基本上，就是在核心層級執行一組被獨立出來的程式，這個程式會被獨自隔離，且這個程式雖然可以取得系統的所有資源，
+			然而這個程式只能看到屬於他自己的部份而已。一般來說，這種虛擬化也被稱為容器化技術 (Containerization)。[1]</li>
+
+			<li>承上，這一隻被隔離的軟體實體，就被稱為是一個容器 (container)，或者是虛擬專用伺服器 (virtual private servers)。
+			對於每個程序的擁有者與執行者來說，他們使用的伺服器感覺好像就是獨自運作一般 (似乎與 Host 本身無關的感覺)。</li>
+
+			<li>事實上，最早的容器起源，可以思考的就是 chroot 這個機制！
+			我們可以將所有的系統資源掛載到某個目錄，然後將他變成根目錄 (chroot) 來處理的意思！回想一下 Linux 課程，
+			當你使用 chroot 去救援系統時，事實上，你使用的核心以及系統資源 (/sys, /proc, /dev 等等重要資源)，都還是屬於原有的系統的！
+			這就是容器！
+			<ol class="practice" type="A">
+				<li>透過各種方法，啟動你的一個 VM 系統</li>
+				<li>注意看出該系統的埠口號碼，然後直接使用 remote-viewer 去做 spice 連線</li>
+				<li>連線取得終端機之後，進行 [ctrl]+[alt]+[del] 重新開機</li>
+				<li>重新開機過程中，在選單模式輸入 rd.break 進入救援模式中</li>
+				<li>在救援模式中查閱 /sysroot 的裝置以及相關的掛載資訊</li>
+				<li>將 /sysroot 重新掛載為可讀寫</li>
+				<li>使用 chroot /sysroot 變更成為根目錄系統</li>
+				<li>使用 df 或 fdisk -l 或 gdisk -l 等等，能不能取得你的裝置分割表？</li>
+				<li>退出 chroot，使用 mount --bind 的方式，掛載 /dev, /proc, /sys.. 到 /sysroot 的相關目錄</li>
+				<li>再次 chroot /sysroot，再次使用 df, fdisk -l, gdisk -l 等等，確認裝置存在否？</li>
+				<li>思考一下 chroot 的相關資源是這次的救援系統？還是你原本的系統？</li>
+				<li>離開 chroot 後，重新開機，再正確的進入系統中。</li>
+			</ol></li>
+
+			<li>因為容器使用了原有系統的資源，因此所需要的獨立的資源相對小很多！
+			與目前主流的 VM 不一樣。因為 VM 是一個『獨立的作業系統』，而 container 只是在原有系統核心下的一個被隔離的程序！
+			兩者本質差很多。因此，VM 可以模擬不同的作業系統 (在 Windows 模擬 Linux，或在 Linux 模擬 Windows)，但是 container
+			只能運作與母系統相同的作業系統環境 (因為共用核心資源！)</li>
+		</ol></li>
+
+		<li>什麼是 docker：
+		<ol class="minlist" type="a">
+			<li>Docker 是一個開放原始碼的專案，這個專案就是以 Linux container 為基本的開發環境。
+			主要緣起於 2013 年 dotCloud 公司的內部專案，後來太熱門，因此 dotCloud 公司甚至改名為 Docker Inc。
+			後來在 0.9 版本之後，更以 Google 開發的 Go 程式語言進行函式庫的開發，在 Linux 核心上面玩弄容器技術 (Linux Container, LXC)。</li>
+
+			<li>Docker 的商標圖示：<br>
+			<img src="%E5%B0%88%E9%A1%8C%E5%85%AD%20-%20Docker%20%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A4%8E%E5%AF%A6%E5%81%9A_files/doecker-1.png" class="image"></li>
+
+			<li>Docker 的角色與 VM 角色的差異：<br>
+			<img src="%E5%B0%88%E9%A1%8C%E5%85%AD%20-%20Docker%20%E5%AE%B9%E5%99%A8%E5%9F%BA%E7%A4%8E%E5%AF%A6%E5%81%9A_files/VMandContainer.PNG" class="image" style="width: 920px"></li>
+
+			<li>如上圖所示，右側的 VM 啟動時，需要完整的底層作業系統執行 (Guest Operating System)，
+			如果你只是想要執行 VM 上面的一個軟體 (App A)，還是得要執行完整的 VM 才行，因此消耗系統資源比較多。至於左側的 Docker 容器，
+			因為與 Host Operation System 幾乎是共用核心與資源，因此只需要直接執行 App A 而已，無須 Guest Operating System 的支援，
+			因此資源損耗比較少，啟動的速度與佈署的速度都比較快速！[2]</li>
+		</ol></li>
+
+		<li>Docker 的名詞與概念：
+		<ol class="minlist" type="a">
+			<li>Docker 的運作，基本上包含了三個基本概念：
+			<ul>
+				<li>映像檔 (image)</li>
+				<li>容器 (container)</li>
+				<li>倉庫 (repository)</li>
+			</ul></li>
+
+			<li>映像檔, Image：<br>
+			映像檔就是一個唯讀的模板。一個映像檔可以包含一個完整的 CentOS 作業系統環境，裡面只安裝了 Apache
+			或者是使用者需要的其他應用程式。事實上，你可以將他想成是一個 VM 的原始磁碟這樣的概念即可。映像檔主要的目的就是在產生 Docker 容器。</li>
+
+			<li>Docker 容器 (container)<br>
+			容器就是從映像檔執行起來的軟體實體。容器可以被啟動、開始、停止、刪除等等。每個容器都是獨立且互相隔離的。
+			你可以想像成，每個容器就是由映像檔快照出來的、被執行的系統的存在。且映像檔 (image) 是唯讀的，
+			容器則是透過某些特殊的檔案系統，讓它可以寫入，且不影響原本的映像檔。</li>
+
+			<li>倉庫 (repository)<br>
+			倉庫就是放置 image 的所在，倉庫有公開的有私有的，例如 github 或者是 docker 官網所提供的映像檔，
+			那就是公開的倉庫。如果你想要有自己公司內部，或者是自己測試用的內部倉庫，那就自己幹一個，也就是私有的倉庫了。</li>
+
+		</ol></li>
+
+		<li>Docker 的安裝與啟動
+		<ol class="minlist" type="a">
+			<li>現在的 docker：由於 docker 分為商業版與自由版，因此軟體名稱已經不太一樣。
+			不過，我們目前是用來測試，而且也無須使用最新版，因此，可以從 CentOS 官網的 Extras 軟體倉儲當中直接安裝啟用即可。
+			也就是說，其實 CentOS 7 已經將 docker 納入到官網釋出的軟體倉儲之中囉！</li>
+
+			<li>經過前一節課的虛擬化網路設計，現在我們的 VM 已經可以正常且順利的取得 Host 提供的 192.168.19.0/24 這一段網域，
+			同時我們可以透過啟動 VM 過程中，在 Host 使用 tail -f /var/log/messages 去探索 DHCP 的用戶端要求，
+			並取得 VM 的 IP。同時我們也加入了 root 的 ssh key 自動登入，因此取得 VM 的方法，就變得很簡單。
+
+			<ol class="practice" type="A">
+			<li>因為我們需要建立一個專門給 docker 來用的原始來源磁碟機，並不是要大量建立虛擬機器，
+			因此，請用複製的行為，將 demo.img 複製成為 docker.img 的磁碟檔案 (請在 /vmdisk 底下實作)</li>
+			<li>請使用底下的方式來建立好 docker 的 xml 檔案：
+<pre class="code"># <span class="myhint">virt-clone --original-xml demo.xml --name docker --file /vmdisk/docker.img  \
+&gt; <span class="myhint">--preserve-data --print-xml &gt; docker.xml</span>
+</span></pre></li>
+			<li>觀察 docker.xml 檔案內容，找到這個虛擬機器的網卡卡號，並將這個卡號可以取得 IP 的號碼成為 192.168.19.201/24，
+			請自行修改 Host 的 /etc/dhcp/dhcpd.conf 的內容，並重新啟動 dhcpd 喔！
+<pre class="code"># <span class="myhint">vim /etc/dhcp/dhcpd.conf</span>
+subnet 192.168.19.0 netmask 255.255.255.0 {
+  ....
+  host docker {
+    hardware ethernet 52:54:00:27:cb:e9;
+    fixed-address 192.168.19.201;
+  }
+}
+
+# <span class="myhint">systemctl restart dhcpd</span>
+# <span class="myhint">systemctl status dhcpd</span>
+</pre></li>
+
+			<li>啟動 docker 這個虛擬機器，並且觀察這個虛擬機器取得 dhcp 的 IP，同時使用 ssh 連線進去這個 docker 虛擬機器。
+<pre class="code"># <span class="myhint">virsh create docker.xml</span>
+# <span class="myhint">tail -f /var/log/messages</span>
+# <span class="myhint">ssh 192.168.19.201</span>
+</pre></li>
+			</ol></li>
+
+			<li>在虛擬機器當中安裝好 Docker 軟體，我們已經使用了 ssh 登入 docker 的虛擬機器，
+			所以可以使用 root 的身份進行如下的行為囉：
+<pre class="code"># <span class="myhint">yum repolist</span>
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: ftp.ksu.edu.tw
+ * extras: ftp.ksu.edu.tw
+ * updates: ftp.ksu.edu.tw
+repo id                   repo name                        status
+base/7/x86_64             CentOS-7 - Base                  10,019
+<span class="myhint">extras/7/x86_64           CentOS-7 - Extras                   386</span>
+updates/7/x86_64          CentOS-7 - Updates                1,573
+repolist: 11,978
+</pre>
+
+			Docker 在 CentOS 7 裡面，主要是放在 Extras 軟體倉儲，但是如果因為某些緣故，你可能曾經將 extras 
+			倉儲關閉，那就無法安裝 docker 喔！一般來說，你的 extras 應該都是存在的，只是可能沒有啟動而已。因此你可以這樣進行安裝：
+
+<pre class="code"># <span class="myhint">yum --enablerepo=extras install docker</span>
+# <span class="myhint">systemctl start  docker</span>
+# <span class="myhint">systemctl enable docker</span>
+</pre>
+			很快的，這樣就安裝好了，而且也啟動了 docker！接下來，就可以開始處理 docker 的各項任務了！</li>
+
+			<li>接下來開始觀察一下，當你安裝並成功啟動 docker 之後，系統會多一個網路界面來給 docker container 使用。
+			我們可以來觀察一下這個界面：
+<pre class="code"># <span class="myhint">ip addr show</span>
+3: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:7c:cb:c8:1a brd ff:ff:ff:ff:ff:ff
+    inet <span class="myhint">172.17.0.1/16</span> scope global docker0
+       valid_lft forever preferred_lft forever
+# 會多一個名為 docker0 的界面，且其 IP 會是 172.17.0.1 的 class B 的界面喔！
+
+# <span class="myhint">brctl show</span>
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.02427ccbc81a       no
+# 個界面是橋接界面，且沒有綁定任何的實體網卡喔！是虛擬存在的橋接界面！
+
+# <span class="myhint">iptables-save</span>
+# Generated by iptables-save v1.4.21 on Sun Apr 21 16:11:42 2019
+*nat
+:PREROUTING ACCEPT [2:96]
+:INPUT ACCEPT [2:96]
+:OUTPUT ACCEPT [61:5604]
+:POSTROUTING ACCEPT [61:5604]
+:DOCKER - [0:0]
+-A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
+-A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
+<span class="myhint">-A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+-A DOCKER -i docker0 -j RETURNM</span>
+COMMIT
+# Completed on Sun Apr 21 16:11:42 2019
+# Generated by iptables-save v1.4.21 on Sun Apr 21 16:11:42 2019
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [4724:283448]
+:DOCKER - [0:0]
+:DOCKER-ISOLATION - [0:0]
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -s 192.168.19.0/24 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+<span class="myhint">-A FORWARD -j DOCKER-ISOLATION
+-A FORWARD -o docker0 -j DOCKER
+-A FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i docker0 ! -o docker0 -j ACCEPT
+-A FORWARD -i docker0 -o docker0 -j ACCEPT
+-A DOCKER-ISOLATION -j RETURN</span>
+COMMIT
+# Completed on Sun Apr 21 16:11:42 2019
+</pre>
+			為了擔心啟用 docker 之後，反而導致系統被攻擊，因此，docker 會主動的加入一些防火牆機制！
+			特別注意這個情況喔！</li>
+		</ol></li>
+
+		<li>處理 docker image
+		<ol class="minlist" type="a">
+			<li>前面提到，docker 最重要的其實就是那個類似 VM 磁碟的 image。目前你的系統是否擁有 image 呢？
+			可以使用底下的指令來觀察：
+
+<pre class="code"># <span class="myhint">docker images</span>
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+</pre>
+			看起來目前是沒有任何的 docker image 存在的，現在，
+			我們可以找到 docker 官網提供的 image 資訊嘛？可以的，這樣處理：
+<pre class="code"># <span class="myhint">docker search 'keyword'</span>
+# <span class="myhint">docker search centos</span>
+INDEX       NAME                                 DESCRIPTION                        STARS OFFICIAL   AUTOMATED
+docker.io   docker.io/centos                     The official build of CentOS.      5287  [OK]
+docker.io   docker.io/ansible/centos7-ansible    Ansible on Centos7                 121              [OK]
+docker.io   docker.io/jdeathe/centos-ssh         CentOS-6 6.10 x86_64 / CentOS...   107              [OK]
+docker.io   docker.io/consol/centos-xfce-vnc     Centos container with "headle...   83               [OK]
+docker.io   docker.io/imagine10255/centos6-lnm   centos6-lnmp-php56                 53               [OK]
+docker.io   docker.io/centos/mysql-57-centos7    MySQL 5.7 SQL database server      50
+docker.io   docker.io/tutum/centos               Simple CentOS docker image wi      44
+docker.io   docker.io/gluster/gluster-centos     Official GlusterFS Image [ Ce...   40               [OK]
+docker.io   docker.io/openshift/base-centos7     A Centos7 derived base image ...   40
+docker.io   docker.io/centos/postgresql-96-cen   PostgreSQL is an advanced Obj...   37
+docker.io   docker.io/centos/python-35-centos7   Platform for building and run...   34
+docker.io   docker.io/kinogmt/centos-ssh         CentOS with SSH                    26               [OK]
+docker.io   docker.io/centos/httpd-24-centos7    Platform for running Apache h...   22
+docker.io   docker.io/centos/php-56-centos7      Platform for building and run...   20
+docker.io   docker.io/openshift/jenkins-2-cent   A Centos7 based Jenkins v2.x ...   20
+docker.io   docker.io/pivotaldata/centos-gpdb-   CentOS image for GPDB develop...   10
+docker.io   docker.io/openshift/wildfly-101-ce   A Centos7 based WildFly v10.1...   6
+docker.io   docker.io/openshift/jenkins-1-cent   DEPRECATED: A Centos7 based J...   4
+docker.io   docker.io/darksheer/centos           Base Centos Image -- Updated       3                [OK]
+docker.io   docker.io/pivotaldata/centos         Base centos, freshened up a l...   3
+docker.io   docker.io/pivotaldata/centos-mingw   Using the mingw toolchain to ...   2
+docker.io   docker.io/blacklabelops/centos       CentOS Base Image! Built and !     1                [OK]
+docker.io   docker.io/pivotaldata/centos-gcc-t   CentOS with a toolchain, but ...   1
+docker.io   docker.io/jameseckersall/sonarr-ce   Sonarr on CentOS 7                 0                [OK]
+docker.io   docker.io/smartentry/centos          centos with smartentry             0                [OK]
+</pre>
+			上述的資料中：
+			<ul style="margin-top: 10px;">
+				<li>INDEX：主要的倉儲</li>
+				<li>NAME： image 的名稱，如果有 / 的，代表的是某個人或單位所提供的</li>
+				<li>DESCRIPTION： 單純的描述</li>
+				<li>STARS： 受歡迎程度，有點像是 FB 的『贊』數量</li>
+				<li>OFFICIAL： 是否為官網所提供的映像檔之意。</li>
+				<li>AUTOMATED： 是否允許使用者驗證映像檔來源與內容</li>
+			</ul></li>
+
+			<li>下載映像檔到本地端：
+
+<pre class="code"># <span class="myhint">docker pull docker.io/centos</span>
+Using default tag: latest
+Trying to pull repository docker.io/library/centos ...
+latest: Pulling from docker.io/library/centos
+8ba884070f61: Pull complete
+Digest: sha256:8d487d68857f5bc9595793279b33d082b03713341ddec91054382641d14db861
+Status: Downloaded newer image for docker.io/centos:latest
+</pre>
+			事實上，每個 image 可能有很多個版本，例如 centos 有 6 與 7 等不同版本，或者是 7.1~7.6 等版本，
+			因此，創造 images 的用戶，也可能提供多種不同的版本！如果沒有加上任何版本，預設會下載最新版。
+			如果你有意思要使用舊的版本，那就得要加上特定的版本號碼：
+
+<pre class="code"># <span class="myhint">docker pull docker.io/centos:[tags]</span>
+# <span class="myhint">docker images</span>
+REPOSITORY          TAG        IMAGE ID            CREATED             SIZE
+docker.io/centos    latest     9f38484d220f        5 weeks ago         202 MB
+</pre>
+			如上所示，最後我們就有一個名為 docker.io/centos:latest 的 docker image 存在了！</li>
+		</ol></li>
+
+		<li>完成底下的實做：
+		<ol class="practice" type="A">
+			<li>搜尋 ubuntu 這個映像檔檔名，並找到官方提供的版本</li>
+			<li>下載 ubuntu 映像檔到本地端</li>
+			<li>查詢目前系統有的映像檔資料</li>
+			<li>查詢 http 伺服器映像檔，並且下載官方提供的映像檔資源，同時觀察下載後的結果。此行為之後的結果，
+			應該是會有點像底下這樣子：
+<pre class="code">REPOSITORY          TAG        IMAGE ID         CREATED         SIZE
+docker.io/httpd     latest     d4a07e6ce470     2 weeks ago     132 MB
+docker.io/centos    latest     9f38484d220f     5 weeks ago     202 MB
+docker.io/ubuntu    latest     94e814e2efa8     5 weeks ago     88.9 MB
+</pre></li>
+			<li>目前我們沒有要使用 httpd，請移除這個映像檔 (可以使用 docker rmi httpd 來處理)</li>
+			<li>最終，請找出 /var/lib/docker 底下容量最大的目錄，並比對 images 的容量，大概就能知道 image 是放在系統的哪個地方了。</li>
+		</ol></li>
+
+		<li>開始 docker 容器的運作：
+		<ol type="a">
+			<li>不要忘記，透過執行類似映像檔的快照行為，就可以啟動一個 docker 容器！
+			這個容器可以視為是一個軟體的實體～只是他快照到 docker 映像檔而已。</li>
+
+			<li>容器的啟動：容器的啟動直接透過 docker run 來處理！語法是：
+
+<pre class="code"># <span class="myhint">docker run -it --name container_name image_name</span>
+</pre>
+			上述指令中：
+			<ul style="margin-top: 10px; margin-bottom: 10px;">
+				<li>-i：讓容器的標準輸入 (standard input) 維持在啟動的狀態</li>
+				<li>-t：讓 Docker 配置一個虛擬終端機，並綁定容器到標準輸入的狀態！因此， -it 通常是合在一起執行。</li>
+				<li>--name：配置一個名稱給容器，未來比較好記憶與操作！</li>
+				<li>image_name：就是映像檔的名稱，要注意，image_name 最好一定放在最後面喔！</li>
+			</ul></li>
+
+			<li>實際執行的流程：
+<pre class="code"># <span class="myhint">docker run -it --name centos1 centos</span>
+[root@030971238ac9 /]# &lt;==此時就在 docker 的容器裡面了！
+</pre>
+
+			此時你可以在 docker 裡面隨意逛逛～不過需要留意的是，這個在 docker 內的 centos ，基本上，使用的資源都是 host 本機的！
+			因此使用 uname -r 或者是 df 或是 mount 等等，看到的大多都是 host 本機的資源！所以，基本上，你是無法使用 fdisk 等功能的！
+			這部份要先理解。
+<pre class="code"># 1. 先執行 df -h 查看一下系統的分割資訊
+# <span class="myhint">df -h</span>
+Filesystem               Size  Used Avail Use% Mounted on
+<span class="myhint">overlay                   37G  1.6G   36G   5% /</span>
+tmpfs                    1.5G     0  1.5G   0% /dev
+tmpfs                    1.5G     0  1.5G   0% /sys/fs/cgroup
+<span class="myhint">/dev/mapper/centos-root   37G  1.6G   36G   5% /etc/hosts</span>
+shm                       64M     0   64M   0% /dev/shm
+tmpfs                    1.5G     0  1.5G   0% /proc/acpi
+tmpfs                    1.5G     0  1.5G   0% /proc/scsi
+tmpfs                    1.5G     0  1.5G   0% /sys/firmware
+
+# 2. 查一下系統根目錄
+# <span class="myhint">ls -l /</span>
+-rw-r--r--.   1 root root 12082 Mar  5 17:36 anaconda-post.log
+lrwxrwxrwx.   1 root root     7 Mar  5 17:34 bin -&gt; usr/bin
+drwxr-xr-x.   5 root root   360 Apr 21 08:30 dev
+drwxr-xr-x.   1 root root    66 Apr 21 08:30 etc
+drwxr-xr-x.   2 root root     6 Apr 11  2018 home
+lrwxrwxrwx.   1 root root     7 Mar  5 17:34 lib -&gt; usr/lib
+lrwxrwxrwx.   1 root root     9 Mar  5 17:34 lib64 -&gt; usr/lib64
+drwxr-xr-x.   2 root root     6 Apr 11  2018 media
+drwxr-xr-x.   2 root root     6 Apr 11  2018 mnt
+drwxr-xr-x.   2 root root     6 Apr 11  2018 opt
+dr-xr-xr-x. 157 root root     0 Apr 21 08:30 proc
+dr-xr-x---.   2 root root   114 Mar  5 17:36 root
+drwxr-xr-x.   1 root root    21 Apr 21 08:30 run
+lrwxrwxrwx.   1 root root     8 Mar  5 17:34 sbin -&gt; usr/sbin
+drwxr-xr-x.   2 root root     6 Apr 11  2018 srv
+dr-xr-xr-x.  13 root root     0 Apr 21 07:36 sys
+drwxrwxrwt.   7 root root   132 Mar  5 17:36 tmp
+drwxr-xr-x.  13 root root   155 Mar  5 17:34 usr
+drwxr-xr-x.  18 root root   238 Mar  5 17:34 var
+</pre>
+			你可以發現幾個很有趣的現象～就是：
+			<ul style="margin-top : 10px; margin-bottom: 10px">
+				<li>因為 docker 無須開機，所以不需要 /boot 這個核心所在的目錄</li>
+				<li>剛剛觀察過 /var/lib/docker，你會有發現 overlay 這個有趣的裝置！那用來作為虛擬根目錄</li>
+				<li>預設 docker 會掛載來自本機 host 的 /etc/hosts，可以作為 IP 與主機名稱對應的一個參考</li>
+			</ul></li>
+
+			<li>離開 bash 的後果與處理方式：<br>
+			基本上，當你使用 exit 離開之後，這個 docker 就關閉了！並不會持續存在喔！
+<pre class="code">[root@030971238ac9 /]# <span class="myhint">exit</span>
+exit
+# 此時會回到 Host 的終端界面中，請開始在本機關查 docker 的 container 資料：
+
+# <span class="myhint">docker ps</span>
+CONTAINER ID   IMAGE     COMMAND    CREATED    STATUS    PORTS     NAMES
+# 這會顯示目前啟動的 docker container 的資訊！
+
+# <span class="myhint">docker ps -a</span>
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                     PORTS    <span class="myhint">NAMES</span>
+030971238ac9   centos    "/bin/bash"   16 minutes ago   Exited (1) 3 minutes ago            <span class="myhint">centos1</span>
+# -a 可以同時列出已經存在但是沒有啟用的 docker container 資料喔！
+</pre>
+
+			如果你只是想要暫時離開這個標準輸入 (standard input) 的狀態，可以使用底下的組合按鍵來暫時離開！
+			因為已經啟動過這個 container 了，會被記憶起來！所以，你不能再以『docker run -it --name centos1 centos』啟動，
+			否則會被判斷為失敗！
+<pre class="code"># <span class="myhint">docker run -it --name centos1 centos</span>
+/usr/bin/docker-current: Error response from daemon: Conflict. The container name "/centos1" is already in use 
+  by container 030971238ac90367ab892e5e9b143344ad63c0b30302a3628edfcdd7fe028617. You have to remove (or rename) 
+  that container to be able to reuse that name..
+See '/usr/bin/docker-current run --help'.
+</pre>
+
+			那怎辦？沒關係，可以透過底下的方式來啟動：
+
+<pre class="code"># <span class="myhint">docker start 'container name'</span>
+# <span class="myhint">docker start centos1</span>
+# <span class="myhint">docker ps</span>
+CONTAINER ID   IMAGE    COMMAND       CREATED          STATUS        PORTS   NAMES
+030971238ac9   centos   "/bin/bash"   24 minutes ago   Up 9 seconds          centos1
+</pre>
+
+			</li><li>連線到已經啟動的 docker 上，並且不關閉離開 docker 的方法：
+
+<pre class="code"># 1. 連線的方法：
+# <span class="myhint">docker exec -it [name or id] [command]</span>
+# <span class="myhint">docker exec -it centos1 bash</span>
+
+# 2. 不要關閉 docker container 但是可以離開終端界面的組合按鈕：
+<span class="myhint">[ctrl] + p</span> 之後 <span class="myhint">[ctrl] + q</span>
+
+# <span class="myhint">docker ps</span>
+CONTAINER ID  IMAGE     COMMAND       CREATED          STATUS        PORTS    NAMES
+030971238ac9  centos    "/bin/bash"   27 minutes ago   Up 3 minutes           centos1
+</pre></li>
+
+			<li>嘗試操作 docker 進行一些類似上課的練習：
+			<ol class="practice" type="A">
+				<li>再次取得 centos1 的終端機界面</li>
+				<li>嘗試使用 ifconfig 及 ip addr show 及 vim 等指令</li>
+				<li>嘗試使用 yum 安裝 net-tools vim-enhanced bash-completion iproute 等軟體</li>
+				<li>再次嘗試使用 ip addr show 以及 ifconfig 指令，看看輸出的情況</li>
+				<li>用 find 找出這個 docker 系統中，具有 suid 或 sgid 的檔案檔名，並列出權限。</li>
+			</ol></li>
+
+			<li>關閉與刪除 docker：<br>
+			我們上面都在惡搞，所以搞錯了很多的 docker 容器資料！同時，也想要將容器刪除 (注意，是刪除容器，不是刪除 image 喔！)。
+			處理的方法也很簡單：
+
+<pre class="code"># 1. 離開 docker container 之後，就觀察目前的 container 狀態：
+# <span class="myhint">docker ps</span>
+CONTAINER ID   IMAGE    COMMAND       CREATED      STATUS       PORTS   NAMES
+030971238ac9   centos   "/bin/bash"   2 hours ago  <span class="myhint">Up 2 hours</span>           centos1
+
+# 2. 關閉容器：
+# <span class="myhint">docker stop [name or ID]</span>
+# <span class="myhint">docker stop centos1</span>
+# <span class="myhint">docker ps -a</span>
+<span class="myhint">CONTAINER ID</span>  IMAGE     COMMAND      CREATED      STATUS                       PORTS   <span class="myhint">NAMES</span>
+030971238ac9  centos    "/bin/bash"  2 hours ago  <span class="myhint">Exited (137) 4 seconds ago</span>           centos1
+
+# 3. 刪除容器
+# <span class="myhint">docker rm [name or id]</span>  &lt;==可以填寫 "CONTAINER ID" 或 "NAMES" 的內容
+# <span class="myhint">docker rm centos1</span>
+# <span class="myhint">docker rm 030971238ac9</span>
+</pre>
+			最後，當你重新 docker ps -a 時，就看不到任何的 container 名稱囉！</li>
+		</ol></li>
+
+		<li>完成底下的實做：
+		<ol class="practice" type="A">
+			<li>啟動名為 ubuntu1 容器名稱，使用的是 ubuntu 映像檔。</li>
+			<li>進入 utuntu 之後，執行 ps 與 ps aux 及 top 等指令，說明為什麼程序數量這麼少？</li>
+			<li>不要停止 ubuntu1，但是離開 docker 的操作</li>
+			<li>觀察 docker 的活動情況</li>
+			<li>關閉 ubuntu1</li>
+			<li>刪除 ubuntu1</li>
+		</ol></li>
+	</ol>
+</div>
+
+
+<h3>Docker 網路功能</h3>
+<div class="block1">
+	<ol class="orilist">
+		<li>Docker 的網路連線介紹：
+		<ol class="minlist" type="a">
+
+		</ol></li>
+
+	</ol>
+</div>
+
+
+<h3>實戰： DNS 預先處理</h3>
+<div class="block1">
+	<ol>
+		<li>DNS 預處理：
+		<ol type="a">
+			<li>連上 hinet domain 的申請網站，查詢有沒有你有興趣的 domain name。</li>
+			<li>選擇一個沒有人使用的 domain name，然後開始註冊！</li>
+			<li>可以使用 whois vbird.idv.tw 查詢一下註冊者！這就是網域管理員的基礎相關資料。</li>
+			<li>可以使用 ATM 繳費，會比較簡單！ (不需要信用卡)</li>
+			<li>等到註冊完畢，並且繳款完畢，你就可以登入系統去處理了！</li>
+		</ol></li>
+
+		<li>testing:
+		<ol type="a">
+			<li>git clone -b 5.2.1 https://github.com/USEPA/CMAQ.git CMAQ_REPO</li>
+		</ol></li>
+	</ol>
+</div>
+
+
+
+<p>參考資料</p>
+
+<ul>
+	<li>ps01:<a href="https://en.wikipedia.org/wiki/OS-level_virtualisation" target="network">維基百科之作業系統層虛擬化：https://en.wikipedia.org/wiki/OS-level_virtualisation</a></li>
+	<li>ps02:<a href="https://philipzheng.gitbooks.io/docker_practice/content/" target="network">docker 入門到實戰(值得慢慢看)：https://philipzheng.gitbooks.io/docker_practice/content/</a></li>
+
+
+	<li><a href="https://github.com/MtFeather/notebook/blob/master/notebook/docker.md?fbclid=IwAR0v8rR_BapKiqTbNGa-AX3OQZ8YAk1J_zhnGABEXzjNxf_hdmtD3t5srJg" target="network">清輝的 Docker 基本教學</a></li>
+
+</ul>
+
+
+
+</div>	<!-- for content 	-->
+</div>  <!-- for page2		-->
+<footer>
+	本網頁由 VBird@dic.ksu 製作！若內容有涉及著作財產權問題，還請來信告知 dmtsai@mail.ksu.edu.tw！
+</footer>
+</div>	<!-- for page		-->
+<div class="sidebar">
+	<ul>
+		<li>看我<p>第 unit06 課</p></li>
+		<li><a href="http://dic.vbird.tw/network_project">首頁</a><p>回到首頁</p></li>
+		<li><a href="http://dic.vbird.tw/network_project/list.php">列表</a><p>回到課程列表</p></li>
+		<li><a href="#">作業</a><p>回到作業繳交</p></li>
+		<li><a href="#top">Top</a><p>回到最上方</p></li>
+	</ul>
+</div>
+
+
+</body></html>

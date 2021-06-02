@@ -1,0 +1,415 @@
+body {
+	font-size: 12pt;
+	font-family: 'Comic Sans MS', 'Times New Roman', '新細明體', 'Courier New', 'Courier';
+	margin: 0;
+	padding: 0;
+	background-color: #eeeeee;
+	text-align: left;
+	color: #151515;
+	height: 100%;
+	overflow-y: scroll;
+	line-height: 160%;
+}
+
+.page {
+	width: 1200px;
+	background-color: white;
+	text-align: left;
+	margin: -10px auto 0 auto;
+	box-shadow: 0 0 5px 5px gray;
+	padding: 0;
+	position: relative;
+}
+
+header {
+	width: 100%;
+	height: 130px;
+	background: linear-gradient(to right, red, yellow);
+	position: relative;
+}
+
+
+nav {
+	width: 100%;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	text-align: center;
+	background-color: rgba(98,91,87,1);
+}
+
+nav ul li {
+	display: inline-block;
+	width: 180px;
+	margin-left: -5px ;
+}
+
+nav ul li a {
+	display: block;
+	color: white;
+	padding: 10px 0 7px 0;
+	text-decoration: none;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px black;
+	transition: background-color 0.5s;
+}
+
+nav ul li.active a {
+	background-color: silver;
+	color: black;
+	text-shadow: 1px 1px 0px white;
+}
+
+nav ul li:hover a {
+	background-color: silver;
+
+}
+
+.here {
+	padding: 5px 0 5px 24%;
+	background: linear-gradient( lightgreen, white);
+	color: darkblue;
+}
+
+.page2 {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+.subnav {
+	width: 24%;
+	border-right: 1px dotted gray; 
+}
+
+.content {
+	width: 74%;
+	border-left: 1px dotted gray; 
+	margin-left: -6px;
+	padding-left: 15px;
+}
+
+.subnav, .content {
+	display: inline-block;
+	vertical-align: top;
+	min-height: 500px;
+
+}
+
+.subnav ul {
+	width: 100%;
+	list-style: none;
+	margin: 0 ;
+	padding: 0;
+}
+
+.subnav ul li {
+	border-bottom: 1px solid white;
+	background-color: gray;
+	border-left: 20px solid darkgray;
+	overflow: hidden;
+	height: 37px;
+}
+
+.subnav ul li a {
+	font-size: 10pt;
+	display: block;
+	padding-top: 7px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	text-decoration: none;
+	color: white;
+}
+
+.subnav ul li a:hover {
+	text-shadow: 1px 1px 1px black;
+}
+
+.subnav ul li:hover {
+	background-color: silver;
+	width: 150%;
+	z-index: 20;
+}
+
+.subnav ul li.active {
+	background: linear-gradient(to right, darkgray, white);
+}
+
+.subnav ul li.active a {
+	color: black;
+	text-shadow: 1px 1px 1px white;
+}
+
+.content a {
+	color: #0000ff; 
+	text-decoration: none; 
+}
+
+.content a:hover { 
+	color: #ff0000; 
+	text-decoration: underline; 
+	background-color: #aaaaaa;
+}
+
+.mytitle {
+	font-weight: bolder;
+	font-family: 'Comic Sans MS', 'Times New Roman', '標楷體';
+	font-size: 16pt;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: darkblue;
+}
+
+.abstract {
+	font-size: 10pt;
+	background-color: #eeeeee;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+	padding: 5px 10px 5px 10px;
+	border: 1px solid gray;
+	box-shadow: 1px 1px 2px 0px gray;
+	text-align: justify;
+	text-justify:inter-ideograph;
+	/*text-justify: distribute-all-lines; */
+}
+
+.content .block1 {
+	padding-left: 20px; 
+	text-align: left;
+}
+
+.content h3 {
+	font-size:14pt;
+	font-family: 'Times New Roman', '標楷體', 'Times', serif; 
+	color: #0000bb ;
+	background-color: #E6E6FA;
+	margin: 5px 0px 15px 0px;
+	padding: 10px 5px 5px 10px;
+	border: 1px solid gray;
+	box-shadow:  2px 2px 2px 0px gray;
+	text-shadow: 2px 2px 1px gray;
+	border-radius: 0px 10px 0 0 ;
+}
+
+.content .block1 .toplist {
+	padding: 0;
+	margin: 30px 0 0 0 ;
+	border-top: 1px solid gray; 
+	font-weight: bold;
+	color: darkblue;
+}
+
+footer {
+	width: 100%;
+	border-top: 1px solid silver;
+	padding: 5px 0 5px 0;
+	font-size: 10pt;
+	color: gray;
+	text-align: right;
+}
+
+ul.homework li, ol.homework li {
+	margin: 10px 0 5px 0;
+}
+
+.code {
+	width: 95%;
+	border: 1px solid black;
+	box-shadow: 0 0 2px 2px silver;
+	padding: 10px; 
+	font-family: monospace, 'Courier New';
+	line-height: 120%;
+}
+
+.code .hd {
+	color: purple;
+}
+.code .cmd {
+	font-weight: 700;
+	color: blue;
+}
+.code .write {
+	color: blue;
+}
+.code .say {
+	color: green;
+	font-style: italic;
+}
+.code .cube {
+	color: rgba(255,255,0,1);
+	background: black;
+}
+
+.datatable {
+	border-top: 2px solid gray;
+	border-bottom: 2px solid gray;
+	margin-top: 10px; 
+	margin-bottom: 10px;
+	font-size: 11pt;
+}
+
+.datatable tr td {
+	border-bottom: 1px solid gray;
+
+}
+
+.myhint {
+	color: darkblue;
+	font-weight: bold;
+}
+
+.ex {
+	width: 90%;
+	border: 5px dotted black;
+	padding: 10px; 
+	font-family: monospace, 'Courier New';
+	background-color: rgba(90,90,90,0.2);
+	color: black;
+}
+
+table.news {
+	width: 97%;
+	border: 1px solid gray;
+	background-color: lightyellow;
+	box-shadow: 2px 2px 2px 2px gray;
+	padding: 0px;
+	margin: 0;
+	border-collapse:collapse;
+}
+table.news tr {
+	margin: 0;
+	padding: 0;
+	border-width: 0;
+}
+table.news tr.title1 {
+	background-color: lightblue;
+	text-align:center;
+	border-width: 0;
+}
+table.news td {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid gray;
+}
+table.news tr:hover {
+	background-color: lightblue;
+	color: black;
+}
+
+table.news .theader {
+	background-color: lightblue;
+	text-align: center;
+}
+
+table.news .tcenter {
+	text-align: center;
+}
+@font-face {
+	font-family: notosanstc;
+	src: url('/webdesign/fonts/NotoSansTC-Regular.otf');
+}
+
+.sidebar {
+	position: fixed;
+	border: 1px solid gray;
+	border-radius: 10px;
+	width: 30px;
+	height: 140px;
+	right: 0;
+	top: 50%;
+	margin-top: -70px;
+	padding-top: 10px;
+	background-color: rgba(98,91,87,1);
+	font-size: 10pt;
+	text-align: center;
+	color: white;
+}
+.sidebar ul {
+	list-style-type: none;
+	margin:0;
+	padding: 0;
+}
+.sidebar a {
+	display: block;
+	text-decoration: none;
+	font-size: 10pt;
+	text-align: center;
+	color: white;
+}
+.sidebar a:hover {
+	background-color: silver;
+	color: black;
+}
+.sidebar p {
+	width: 90px;
+	border: 1px solid gray;
+	position: absolute;
+	margin-left: -100px;
+	margin-top: -25px;
+	font-size: 10pt;
+	text-align: right;
+	padding-right: 10px;
+	background-color: silver;
+	color: darkgreen;
+	visibility: hidden;
+}
+
+.sidebar li:hover p {
+	visibility: visible;
+}
+
+.mytext {
+	font-family: '細明體';
+}
+.lastdate {
+	padding:0;
+	margin:0;
+	text-align: right;
+}
+
+.image {
+        border: 1px solid gray;
+        display: block;
+	margin: 10px auto 10px auto;
+        padding: 5px;
+	max-width: 98%;
+	
+}
+ol.orilist > li {
+	margin-top: 30px;
+	margin-left: -10px;
+	border-top: 3px solid purple;
+}
+
+ol.orilist > li > ol.minlist > li, ol.orilist > li > ul.minlist > li{
+	margin-top: 10px;
+}
+.practice {
+	width: 95%;
+	border: 1px solid black;
+	box-shadow: 0 0 2px 2px silver;
+	padding: 10px; 
+	font-family: monospace, 'Courier New';
+	background-color: rgba(0,0,0,0.05);
+	margin: 15px 0 15px 0;
+	padding-left: 30px;
+}
+
+ol.marlist li, ul.marlist li {
+	margin-top: 10px;
+}
+
+ul.normallist {
+	margin-top: 0px;
+}
+
+.fixedfont {
+	font-family: monospace, 'Courier New';
+}
