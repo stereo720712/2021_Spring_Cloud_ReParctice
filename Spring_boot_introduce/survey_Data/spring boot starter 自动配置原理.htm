@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.55.6">
+
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+
+<link rel="alternate" type="application/rss+xml" href="https://puppylpg.github.io/docs/index.xml">
+
+<link rel="shortcut icon" href="https://puppylpg.github.io/assets/favicons/favicon.ico">
+<link rel="apple-touch-icon" href="https://puppylpg.github.io/assets/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-96x196.png" sizes="96x196">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="https://puppylpg.github.io/assets/favicons/android-192x192.png" sizes="192x192">
+
+<title>spring boot starter 自动配置原理</title>
+<meta property="og:title" content="spring boot starter 自动配置原理">
+<meta property="og:description" content="To Beyond and Infinity!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://puppylpg.github.io">
+<meta property="og:site_name" content="https://puppylpg.github.io">
+
+<meta itemprop="name" content="spring boot starter 自动配置原理">
+<meta itemprop="description" content="To Beyond and Infinity!">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot starter 自动配置原理">
+<meta name="twitter:description" content="To Beyond and Infinity!">
+
+<link rel="stylesheet" href="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/main.css">
+<link rel="stylesheet" href="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/palette.css">
+<script src="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/jquery-3.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+  
+
+  <body class="td-section">
+    <header>
+        <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="https://puppylpg.github.io/">
+            <span class="navbar-logo"></span><!--?xml version="1.0" encoding="iso-8859-1"?-->
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 127.782 127.782" style="enable-background:new 0 0 127.782 127.782;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<polygon style="fill:#FFD400;" points="90.685,5.927 64.69,5.927 50.365,31.066 62.005,31.066 46.735,62.091 86.864,26.183 
+				73.827,26.183 			"></polygon>
+		</g>
+		<g>
+			<polygon style="fill:#FFB000;" points="59.724,14.642 50.365,31.066 62.005,31.066 46.735,62.091 77.124,34.898 66.995,34.898 
+				74.247,26.183 73.827,26.183 83.431,14.642 			"></polygon>
+		</g>
+		<g>
+			<path style="fill:#33363A;" d="M46.734,63.591c-0.318,0-0.638-0.101-0.906-0.305c-0.572-0.435-0.757-1.213-0.439-1.857
+				l14.206-28.863h-9.229c-0.534,0-1.028-0.284-1.297-0.746s-0.271-1.032-0.007-1.496L63.386,5.185
+				c0.268-0.469,0.765-0.758,1.304-0.758h25.995c0.582,0,1.111,0.337,1.358,0.863c0.247,0.527,0.167,1.149-0.205,1.597
+				L77.027,24.683h9.837c0.622,0,1.18,0.384,1.401,0.965s0.063,1.238-0.401,1.653l-40.13,35.908
+				C47.451,63.463,47.093,63.591,46.734,63.591z M52.946,29.566h9.059c0.519,0,1,0.268,1.273,0.707
+				c0.273,0.44,0.301,0.99,0.072,1.455L51.492,55.821l31.446-28.138h-9.111c-0.582,0-1.111-0.337-1.358-0.863
+				c-0.247-0.527-0.167-1.149,0.205-1.597L87.484,7.427H65.562L52.946,29.566z"></path>
+		</g>
+	</g>
+	<g>
+		<g>
+			<path style="fill:#FFF800;" d="M113.1,84.413c0,20.676-22.032,37.441-49.209,37.441c-27.178,0-49.209-16.766-49.209-37.441
+				c0-20.68,22.031-45.459,49.209-45.459C91.068,38.954,113.1,63.734,113.1,84.413z"></path>
+		</g>
+		<g>
+			<path style="fill:#FFD400;" d="M113.1,84.413c0,20.676-22.032,37.441-49.209,37.441c-27.178,0-49.209-16.766-49.209-37.441
+				c0-20.68,22.031-34.928,49.209-34.928C91.068,49.486,113.1,63.734,113.1,84.413z"></path>
+		</g>
+		<g>
+			<path style="fill:#FFF800;" d="M74.37,74.615c0,1.393-4.691,1.643-10.479,1.643s-10.479-0.25-10.479-1.643
+				c0-1.395,4.691-5.037,10.479-5.037S74.37,73.22,74.37,74.615z"></path>
+		</g>
+		<g>
+			<path style="fill:#FFB000;" d="M113.1,84.413c0,20.676-22.032,37.441-49.209,37.441c-27.178,0-49.209-16.766-49.209-37.441
+				c0-20.682,6.261,18.34,49.209,18.34S113.1,63.732,113.1,84.413z"></path>
+		</g>
+		<g>
+			<path style="fill:#33363A;" d="M63.891,123.355c-27.961,0-50.709-17.469-50.709-38.941c0-21.27,22.619-46.959,50.709-46.959
+				S114.6,63.144,114.6,84.413C114.6,105.886,91.852,123.355,63.891,123.355z M63.891,40.454c-26.428,0-47.709,24.048-47.709,43.959
+				c0,19.818,21.402,35.941,47.709,35.941S111.6,104.232,111.6,84.413C111.6,64.502,90.318,40.454,63.891,40.454z"></path>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<path style="fill:#FFD400;" d="M9.197,47.273c6.385,10.541,15.331,16.738,23.985,17.811
+						c1.492-10.754-0.872-23.232-7.258-33.773C19.539,20.767,10.593,14.57,1.94,13.501C0.447,24.251,2.812,36.732,9.197,47.273z"></path>
+				</g>
+				<g>
+					<path style="fill:#FFB000;" d="M1.94,13.501c-1.492,10.75,0.872,23.23,7.258,33.771c6.385,10.541,15.331,16.738,23.985,17.811
+						L1.94,13.501z"></path>
+				</g>
+				<path style="fill:#33363A;" d="M34.587,51.296c-1.041-7.334-3.593-14.514-7.379-20.764c-6.417-10.594-15.56-17.344-25.085-18.52
+					c-0.816-0.101-1.557,0.47-1.669,1.282c-1.611,11.602,1.108,24.27,7.46,34.755c4.339,7.166,9.961,12.622,16.259,15.778
+					c0.216,0.108,0.444,0.159,0.671,0.159c0.55,0,1.079-0.303,1.342-0.828c0.371-0.74,0.072-1.642-0.669-2.013
+					c-5.791-2.903-10.99-7.969-15.036-14.651c-1.861-3.071-3.385-6.34-4.567-9.713c6.1-1,13.157,2.117,12.314-12.987
+					c2.338,2.362,4.503,5.137,6.414,8.292c3.579,5.906,5.99,12.694,6.975,19.631c0.117,0.82,0.879,1.385,1.696,1.274
+					C34.133,52.876,34.703,52.117,34.587,51.296z"></path>
+			</g>
+		</g>
+		<g>
+			<g>
+				<g>
+					<path style="fill:#FFD400;" d="M118.584,47.273c-6.385,10.541-15.331,16.738-23.985,17.811
+						c-1.492-10.754,0.871-23.232,7.258-33.773c6.386-10.543,15.332-16.74,23.986-17.808
+						C127.334,24.251,124.971,36.732,118.584,47.273z"></path>
+				</g>
+				<g>
+					<path style="fill:#FFB000;" d="M125.843,13.501c1.491,10.75-0.872,23.23-7.259,33.771
+						c-6.385,10.541-15.331,16.738-23.985,17.811L125.843,13.501z"></path>
+				</g>
+				<path style="fill:#33363A;" d="M127.328,13.295c-0.112-0.813-0.857-1.382-1.669-1.282c-9.525,1.176-18.669,7.926-25.086,18.52
+					c-3.787,6.253-6.339,13.434-7.378,20.764c-0.116,0.82,0.454,1.58,1.274,1.696c0.832,0.114,1.58-0.455,1.696-1.274
+					c0.982-6.934,3.395-13.722,6.974-19.631c1.911-3.155,4.076-5.93,6.414-8.292c-0.844,15.104,6.214,11.987,12.315,12.987
+					c-1.182,3.373-2.706,6.642-4.567,9.713c-4.048,6.684-9.247,11.75-15.036,14.651c-0.741,0.371-1.04,1.272-0.669,2.013
+					c0.263,0.525,0.792,0.828,1.342,0.828c0.226,0,0.455-0.051,0.671-0.159c6.296-3.155,11.918-8.611,16.259-15.778
+					C126.219,37.567,128.939,24.899,127.328,13.295z"></path>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<circle style="fill:#FF1A1A;" cx="32.889" cy="87.775" r="7.013"></circle>
+		</g>
+		<g>
+			<path style="fill:#D61D1D;" d="M39.902,87.775c0,3.871-3.14,7.012-7.013,7.012c-3.874,0-7.014-3.141-7.014-7.012"></path>
+		</g>
+		<g>
+			<circle style="fill:#FF1A1A;" cx="94.892" cy="87.775" r="7.014"></circle>
+		</g>
+		<g>
+			<path style="fill:#D61D1D;" d="M101.905,87.775c0,3.871-3.141,7.012-7.014,7.012c-3.873,0-7.014-3.141-7.014-7.012"></path>
+		</g>
+	</g>
+	<path style="fill:#33363A;" d="M73.528,80.281c-0.828,0-1.5,0.672-1.5,1.5c0,1.427-1.162,2.588-2.591,2.588h-1.456
+		c-1.428,0-2.59-1.161-2.59-2.588v-1.455c0-0.073-0.011-0.143-0.021-0.213l3.11-1.556c0.622-0.312,0.949-1.01,0.789-1.687
+		s-0.765-1.155-1.46-1.155h-7.837c-0.695,0-1.3,0.479-1.46,1.155s0.167,1.375,0.789,1.687l3.109,1.556
+		c-0.01,0.07-0.021,0.14-0.021,0.213v1.455c0,1.427-1.161,2.588-2.589,2.588h-1.457c-1.429,0-2.591-1.161-2.591-2.588
+		c0-0.828-0.672-1.5-1.5-1.5s-1.5,0.672-1.5,1.5c0,3.081,2.508,5.588,5.591,5.588h1.457c1.616,0,3.069-0.693,4.09-1.792
+		c1.021,1.099,2.475,1.792,4.091,1.792h1.456c3.083,0,5.591-2.507,5.591-5.588C75.028,80.953,74.357,80.281,73.528,80.281z"></path>
+	<g>
+		<path style="fill:#6D5C4D;" d="M47.729,70.144c0,4.449-3.605,8.051-8.053,8.051c-4.446,0-8.051-3.602-8.051-8.051
+			c0-4.447,3.604-8.053,8.051-8.053C44.123,62.091,47.729,65.697,47.729,70.144z"></path>
+	</g>
+	<g>
+		<circle style="fill:#FFFFFF;" cx="35.672" cy="67.527" r="3.281"></circle>
+	</g>
+	<path style="fill:#33363A;" d="M39.676,60.591c-3.245,0-6.113,1.63-7.84,4.111c-0.105,0.143-0.197,0.293-0.286,0.447
+		c-0.897,1.455-1.425,3.163-1.425,4.995c0,5.267,4.284,9.551,9.551,9.551c5.268,0,9.553-4.284,9.553-9.551
+		C49.229,64.876,44.943,60.591,39.676,60.591z M39.676,76.695c-2.721,0-5.058-1.668-6.047-4.035c0.681-0.018,1.511-0.202,2.44-0.394
+		c0.356-0.03,0.699-0.097,1.029-0.201c0.809-0.145,1.675-0.259,2.577-0.259c2.413,0,4.573,0.814,6.049,0.854
+		C44.736,75.027,42.398,76.695,39.676,76.695z"></path>
+	<circle style="fill:#FFFFFF;" cx="35.672" cy="67.527" r="1.779"></circle>
+	<g>
+		<path style="fill:#6D5C4D;" d="M96.155,70.144c0,4.449-3.604,8.051-8.051,8.051c-4.447,0-8.052-3.602-8.052-8.051
+			c0-4.447,3.604-8.053,8.052-8.053C92.551,62.091,96.155,65.697,96.155,70.144z"></path>
+	</g>
+	<g>
+		<circle style="fill:#FFFFFF;" cx="84.1" cy="67.527" r="3.28"></circle>
+	</g>
+	<path style="fill:#33363A;" d="M88.105,60.591c-3.243,0-6.11,1.629-7.837,4.108c-0.107,0.145-0.201,0.298-0.292,0.455
+		c-0.896,1.454-1.423,3.16-1.423,4.99c0,5.267,4.285,9.551,9.552,9.551s9.551-4.284,9.551-9.551
+		C97.655,64.876,93.371,60.591,88.105,60.591z M88.105,76.695c-2.721,0-5.059-1.668-6.048-4.035
+		c0.689-0.019,1.527-0.201,2.471-0.397c0.335-0.03,0.658-0.093,0.97-0.189c0.819-0.148,1.693-0.268,2.607-0.268
+		c2.413,0,4.571,0.814,6.047,0.854C93.163,75.027,90.826,76.695,88.105,76.695z"></path>
+	<circle style="fill:#FFFFFF;" cx="84.101" cy="67.527" r="1.779"></circle>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+<span class="text-uppercase font-weight-bold">Pokédex puppylpg</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://github.com/puppylpg" target="_blank"><span>GitHub</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/tech"><span>Tech</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/snippets"><span>Snippet</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/docs"><span>Docs</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/tags"><span>Tags</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/recently"><span>Recently</span></a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+                            <a class="nav-link" href="https://puppylpg.github.io/about"><span>About</span></a>
+			</li>
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+ <input type="search" class="form-control td-search-input" placeholder=" Search this site…" aria-label="Search this site…" autocomplete="off">
+        </div>
+
+	<div class="navbar-nav d-none d-lg-block">
+          <a class="gh-source" data-gh-source="github" href="https://github.com/puppylpg/puppylpg.github.io" title="Go to repository" data-md-state="done">
+          <div class="gh-source__repository">
+            <i class="fab fa fa-github fa-2x" style="padding-right:20px; float:left; margin-top:5px"></i>
+            puppylpg/puppylpg.github.io
+          <ul class="gh-source__facts"><li class="gh-source__fact" id="stars">0 Stars</li><li id="forks" class="gh-source__fact">0 Forks</li></ul></div></a>
+        </div>
+      
+
+
+</nav>
+</header>
+
+<script>
+$(document).ready(function() {
+  var url = "https://api.github.com/search/repositories?q=puppylpg/puppylpg.github.io";
+  fetch(url, { 
+      headers: {"Accept":"application/vnd.github.preview"}
+  }).then(function(e) {
+    return e.json()
+  }).then(function(r) {
+     console.log(r.items[0])
+     stars = r.items[0]['stargazers_count']
+     forks = r.items[0]['forks_count']
+     $('#stars').text(stars + " Stars")
+     $('#forks').text(forks + " Forks")
+  });
+});
+</script>
+
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          <div id="td-sidebar-menu" class="td-sidebar__inner">  
+  <form class="td-sidebar__search d-flex align-items-center">
+ <input type="search" class="form-control td-search-input" placeholder=" Search this site…" aria-label="Search this site…" autocomplete="off">
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>  
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+<ul class="td-sidebar-nav__section pr-md-3">
+  
+  
+  <li class="td-sidebar-nav__section-title">
+    <a href="//" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Pokédex</a>
+  </li><ul>
+    <li class="collapse show" id="pokédex">
+        <ul class="td-sidebar-nav__section pr-md-3">
+          <li class="td-sidebar-nav__section-title">
+            <a href="https://puppylpg.github.io/docs" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">Docs</a>
+          </li>
+          
+          <li class="td-sidebar-nav__section-title">
+            <a href="https://puppylpg.github.io/tech" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">Tech</a>
+          </li>
+          
+          <li class="td-sidebar-nav__section-title">
+            <a href="https://puppylpg.github.io/tags" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">Tags</a>
+          </li>
+          
+          <li class="td-sidebar-nav__section-title">
+            <a href="https://puppylpg.github.io/recently" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">Recently</a>
+          </li>
+          
+          <li class="td-sidebar-nav__section-title">
+            <a href="https://puppylpg.github.io/about" class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">About</a>
+          </li>
+          
+    </ul>
+  </li></ul></ul></nav>
+</div>
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+              <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+                  <a href="https://github.com/puppylpg/puppylpg.github.io/edit/master/_posts/2020-02-18-spring-boot-starter-auto-config.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
+<a href="https://github.com/puppylpg/puppylpg.github.io/issues/new?labels=question&amp;title=Question:&amp;body=Question%20on:%20https://github.com/puppylpg/puppylpg.github.io/tree/master/_posts/2020-02-18-spring-boot-starter-auto-config.md" target="_blank"><i class="fab fa-github fa-fw"></i> Create documentation issue</a>
+<a href="https://github.com/puppylpg/puppylpg.github.io/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> Create project issue</a>
+<!-- this will parse through the header fields and add a button to open
+     an issue / ask a question on Github. The editable field should be in
+     the post frontend matter, and refer to the label to open the issue for -->
+
+              </div>
+              <nav id="TableOfContents"><ul>
+              <li><ul id="TOC">
+                <!-- Links will be appended here-->
+              <li id="link_undefined" class="md-nav__item"><a class="md-nav__link" href="#undefined" title="spring boot starter 自动配置原理">spring boot starter 自动配置原理</a><nav class="md-nav"><ul class="md-nav__list"></ul></nav></li><li id="link_为什么spring-boot可以自动配置" class="md-nav__item"><a class="md-nav__link" href="#为什么spring-boot可以自动配置" title="为什么spring boot可以自动配置？">为什么spring boot可以自动配置？</a><nav class="md-nav"><ul class="md-nav__list"></ul></nav></li><li id="link_自动配置原理以自定义的pikachu-spring-boot-starter为例" class="md-nav__item"><a class="md-nav__link" href="#自动配置原理以自定义的pikachu-spring-boot-starter为例" title="自动配置原理：以自定义的pikachu-spring-boot-starter为例">自动配置原理：以自定义的pikachu-spring-boot-starter为例</a><nav class="md-nav"><ul class="md-nav__list"></ul><li class="md-nav__item"><a class="md-nav__link" href="#auto-config类" title="auto config类">auto config类</a></li><li class="md-nav__item"><a class="md-nav__link" href="#properties类" title="properties类">properties类</a></li></nav></li><li id="link_spring-boot怎么加载这些auto-config的类的" class="md-nav__item"><a class="md-nav__link" href="#spring-boot怎么加载这些auto-config的类的" title="spring boot怎么加载这些auto config的类的？">spring boot怎么加载这些auto config的类的？</a><nav class="md-nav"><ul class="md-nav__list"></ul><li class="md-nav__item"><a class="md-nav__link" href="#springfactories" title="spring.factories">spring.factories</a></li></nav></li><li id="link_制作starter需要引入的包" class="md-nav__item"><a class="md-nav__link" href="#制作starter需要引入的包" title="制作starter需要引入的包">制作starter需要引入的包</a><nav class="md-nav"><ul class="md-nav__list"></ul><li class="md-nav__item"><a class="md-nav__link" href="#spring-boot-autoconfig" title="spring-boot-autoconfig">spring-boot-autoconfig</a></li><li class="md-nav__item"><a class="md-nav__link" href="#spring-boot-configuration-processor" title="spring-boot-configuration-processor">spring-boot-configuration-processor</a></li></nav></li><li id="link_使用starter" class="md-nav__item"><a class="md-nav__link" href="#使用starter" title="使用starter">使用starter</a><nav class="md-nav"><ul class="md-nav__list"></ul></nav></li><li id="link_其他" class="md-nav__item"><a class="md-nav__link" href="#其他" title="其他">其他</a><nav class="md-nav"><ul class="md-nav__list"></ul></nav></li></ul></li>
+              </ul></nav>
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	      <ol class="breadcrumb spb-1">
+              
+              
+                <li class="breadcrumb-item">
+                  <a href="https://puppylpg.github.io/2020/">2020</a>
+                </li>
+                
+                <li class="breadcrumb-item">
+                  <a href="https://puppylpg.github.io/2020/02/">02</a>
+                </li>
+                
+                <li class="breadcrumb-item">
+                  <a href="https://puppylpg.github.io/2020/02/18/">18</a>
+                </li>
+                
+                <li class="breadcrumb-item active" aria-current="page">
+	          <a href="https://puppylpg.github.io/2020/02/18/spring-boot-starter-auto-config/">spring boot starter 自动配置原理</a>
+                </li>
+                
+	      </ol>
+           </nav>
+           <div class="td-content">
+	      <h1 style="margin-bottom:0px">spring boot starter 自动配置原理<a class="headerlink" style="color:red" href="#undefined" title="Permanent link">¶</a><div><span style="font-size:12px" class="badge badge-primary"><a style="cursor:pointer; color:white" href="https://puppylpg.github.io/tags#Java">Java</a></span><span style="font-size:12px" class="badge badge-primary"><a style="cursor:pointer; color:white" href="https://puppylpg.github.io/tags#spring-boot">spring-boot</a></span></div></h1>
+
+<span class="post-date" style="font-style: italic;">February 18, 2020</span>
+<p>spring boot的功能主要有四方面：</p>
+<ul>
+  <li>starter：能够整合依赖，防止冲突，方便使用；</li>
+  <li><strong>自动配置</strong>：利用条件注解，推测要使用的bean并自动化配置。使用者直接用这些bean就行了。所以就不用配置bean了；</li>
+  <li>cli：使用groovy写工程，直接cli运行。但是个人感觉大项目好像不太适用，写写小demo倒是很方便；</li>
+  <li>actuator：直接为应用引入一些管理的功能。</li>
+</ul>
+
+<p>其中最重要的莫过于自动配置。</p>
+
+<ol id="markdown-toc">
+  <li><a href="#为什么spring-boot可以自动配置" id="markdown-toc-为什么spring-boot可以自动配置">为什么spring boot可以自动配置？</a></li>
+  <li><a href="#自动配置原理以自定义的pikachu-spring-boot-starter为例" id="markdown-toc-自动配置原理以自定义的pikachu-spring-boot-starter为例">自动配置原理：以自定义的pikachu-spring-boot-starter为例</a>    <ol>
+      <li><a href="#auto-config类" id="markdown-toc-auto-config类">auto config类</a></li>
+      <li><a href="#properties类" id="markdown-toc-properties类">properties类</a></li>
+    </ol>
+  </li>
+  <li><a href="#spring-boot怎么加载这些auto-config的类的" id="markdown-toc-spring-boot怎么加载这些auto-config的类的">spring boot怎么加载这些auto config的类的？</a>    <ol>
+      <li><a href="#springfactories" id="markdown-toc-springfactories">spring.factories</a></li>
+    </ol>
+  </li>
+  <li><a href="#制作starter需要引入的包" id="markdown-toc-制作starter需要引入的包">制作starter需要引入的包</a>    <ol>
+      <li><a href="#spring-boot-autoconfig" id="markdown-toc-spring-boot-autoconfig">spring-boot-autoconfig</a></li>
+      <li><a href="#spring-boot-configuration-processor" id="markdown-toc-spring-boot-configuration-processor">spring-boot-configuration-processor</a></li>
+    </ol>
+  </li>
+  <li><a href="#使用starter" id="markdown-toc-使用starter">使用starter</a></li>
+  <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+</ol>
+
+<h1 id="为什么spring-boot可以自动配置">为什么spring boot可以自动配置？<a class="headerlink" style="color:red" href="#为什么spring-boot可以自动配置" title="Permanent link">¶</a></h1>
+<p>spring怎么管理bean的？</p>
+<blockquote>
+  <p>spring bean map: string -&gt; bean。搞一个bean到map里，然后可以根据它的名字或者类型从map里取出来，注入到需要的地方。</p>
+</blockquote>
+
+<p>老spring一开始怎么搞的？怎么new出来这些bean的？</p>
+<blockquote>
+  <p>使用xml，用xml声明bean，然后spring用反射把他们new出来。</p>
+</blockquote>
+
+<p>后来为什么用@Bean标注的Java类取代xml？</p>
+<blockquote>
+  <p>@Bean取代xml更简洁、可用IDE方便重构。反射应该还是需要的，但是应该更简单了，毕竟Java反射可以直接取到class上的annotation。如果用xml感觉还要用xml parser一个一个解析。</p>
+</blockquote>
+
+<p>springboot干啥了，怎么就自动配置了？</p>
+<blockquote>
+  <p>当开发者引入一个jar的时候，spring boot推测会用这个jar的bean，所以直接就自动new出这些bean，开发者就可以直接用了。</p>
+</blockquote>
+
+<p>这就是传说中的<strong>约定大于配置</strong>：我把你可能用到的所有bean都写进来，如果你想用某个，就引个jar包就行了。这就是暴力if…then…else…啊！</p>
+
+<p>所以约定大于配置的结果就是：开发者引入jar，就可以直接用bean了。</p>
+
+<p>怎么根据引入的jar去new相应的bean？</p>
+<blockquote>
+  <p>提前写好啊！类似于if 有jar then new bean。只不过这种写不是用if else，而是用条件注解。</p>
+</blockquote>
+
+<h1 id="自动配置原理以自定义的pikachu-spring-boot-starter为例">自动配置原理：以自定义的pikachu-spring-boot-starter为例<a class="headerlink" style="color:red" href="#自动配置原理以自定义的pikachu-spring-boot-starter为例" title="Permanent link">¶</a></h1>
+<p>有些中间件是常用的，spring boot已经用条件注解为他们写了自动new 
+bean的类。比如DataSource，发现有hikari的包就直接new HikariDataSource。但是显然spring 
+boot不可能写全的，世界上这么多中间件，springboot也就只能把最火的那些提前写好。对于第三方的，如果想接入springboot，会自己
+写好各种starter，比如mybatis-spring-boot-starter，引入它之后，再引入mybatis，就能自动配置mybatis
+的bean了。</p>
+
+<p>这些starter（springboot &amp; 第三方starter）都干了啥？</p>
+
+<p>这里主要以字节写的pikachu-spring-boot-starter为例。假设世界上有一个接口叫pokemon：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public interface Pokemon {
+    String show();
+}
+</code></pre></div></div>
+<p>pikachu就是一个pokemon，所以是该接口实现者之一。它就是一个普通的类，定义了一些属性，实现了show方法：打印一只皮卡丘。</p>
+
+<h2 id="auto-config类">auto config类<a class="headerlink" style="color:orange" href="#auto-config类" title="Permanent link">¶</a></h2>
+<p>starter里一般有autoconfig包，里面写的有用@Configuration标记的xxxAutoConfiguration配置类。</p>
+
+<p>在类里，使用@Bean去new一些bean，比如这里new一只pikachu。当然这些new不是无条件的，比如必须在没有皮卡丘的情况下才能new出一只pikachu。所以我们用条件注解写为：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Configuration
+@ConditionalOnClass(Pikachu.class)
+@EnableConfigurationProperties(PikachuProperties.class)
+public class PikachuAutoConfig {
+
+    @Bean
+    @ConditionalOnMissingBean(Pokemon.class)
+    public Pikachu getPikachu(PikachuProperties properties) {
+        Pikachu pikachu =  new Pikachu(properties.getName(), properties.getHeight());
+
+        if (properties.getGirlFriend() != null) {
+            Pikachu.GirlFriend girlFriend = new Pikachu.GirlFriend();
+            girlFriend.setName(properties.getGirlFriend().getName());
+            girlFriend.setInterest(properties.getGirlFriend().getInterest());
+            pikachu.setGirlFriend(girlFriend);
+        }
+
+        return pikachu;
+    }
+}
+</code></pre></div></div>
+<p>在有Pikachu这个类的情况下才考虑配置pikachu（sure，没有pikachu这个类还怎么new。。。），且Pokemon这个
+bean不存在。即开发者还没有手动new，如果开发者手动new了pikachu或者其他的pokemon实现类，那我们就别瞎掺和了。人家已经有自己
+中意的bean了，就不要再自动配置了。</p>
+
+<blockquote>
+  <p>条件注解有@ConditionalOnClass、@ConditionalOnMissingBean、@ConditionalOnProperty等等注解。</p>
+
+  <p>比如还可以给上述new pikachu的@Bean加上一句<code class="language-plaintext highlighter-rouge">@ConditionalOnProperty(prefix = "pokemon.pikachu",value = "enabled", havingValue = "true")</code>，代表只有显示指定<code class="language-plaintext highlighter-rouge">pokemon.pikachu.enabled=true</code>才会配置这个bean。</p>
+</blockquote>
+
+<h2 id="properties类">properties类<a class="headerlink" style="color:orange" href="#properties类" title="Permanent link">¶</a></h2>
+<p>new 
+pikachu可以，因为pikachu的类在这儿。new出来的pikachu的属性填啥？比如pikachu有个name属性，填什么？它可以叫
+pika，也可以叫雷恩，还可以叫杰尼龟、皮狗蛋。名字这种东西自然是开发者指定的，所以应该留个给开发者配置pikachu的属性的地方。</p>
+
+<p>一般都是让开发者在配置文件里配置pikachu的属性。所以我们搞个读取配置文件的类，不如就设置两个配置：</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pokemon.pikachu.name</code>设定name属性；</li>
+  <li><code class="language-plaintext highlighter-rouge">pokemon.pikachu.height</code>设定height属性。</li>
+</ul>
+
+<p>这个类应该写成：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Data
+@ConfigurationProperties(prefix = PikachuProperties.PIKACHU_PREFIX)
+public class PikachuProperties {
+
+    public static final String PIKACHU_PREFIX = "pokemon.pikachu";
+
+    private String name;
+
+    private int height;
+}
+</code></pre></div></div>
+<p>使用了<code class="language-plaintext highlighter-rouge">@ConfigurationProperties</code>，就是从配置文件里读pokemon.pikachu.xxx了。</p>
+
+<p>在刚刚写的pikachu的autoconfig类里，有<code class="language-plaintext highlighter-rouge">@EnableConfigurationProperties(PikachuProperties.class)</code>，就是说启用这个类，并在new pikachu的时候从这个类里读数据。</p>
+
+<h1 id="spring-boot怎么加载这些auto-config的类的">spring boot怎么加载这些auto config的类的？<a class="headerlink" style="color:red" href="#spring-boot怎么加载这些auto-config的类的" title="Permanent link">¶</a></h1>
+<p>springboot程序是使用一个主类，标记上<code class="language-plaintext highlighter-rouge">@SpringBootApplication</code>来启动的。这个注解含有<code class="language-plaintext highlighter-rouge">@ComponentScan</code>，而后者的定义是：<strong>扫描指定的包。如果没指定要扫描的basePackge，则只会扫描标注这个注解的类所在的包（及其子包）</strong>。</p>
+
+<p>但是我们写的starter作为第三方以来被开发者引入程序，肯定不在上述自动扫描的包下，那pikachu的auto config的类是怎么被实例化的？</p>
+
+<h2 id="springfactories">spring.factories<a class="headerlink" style="color:orange" href="#springfactories" title="Permanent link">¶</a></h2>
+<p>那就再做个约定呗。spring boot会读某个提前约定好的文件，这个文件下指定的类spring boot都加载就完事儿了。</p>
+
+<p>这个文件就是META-INF/spring.factories。</p>
+
+<p>spring 
+boot会加载META-INF/spring.factories指定的那些类，而各个autoconfig的starter（除了spring 
+boot自己写的一堆的，还有第三发的starter），就在这里指定所有自己的AutoConfiguration类，来让自己被加载。</p>
+
+<p>所以我们的pikachu-spring-boot-starter在resources新建META-INF/spring.factories：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  io.puppylpg.pokemon.pikachu.PikachuAutoConfig
+</code></pre></div></div>
+<p>META-INF/spring.factories必须要打包到jar的root下，不放在resources下当然也行，但是必须用maven的指定resources的方法把它指定为resources。</p>
+
+<p>这样一个starter就搞好了。</p>
+
+<h1 id="制作starter需要引入的包">制作starter需要引入的包<a class="headerlink" style="color:red" href="#制作starter需要引入的包" title="Permanent link">¶</a></h1>
+<p>要引入两个包：</p>
+<ul>
+  <li>spring-boot-autoconfig</li>
+  <li>spring-boot-configuration-processor</li>
+</ul>
+
+<h2 id="spring-boot-autoconfig">spring-boot-autoconfig<a class="headerlink" style="color:orange" href="#spring-boot-autoconfig" title="Permanent link">¶</a></h2>
+<p>显然，首先我们要用到那些条件注解，比如<code class="language-plaintext highlighter-rouge">@ConditionalOnClass</code>，这些注解就在spring-boot-autoconfig包里。另外，之前说的spring-boot已经为一些热门中间件写好了自动配置，这些也在这个包里。</p>
+
+<p>所以spring-boot-autoconfig包：</p>
+<ul>
+  <li>有条件注解；</li>
+  <li>有提前写好的AutoConfig + Properties类。</li>
+</ul>
+
+<p>这些AutoConfig不包含的中间件自然不能自动配置，比如我们的pikachu中间件，就要自己去写能给它自动配置的starter了。</p>
+
+<h2 id="spring-boot-configuration-processor">spring-boot-configuration-processor<a class="headerlink" style="color:orange" href="#spring-boot-configuration-processor" title="Permanent link">¶</a></h2>
+<p>参阅：</p>
+<ul>
+  <li>https://stackoverflow.com/a/53708051/7676237</li>
+</ul>
+
+<p>主要用来处理<code class="language-plaintext highlighter-rouge">@ConfigurationProperties</code>的，IDE使用生成的meta在用户编辑application.properties/.yml是提供自动补全。</p>
+
+<h1 id="使用starter">使用starter<a class="headerlink" style="color:red" href="#使用starter" title="Permanent link">¶</a></h1>
+<p>初始化一个spring boot工程，引入pikachu的starter，声明一个pokemon，直接使用<code class="language-plaintext highlighter-rouge">@Autowired</code>自动注入，然后使用pokemon.show()，就会发现是pikachu在show。</p>
+
+<h1 id="其他">其他<a class="headerlink" style="color:red" href="#其他" title="Permanent link">¶</a></h1>
+<p>当文件被打成jar包之后，就不能从file读了：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("pikachu.pic").getFile());
+</code></pre></div></div>
+<p>但是可以从InputStream读：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("pikachu.pic");
+        try {
+            pic = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+</code></pre></div></div>
+<p>打成jar之后，file就不是file了。和操作系统从文件系统上读普通文件是不一样的。</p>
+
+<p>参阅：</p>
+<ul>
+  <li>https://stackoverflow.com/a/20389418/7676237</li>
+  <li>https://stackoverflow.com/a/10144757/7676237</li>
+</ul>
+
+
+<style>
+#scrolltop {
+  display: compact; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #30638e; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 10px 15px; /* Some padding */
+  border-radius: 100px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+  font-weight: 600;
+}
+
+#scrolltop:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+</style>
+<button onclick="topFunction()" id="scrolltop" title="Go to top" style="display: block;">🔝</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("scrolltop").style.display = "block";
+  } else {
+    document.getElementById("scrolltop").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+</script>
+
+
+<script src="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/jquery-3.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+
+    var toc = $('#TOC');
+
+    // Select each header
+    sections = $('.td-content h1');
+        $.each(sections, function(idx, v) {
+            section = $(v);
+            var div_id = $(section).attr('id');
+            var div_text = section.text().split('¶')[0];
+            var parent = $("#" + div_id)
+            var content = '<li id="link_' + div_id + '" class="md-nav__item"><a class="md-nav__link" href="#' + div_id + '" title="' + div_text +'">' + div_text +'</a></li>';
+            $(toc).append(content);
+
+            // Add section code to subnavigation
+            var children = $('<nav class="md-nav"><ul class="md-nav__list"></nav></ul>')
+            var contenders = $("#" + div_id).nextUntil("h1");
+            $.each(contenders, function(idx, contender){
+               if($(contender).is('h2') || $(contender).is('h3')) {
+                   var contender_id = $(contender).attr('id');
+                   var contender_text = $(contender).text().split('¶')[0];
+                   var content = '<li class="md-nav__item"><a class="md-nav__link" href="#' + contender_id + '" title="' + contender_text +'">' + contender_text +'</a></li>';
+                   children.append(content);
+                }
+             })
+             $("#link_" + div_id).append(children);
+        });
+    });
+</script>
+
+<script>
+var headers = ["h1", "h2", "h3", "h4"]
+var colors = ["red", "orange", "green", "blue"]
+
+$.each(headers, function(i, header){
+    var color = colors[i];
+    $(header).each(function () {
+        var href=$(this).attr("id");
+        $(this).append('<a class="headerlink" style="color:' + color + '" href="#' + href + '" title="Permanent link">¶</a>')
+    });
+})
+</script>
+
+<script>
+$('h1').first().append('<div><span style="font-size:12px" class="badge badge-primary"><a style="cursor:pointer; color:white" href="https://puppylpg.github.io/tags#Java ">Java</a></span><span style="font-size:12px" class="badge badge-primary"><a style="cursor:pointer; color:white" href="https://puppylpg.github.io/tags#spring-boot ">spring-boot</a></span></div>')</script>
+
+	
+              
+              <style>
+  .feedback--answer {
+    display: inline-block;
+  }
+  .feedback--answer-no {
+    margin-left: 1em;
+  }
+  .feedback--response {
+    display: none;
+    margin-top: 1em;
+  }
+  .feedback--response__visible {
+    display: block;
+  }
+</style>
+<h5 class="feedback--title">Feedback</h5>
+<p class="feedback--question">Was this page helpful?</p>
+<button class="feedback--answer feedback--answer-yes">Yes</button>
+<button class="feedback--answer feedback--answer-no">No</button>
+<p class="feedback--response feedback--response-yes">
+  Glad to hear it! Please <a href="https://github.com/puppylpg/puppylpg.github.io/issues/new">tell us how we can improve</a>.
+</p>
+<p class="feedback--response feedback--response-no">
+  Sorry to hear that. Please <a href="https://github.com/puppylpg/puppylpg.github.io/issues/new">tell us how we can improve</a>.
+</p>
+<script>
+  const yesButton = document.querySelector('.feedback--answer-yes');
+  const noButton = document.querySelector('.feedback--answer-no');
+  const yesResponse = document.querySelector('.feedback--response-yes');
+  const noResponse = document.querySelector('.feedback--response-no');
+  const disableButtons = () => {
+    yesButton.disabled = true;
+    noButton.disabled = true;
+  };
+  const sendFeedback = (value) => {
+    if (typeof ga !== 'function') return;
+    const args = {
+      command: 'send',
+      hitType: 'event',
+      category: 'Helpful',
+      action: 'click',
+      label: window.location.pathname,
+      value: value
+    };
+    ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+  };
+  yesButton.addEventListener('click', () => {
+    yesResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(1);
+  });
+  noButton.addEventListener('click', () => {
+    noResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(0);
+  });
+</script><br>
+
+
+           </div>
+          </main>
+        </div>
+      </div>
+      <footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+<ul class="list-inline mb-0">  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="" aria-label="Twitter" data-original-title="Twitter">
+    <a class="text-white" target="_blank" href="https://twitter.com/puppylpg">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+</ul>
+</div>
+<div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+<ul class="list-inline mb-0">  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="" aria-label="GitHub" data-original-title="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/puppylpg/puppylpg.github.io">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+</ul>
+</div>
+<div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+  <small class="text-white">© 2019-2020 puppylpg All Rights Reserved</small>
+  
+  <p class="mt-2"><a href="https://puppylpg.github.io/about/">About Docsy</a></p>	
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/bootstrap.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="spring%20boot%20starter%20%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86_files/main.js"></script>
+
+  
+
+</body></html>

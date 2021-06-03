@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基於Springboot的Spring AOP學習記錄 - IT閱讀</title>
+<meta name="robots" content="max-image-preview:large">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="stylesheet" href="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/style.css" type="text/css" media="all">	
+<link rel="stylesheet" href="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/font-awesome.css" media="all">	
+<style>
+.pln{color:#000}
+@media screen{.str{color:#080}
+.kwd{color:#008}
+.com{color:#800}
+.typ{color:#606}
+.lit{color:#066}
+.pun,.opn,.clo{color:#660}
+.prettyprint .tag{color:#008}
+.atn{color:#606}
+.atv{color:#080}
+.dec,.var{color:#606}
+.fun{color:red}
+}
+@media print,projection{
+.str{color:#060}
+.kwd{color:#006;font-weight:bold}
+.com{color:#600;font-style:italic}
+.typ{color:#404;font-weight:bold}
+.lit{color:#044}
+.pun,.opn,.clo{color:#440}
+.prettyprint .tag{color:#006;font-weight:bold}
+.atn{color:#404}
+.atv{color:#060}
+}
+pre.prettyprint{padding:2px;border:1px solid #888}
+ol.linenums{margin-top:0;margin-bottom:0}
+li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}
+li.L1,li.L3,li.L5,li.L7,li.L9{background:none;}
+pre{ background:#000;}
+.prettyprint,
+pre.prettyprint {
+    background-color: #39382e;
+    border: none;
+    /*overflow: hidden;*/
+    padding: 10px 15px;
+	white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap;white-space: -o-pre-wrap; word-wrap: break-word;/*鎹㈣*/
+	
+}
+.prettyprint.linenums,
+pre.prettyprint.linenums {
+	-webkit-box-shadow: inset 40px 0 0 #464541, inset 41px 0 0 #464741;
+	-moz-box-shadow: inset 40px 0 0 #464541, inset 41px 0 0 #464741;
+	box-shadow: inset 40px 0 0 #464541, inset 41px 0 0 #464741;
+}
+.prettyprint.linenums ol,
+pre.prettyprint.linenums ol {
+    margin: 0 0 0 30px;
+	padding:0;
+}
+.prettyprint.linenums ol li,
+pre.prettyprint.linenums ol li {
+	text-indent:0;
+    padding-left: 12px;
+	color: #bebec5;
+	line-height: 20px;
+	margin-left: 0;
+	list-style: decimal;
+	margin-bottom: 0;
+	word-wrap:break-word;
+}
+.prettyprint *{font-family:'courier new',monospace;}
+.prettyprint .com { color: #93a1a1; }
+.prettyprint .lit { color: #AE81FF; }
+.prettyprint .pun,
+.prettyprint .opn, 
+.prettyprint .clo { color: #F8F8F2; }
+.prettyprint .fun { color: #dc322f; }
+.prettyprint .str, 
+.prettyprint .atv { color: #E6DB74; }
+.prettyprint .kwd, 
+.prettyprint .tag { color: #F92659; }
+.prettyprint .typ, 
+.prettyprint .atn, 
+.prettyprint .dec, 
+.prettyprint .var { color: #A6E22E; }
+.prettyprint .pln { color: #66D9EF; }
+.article-intro{ font-size:16px; padding:5px; line-height:28px;font-family:"微軟正黑體","Helvetica Neue",Helvetica,Arial,sans-serif; color:#333333}
+.article-intro h1,h2,h3,h4,h5{ font-size:18px; font-weight:bold; line-height:1.25em; margin-top:10px;}
+#content p{text-indent:2em;font-size:16px; line-height:28px; margin-top:5px;}
+#content li{text-indent:2em;font-size:16px; line-height:28px;}
+#content p img{display:block; margin-left:0px;}
+h1.title{ color:#333; font-size:24px; line-height:40px; margin-left:10px;}
+.m10{ margin-top:10px; margin-left:5px; padding-right:10px;}
+.related{ padding:10px;}
+.related ul{ margin-top:20px;}
+.related ul li{ line-height:30px; font-size:14px; margin-left:20px;list-style-type:disc;}
+.related a{ font-family:"微軟正黑體","Helvetica Neue",Helvetica,Arial,sans-serif; color:#333333; font-size:16px;font-weight:normal;}
+.block-title {
+    border-left: 5px solid darkred;
+    padding-left:10px; color:#96b97d;
+    font-size:21pt;
+    }
+</style>
+  <!--[if gte IE 9]><!-->
+  <iframe src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ga.htm" style="display: none;"></iframe><script src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/jquery.js"></script>
+  <!--<![endif]-->
+  <!--[if lt IE 9]>
+     <script src="https://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <![endif]-->
+  <meta name="apple-mobile-web-app-title" content="ITREADO1">
+<link rel="stylesheet" type="text/css" href="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/iprettify.htm"></head>
+<body>
+<!--  header -->
+<div class="container logo-search">
+  <div class="col search row-search-mobile">
+    <form action="index.php">
+      <input class="placeholder" placeholder="搜寻……" name="s" autocomplete="off">
+    </form>
+  </div>
+  <div class="row">
+    <div class="col logo">
+      <h1><a href="https://www.itread01.com/">基於Springboot的Spring AOP學習記錄</a></h1>
+    </div>
+        <div class="col right-list"> 
+    <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull" style=""> <i class="fa fa-navicon"></i> </button>
+    </div>
+        <div class="col search search-desktop last">
+      <form action="https://www.itread01.com/" target="_blank">
+        <input class="placeholder" id="s" name="s" placeholder="搜尋……" autocomplete="off">
+      </form>
+    </div>
+  </div>
+</div>
+<!-- 导航栏 -->
+<!-- 导航栏 -->
+<div class="container navigation">
+	<div class="row">
+		<div class="col nav">
+			<ul class="pc-nav">
+				<li><a href="https://www.itread01.com/">首頁</a></li>
+				<li><a href="https://www.itread01.com/study/html-tutorial.html">HTML</a></li>
+                <li><a href="https://www.itread01.com/study/css-tutorial.html">CSS</a></li>
+				<li><a href="https://www.itread01.com/study/js-tutorial.html">JavaScript</a></li>
+				<li><a href="https://www.itread01.com/study/jquery-tutorial.html">jQuery</a></li>
+				<li><a href="https://www.itread01.com/study/python3-tutorial.html">Python3</a></li>
+				<li><a href="https://www.itread01.com/study/python-tutorial.html">Python2</a></li>
+				<li><a href="https://www.itread01.com/study/java-tutorial.html">Java</a></li>
+				<li><a href="https://www.itread01.com/study/c-tutorial.html">C</a></li>
+				<li><a href="https://www.itread01.com/study/cpp-tutorial.html">C++</a></li>
+				 
+				<li><a href="https://www.itread01.com/study/go-tutorial.html">Go</a></li>
+				<li><a href="https://www.itread01.com/study/sql-tutorial.html">SQL</a></li>
+      		</ul>
+			<ul class="mobile-nav">
+				<li><a href="https://www.itread01.com/">首頁</a></li>
+				<li><a href="https://www.itread01.com/study/html-tutorial.html">HTML</a></li>
+				
+				<a href="javascript:void(0)" class="search-reveal">Search</a> 
+			</ul>
+			
+		</div>
+	</div>
+</div><!--  内容  -->
+<div class="container main">
+	<!-- 中间 -->
+	<div class="row">
+	
+	<div class="col middle-column">
+<div class="article">
+		<div class="article-heading">
+		<h2>基於Springboot的Spring AOP學習記錄</h2>	
+     <span><i class="fa fa-calendar m10"> 2019-02-03</i>  <i class="fa fa-eye m10"> 254</i> </span>
+			</div>
+		<div class="article-body">
+
+			<div class="article-intro" id="content">
+<script type="text/javascript" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/scupio1.js"></script>   <ins id="scupio-sc-4995-17811-847678_registed" class="scupioadslot" style="display: inline-block; width: 100%; height: 100px; background-color: transparent; position: relative;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17811" data-sca-slot-type="PRA" data-sca-status="callback" undefined="0"><ins class="scupioadslot" style="display: inline-block; width: 100%; height: 100px; margin: auto; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17812" data-sca-slot-type="STA" data-sca-status="done" undefined="1"><iframe name="scupioadframe" marginwidth="0" marginheight="0" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px none; padding: 0px; margin: 0px; width: 100%; height: 100px;" id="sc-1622699976056-313872472995_frame_4e09d1b3-aa50-483d-9cd6-3bb451c163d8" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad_002.htm" frameborder="0"></iframe></ins><iframe name="scupioadframe" marginwidth="0" marginheight="0" style="box-sizing: content-box; overflow: hidden; display: none; border: 0px none; padding: 0px; margin: 0px; width: 100%; height: 100px;" id="scupio-sc-4995-17811-847678_frame_285a539a-2190-4b87-a620-293c1cf028e2" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad_002.htm" frameborder="0"></iframe><ins class="scupioadslot" style="display: inline-block; width: 100%; height: 100px; margin: auto; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17812" data-sca-slot-type="STA" data-sca-status="done" undefined="6"><iframe name="scupioadframe" marginwidth="0" marginheight="0" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px none; padding: 0px; margin: 0px; width: 100%; height: 100px;" id="sc-1622699977585-315818441785_frame_7ace5541-4c81-4969-a463-596246621e82" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad_002.htm" frameborder="0"></iframe></ins></ins>
+<script async="" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad.js"></script>
+<script>
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            o = 'inline-block';
+            p.appendChild(z({
+                display: o,
+                width: '100%',
+                height: '100px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17812',
+                'slot-type': 'STA'
+            }));
+            i.width = '100%';
+            i.height = '100px';
+            i.display = o;
+        }
+    });
+    setTimeout(function(){if(!s.Scupioads.init)for(i=d.length-1;0<=i;i--)if(d[i].id===u){d[i].callback(),d[i].callback=function(){};break}},1e3);
+})(window, document, 'scupio-sc-4995-17811-847678');
+</script>
+
+ 
+ <div id="content_views" class="markdown_views prism-tomorrow-night-eighties">
+							
+							
+							<p>前段時間各種面試，aop問到就蒙逼，所以結合新學的springboot重新理一下這玩意兒，很重要啊</p>
+
+
+
+<h1 id="一aop概述">一、AOP概述</h1>
+
+<p>AOP(面對切面程式設計)是對OOP(面向物件程式設計)的補充，總體來說，程式設計正規化包含：面向過程程式設計、面向物件程式設計、函數語言程式設計、事件驅動程式設計、面向切面程式設計。</p>
+
+<p><strong>AOP的出現主要是為了解決如下的幾個問題：</strong> <br>
+1.程式碼重複性的問題 <br>
+2.關注點的分離（包含了水平分離：展示層-&gt;服務層-&gt;持久層；垂直分離：模組劃分(訂單、庫存等)；切面分離：分離功能性需求與非功能性需求）</p>
+
+<p><strong>AOP使用優勢：</strong> <br>
+1.集中處理某一關注點/橫切邏輯 <br>
+2.可以方便的新增/刪除關注點 <br>
+3.侵入性少，增強程式碼的可讀性和可維護性</p>
+
+<p><strong>AOP的應用場景：</strong> <br>
+許可權控制、快取控制、事務控制、審計日誌、效能監控、分散式追蹤、異常處理</p>
+
+<p>所以這麼優秀的東西絕不僅僅侷限於Java，AOP是支援多語言開發的。</p>
+
+
+
+<h1 id="二springaop的使用">二、SpringAOP的使用</h1>
+
+<p>Spring AOP的使用方式包含XML配置和註解方式（比較方便），下面看一下基於註解方式的AOP。 <br>
+AOP的註解主要包括@Aspect、@Pointcut、Advice三種。在詳細記錄前先給出一個AOP的簡單使用程式碼（流程：引入依賴–&gt;
+定義切面類–&gt;在切面類中定義Advice以及前後邏輯），如果要獲取方法的一些屬性（比如方法名，返回值、引數等等），<font color="red">除了環繞通知需要傳入ProceedingJoinPoint物件，其他的Advice則是需要傳入JoinPoint物件，兩類不同！</font></p>
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs xml"><span class="pln"> </span><span class="hljs-comment"><span class="com">&lt;!-- 新增AOP的依賴 --&gt;</span></span><span class="pln">
+ </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-aop</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+ </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span></code></pre>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">aspect</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">aspectj</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">After</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">aspectj</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Aspect</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">aspectj</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Before</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">aspectj</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Pointcut</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">stereotype</span><span class="pun">.</span><span class="typ">Component</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-annotation"><span class="lit">@Aspect</span></span><span class="hljs-comment"><span class="com">//表明它是一個切面類</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@Component</span></span><span class="hljs-comment"><span class="com">//交給Spring管理</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">HttpAspect</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//  //定義攔截GirlController中所有public方法</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  @Before("execution(public * com.imooc.controller.GirlController.*(..))")</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  public void log() {</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//      System.out.println("******攔截前的邏輯******");</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  }</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  </span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  @After("execution(public * com.imooc.controller.GirlController.*(..))")</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  public void doAfter() {</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//      System.out.println("******攔截後的邏輯******");</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//  }</span></span><span class="pln">
+
+    </span><span class="hljs-comment"><span class="com">/*
+     * 上面攔截的方式比較繁瑣，因為Before和After的匹配規則有重複程式碼
+     * 
+     * 可以先定義一個Pointcut,然後直接攔截這個方法即可
+     * 
+     */</span></span><span class="pln">
+    </span><span class="hljs-comment"><span class="com">//這裡就定義了一個總的匹配規則，以後攔截的時候直接攔截log()方法即可，無須去重複寫execution表示式</span></span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@Pointcut</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"execution(public * com.imooc.controller.GirlController.*(..))"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">log</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@Before</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"log()"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">doBefore</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"******攔截前的邏輯******"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@After</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"log()"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">doAfter</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"******攔截後的邏輯******"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="pun">}</span></code></pre>
+
+
+
+<h2 id="1aspect"><a href="https://www.itread01.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d6c731d1c2e2d383e29">[email&nbsp;protected]</a></h2>
+
+<p>主要用來標註Java類，表明它是一個切面配置的類，通常下面也會加上@Component註解來表明它由Spring管理</p>
+
+
+
+<h2 id="2pointcut"><a href="https://www.itread01.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="65574b25350a0c0b11061011">[email&nbsp;protected]</a></h2>
+
+<p>主要有pointCutExpression(切面表示式)來表達，用來描述你要在哪些類的哪些方法上注入程式碼。其中切面表示式包含了
+designators(指示器，主要描述通過哪些方式去匹配Java類的哪些方法：如execution()等)和wildcards（萬用字元：
+如*）以及operators（運算子：如&amp;&amp;、||、！），具體如下所示 <br>
+<img src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/20171121093525914.png" alt="切面表示式組成" title="" referrerpolicy="no-referrer" class="img-fluid"></p>
+
+<p><strong>designators指示器</strong> <br>
+表示想要通過什麼樣的方式匹配想要的方法，具體組成如下圖，重點是execution() <br>
+<img src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/20171121094613928.png" alt="指示器的組成" title="" referrerpolicy="no-referrer" class="img-fluid"></p>
+
+<p>1.匹配包/型別within()</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs r"><span class="com">//匹配ProductService類種的所有方法</span><span class="pln">
+</span><span class="lit">@Poincut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"within(com.hhu.service.ProductService)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> matchType</span><span class="pun">(){</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配com.hhu包及其子包下所有類的方法</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"within(com.hhu..*)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> matchPackage</span><span class="pun">(){</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>2.匹配物件（主要有this和target以及bean）</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs r"><span class="com">//匹配AOP物件的目標物件為指定型別的方法，即DemoDao的aop的代理物件</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"this(com.hhu.DemaoDao)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> thisDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配實現IDao介面的目標物件(而不是aop代理後的物件，這裡即DemoDao的方法)</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"target(com.hhu.Idao)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> targetDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配所有以Service結尾的bean中的方法</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"bean(*Service)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> beanDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>3.引數匹配（主要有execution()和args()方法）</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs cs"><span class="hljs-comment"><span class="com">//過濾出第一個引數是long型別的並且在com.hhu.service包下的方法，如果是第一個引數是Long，第二個引數是String則可以寫成args(Long,String),如果匹配第一個為Long，其它任意的話則可以寫成args(Long..)</span></span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"args(Long) &amp;&amp; within(com.hhu.service.*)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">matchArgs</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="lit">@Before</span><span class="pun">(</span><span class="hljs-string"><span class="str">"mathArgs()"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">befor</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">""</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###before"</span></span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>4.匹配註解</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs r"><span class="com">//匹配方法標註有AdminOnly註解的方法</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"@annotation(com.hhu.demo.security.AdminOnly)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> annoDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配標註有Beta的類下的方法，要求annotation的RetentionPplicy級別為CLASS</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"@within(com.google.common.annotations.Beta)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> annoWithinDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配標註有Repository類下的方法，要求的annotation的RetentionPolicy級別為RUNTIME</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"@target(org.springframework.stereotype.Repository)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> annoTargetDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//匹配傳入的引數型別標註有Repository註解的方法</span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"@args(org.springframework.stereotype.Repository)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> annoArgsDemo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="pun">...</span></span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>5.execution() <br>
+標準的execution表示式如下，共有5個引數：</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs fsharp"><span class="pln">execution</span><span class="pun">(</span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//許可權修飾符（如public、private）</span></span><span class="pln">
+</span><span class="pun">[</span><span class="pln">modifier</span><span class="pun">-</span><span class="pln">pattern</span><span class="pun">],</span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//返回值（如*表示任意返回值，void表示無返回值）</span></span><span class="pln">
+ret</span><span class="pun">-</span><span class="hljs-class"><span class="hljs-keyword"><span class="pln">type</span></span><span class="pun">-</span><span class="hljs-title"><span class="pln">pattern</span></span><span class="pun">,</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//包名（如com.hhu.service.*Service.*(..)表示對應包com.hhu.service中以Service結尾的類中的任意方法（該方法可以帶任意引數），如果匹配無參的則可以寫成（），如果像攔截產生異常的方法，則可以寫成(..) throws+具體異常 ）</span></span><span class="pln">
+</span><span class="pun">[</span><span class="pln">declaring</span><span class="pun">-</span><span class="hljs-class"><span class="hljs-keyword"><span class="pln">type</span></span><span class="pun">-</span><span class="hljs-title"><span class="pln">pattern</span></span><span class="pun">],</span></span><span class="pln">
+name</span><span class="pun">-</span><span class="pln">pattern</span><span class="pun">(或者是</span><span class="pln">param</span><span class="pun">-</span><span class="pln">pattern</span><span class="pun">)，</span><span class="pln">
+</span><span class="pun">[</span><span class="kwd">throws</span><span class="pun">-</span><span class="pln">pattern</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">)</span></code></pre>
+
+<p>其中帶有方括號的引數表示可以預設。比如</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs ruby"><span class="hljs-variable"><span class="lit">@Pointcut</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"execution(* *..find*(Long)) &amp;&amp; within(com.imooc..*) "</span></span><span class="pun">)</span></code></pre>
+
+<p><strong>wildcard主要包括常用的三種：</strong> <br>
+ *表示匹配任意數量的字元 <br>
+ +表示匹配製定類及其子類 <br>
+ ..表示一般用於匹配任意數的子包或引數。</p>
+
+<p><strong>operators主要包括如下的三種：</strong> <br>
+ &amp;&amp;表示與操作 <br>
+ ||表示或操作 <br>
+ ！表示非操作</p>
+
+
+
+<h2 id="3advice註解">3.Advice註解</h2>
+
+<p>表示程式碼織入的時機，如執行之前、執行之後等等，主要有5種，通常是進行註解切面註解後會緊接著寫Advice，格式為Advice(“切面攔截方法”)。比如下面的</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-comment"><span class="com">//切面註解</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@Pointcut</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"@annotation(com.imooc.anno.AdminOnly) &amp;&amp; within(com.imooc..*)"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">matchAnno</span></span><span class="pun">(){}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//Advice註解</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@After</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"matchAnno()"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">after</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###after"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span></code></pre>
+
+<ol>
+<li>@Before，前置通知</li>
+<li>@After，後置通知，不管程式碼是成功還是丟擲異常，都會織入</li>
+<li>@AfterReturning，返回通知，當且僅當方法成功執行</li>
+<li>@AfterThrowing，異常通知，當且僅當方法丟擲異常</li>
+<li>@Around，環繞通知，基本包含了上述所有的植入位置</li>
+</ol>
+
+<p>獲取引數的話一般跟Before的Advice結合在一起的，程式碼如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs cs"><span class="lit">@Before</span><span class="pun">(</span><span class="hljs-string"><span class="str">"matchLongArg() &amp;&amp; args(productId)"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//這裡是因為知道引數的型別是Long</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">before</span></span><span class="pun">(</span><span class="typ">Long</span><span class="pln"> productId</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###before,get args:"</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> productId</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>其中@AfterReturning註解可以獲取方法的返回值，比如下面的</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs cs"><span class="hljs-comment"><span class="com">//切面註解</span></span><span class="pln">
+</span><span class="lit">@Pointcut</span><span class="pun">(</span><span class="hljs-string"><span class="str">"@annotation(com.imooc.anno.AdminOnly) &amp;&amp; within(com.imooc..*)"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">matchAnno</span></span><span class="pun">(){}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//Advice註解,returning的值result代表的就是返回值,形參Object類表示</span></span><span class="pln">
+</span><span class="lit">@AfterReturning</span><span class="pun">(</span><span class="hljs-keyword"><span class="pln">value</span></span><span class="pun">=</span><span class="hljs-string"><span class="str">"matchAnno()"</span></span><span class="pun">,</span><span class="pln">returning</span><span class="pun">=</span><span class="hljs-string"><span class="str">"result"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">after</span></span><span class="pun">(</span><span class="pln">java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="typ">Object</span><span class="pln"> result</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###after"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span></code></pre>
+
+<p>@Around註解比較強大，一般有它的存在就可以不用Before或者After這類註解了，如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs cs"><span class="hljs-comment"><span class="com">//由於這裡可能有返回值所以必須有Object,而且必須獲取Proceeding的上下文才能讓方法得以繼續，所以會有此形參</span></span><span class="pln">
+</span><span class="lit">@Around</span><span class="pun">(</span><span class="hljs-string"><span class="str">"matchAnno()"</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="typ">Object</span><span class="pln"> </span><span class="hljs-title"><span class="pln">after</span></span><span class="pun">(</span><span class="typ">ProceedingJoinPoint</span><span class="pln"> joinPoint</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###before"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="hljs-comment"><span class="com">//定義返回值</span></span><span class="pln">
+    java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="typ">Object</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">null</span></span><span class="pun">;</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">try</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//獲取返回值</span></span><span class="pln">
+        result </span><span class="pun">=</span><span class="pln"> joinPoint</span><span class="pun">.</span><span class="pln">proceed</span><span class="pun">(</span><span class="pln">joinPoint</span><span class="pun">.</span><span class="pln">getArgs</span><span class="pun">());</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###after returning"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">catch</span></span><span class="pun">(</span><span class="typ">Throwable</span><span class="pln"> e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###ex"</span></span><span class="pun">);</span><span class="pln">
+        e</span><span class="pun">.</span><span class="pln">printStackTrace</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">finally</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="hljs-keyword"><span class="kwd">out</span></span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"###finally"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+
+
+<h1 id="三spring-aop的原理">三、Spring AOP的原理</h1>
+
+<p>AOP的設計主要用到的設計模式包含了代理模式、責任鏈模式；AOP的實現方式包含了兩種：基於JDK實現、基於CGlib實現。</p>
+
+<p>織入時機：主要有以下的3種 <br>
+1. 編譯期（如AspectJ） <br>
+2. 類載入時（如AspectJ5以上版本） <br>
+3. 執行時（如Spring AOP）</p>
+
+<p>Spring AOP屬於執行時織入，這種織入方式是基於代理實現的，這樣代理才能在實際方法執行前後進行一些邏輯處理，可以有兩種：從靜態代理到動態代理（動態代理包含基於介面代理與基於繼承代理）。</p>
+
+
+
+<h2 id="1代理模式簡單aop的模擬靜態代理">1.代理模式（簡單AOP的模擬）–靜態代理</h2>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-comment"><span class="com">//1.首先定義一個介面</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">interface</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Subject</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> request</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.讓實際物件和代理物件都實現這個介面</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//2.1實際物件</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">RealSubject</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">implements</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Subject</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@Override</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">request</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"real subject execute request"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.2織入邏輯物件，持有實際物件</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Proxy</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">implements</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Subject</span></span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">private</span></span><span class="pln"> </span><span class="typ">RealSubject</span><span class="pln"> realSubject</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Proxy</span></span><span class="pun">(</span><span class="typ">RealSubject</span><span class="pln"> realSubject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">this</span></span><span class="pun">.</span><span class="pln">realSubject </span><span class="pun">=</span><span class="pln"> realSubject</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@Override</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">request</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"before"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">try</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            realSubject</span><span class="pun">.</span><span class="pln">request</span><span class="pun">();</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">catch</span></span><span class="pln"> </span><span class="pun">(</span><span class="typ">Exception</span><span class="pln"> e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"ex:"</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> e</span><span class="pun">.</span><span class="pln">getMessage</span><span class="pun">());</span><span class="pln">
+            </span><span class="hljs-keyword"><span class="kwd">throw</span></span><span class="pln"> e</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">finally</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"after"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//3.客戶端呼叫</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Client</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">main</span></span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">RealSubject</span><span class="pln"> realSubject </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">RealSubject</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Proxy</span><span class="pln"> proxy </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">Proxy</span><span class="pun">(</span><span class="pln">realSubject</span><span class="pun">);</span><span class="pln">
+        realSubject</span><span class="pun">.</span><span class="pln">request</span><span class="pun">();</span><span class="pln">
+        proxy</span><span class="pun">.</span><span class="pln">request</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>靜態代理方便易懂，但是當目標類中需要邏輯的處理方法很多，由於邏輯處理的前後大部分都是相差不大的，那麼此時就需要寫很多重複的程式碼，從而向動態代理過渡，動態代理分為基於介面的動態代理（典型代表是JDK代理）和基於繼承的動態代理（典型代表是CGlib代理）。</p>
+
+
+
+<h2 id="2jdk動態代理只能基於介面">2.JDK動態代理（只能基於介面）</h2>
+
+<p>jdk動態著重理解動態，可以翻一下其原始碼應該就知道了。主要有兩個步驟： <br>
+通過java.lang.reflect.Proxy類來動態生成代理類，其次這個代理類需要實現的織入邏輯必須實現InvocationHandler介面（需要重寫其中的invoke()方法），程式碼如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-comment"><span class="com">//1.Subject介面同上</span></span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.jdk動態代理</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="kwd">dynamic</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">.</span><span class="typ">RealSubject</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">reflect</span><span class="pun">.</span><span class="typ">InvocationHandler</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">reflect</span><span class="pun">.</span><span class="typ">Method</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-javadoc"><span class="com">/**
+ * 就是需要織入的邏輯程式碼，相當與AOP中aspect
+ */</span></span><span class="pln">
+ </span><span class="hljs-comment"><span class="com">//必須實現InvocationHandler介面</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">JdkProxySubject</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">implements</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">InvocationHandler</span></span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-comment"><span class="com">//jdk動態代理仍然需要引用目標類物件</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">private</span></span><span class="pln"> </span><span class="typ">RealSubject</span><span class="pln"> realSubject</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">JdkProxySubject</span></span><span class="pun">(</span><span class="typ">RealSubject</span><span class="pln"> realSubject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">this</span></span><span class="pun">.</span><span class="pln">realSubject </span><span class="pun">=</span><span class="pln"> realSubject</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-comment"><span class="com">//重寫invoke()</span></span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@Override</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">Object</span><span class="pln"> </span><span class="hljs-title"><span class="pln">invoke</span></span><span class="pun">(</span><span class="typ">Object</span><span class="pln"> proxy</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Method</span><span class="pln"> method</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">throws</span></span><span class="pln"> </span><span class="typ">Throwable</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//執行動態代理邏輯</span></span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"before"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//初始化返回值</span></span><span class="pln">
+        </span><span class="typ">Object</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">null</span></span><span class="pun">;</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">try</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="hljs-comment"><span class="com">//通過反射執行目標類的所有方法</span></span><span class="pln">
+            result </span><span class="pun">=</span><span class="pln"> method</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="pln">realSubject</span><span class="pun">,</span><span class="pln">args</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">catch</span></span><span class="pln"> </span><span class="pun">(</span><span class="typ">Exception</span><span class="pln"> e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"ex:"</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> e</span><span class="pun">.</span><span class="pln">getMessage</span><span class="pun">());</span><span class="pln">
+            </span><span class="hljs-comment"><span class="com">//異常一定要丟擲，因為上面的catch只是指標的是代理類，這裡的throw是指目標類的異常丟擲</span></span><span class="pln">
+            </span><span class="hljs-keyword"><span class="kwd">throw</span></span><span class="pln"> e</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="hljs-keyword"><span class="kwd">finally</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"after"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="hljs-comment"><span class="com">//3.客戶端呼叫</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="kwd">dynamic</span><span class="pun">.</span><span class="typ">JdkProxySubject</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">reflect</span><span class="pun">.</span><span class="typ">Proxy</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Client</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">main</span></span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//通過java.lang.reflect.Proxy類來動態生成代理類，注意引數</span></span><span class="pln">
+        </span><span class="typ">Subject</span><span class="pln"> subject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Subject</span><span class="pun">)</span><span class="typ">Proxy</span><span class="pun">.</span><span class="pln">newProxyInstance</span><span class="pun">(</span><span class="typ">Client</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">.</span><span class="pln">getClassLoader</span><span class="pun">(),</span><span class="pln">
+                </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">Class</span><span class="pun">[]{</span><span class="typ">Subject</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">},</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">JdkProxySubject</span><span class="pun">(</span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">RealSubject</span><span class="pun">()));</span><span class="pln">
+        subject</span><span class="pun">.</span><span class="pln">request</span><span class="pun">();</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//這裡在接口裡增加一個hello()，如果用靜態代理的話就必須在代理類中重寫該方法，而jdk代理則不需要，直接呼叫即可</span></span><span class="pln">
+        subject</span><span class="pun">.</span><span class="pln">hello</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+
+
+<h2 id="3cglib動態代理通過繼承實現代理類">3.Cglib動態代理（通過繼承實現代理類）</h2>
+
+<p><strong>主要兩點：</strong> <br>
+1.Cglib通過繼承的方式實現代理類 <br>
+2.Cglib通過Callback方式來織入程式碼</p>
+
+<p>步驟兩不：通過org.springframework.cglib.proxy.Enhancer來建立代理物件，織入的邏輯程式碼需要實現
+org.springframework.cglib.proxy.MethodInterceptor介面（重寫intercept()方法），程式碼
+如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-comment"><span class="com">//1.Subject介面同上</span></span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.織入的邏輯程式碼</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">cglib</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">cglib</span><span class="pun">.</span><span class="pln">proxy</span><span class="pun">.</span><span class="typ">MethodInterceptor</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">cglib</span><span class="pun">.</span><span class="pln">proxy</span><span class="pun">.</span><span class="typ">MethodProxy</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> java</span><span class="pun">.</span><span class="pln">lang</span><span class="pun">.</span><span class="pln">reflect</span><span class="pun">.</span><span class="typ">Method</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">DemoMethodInterceptor</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">implements</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">MethodInterceptor</span></span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@Override</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">Object</span><span class="pln"> </span><span class="hljs-title"><span class="pln">intercept</span></span><span class="pun">(</span><span class="typ">Object</span><span class="pln"> o</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Method</span><span class="pln"> method</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">[]</span><span class="pln"> objects</span><span class="pun">,</span><span class="pln"> </span><span class="typ">MethodProxy</span><span class="pln"> methodProxy</span><span class="pun">)</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">throws</span></span><span class="pln"> </span><span class="typ">Throwable</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"before in cglib"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//定義返回的結果</span></span><span class="pln">
+        </span><span class="typ">Object</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">null</span></span><span class="pun">;</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">try</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="hljs-comment"><span class="com">//獲取結果</span></span><span class="pln">
+            result </span><span class="pun">=</span><span class="pln"> methodProxy</span><span class="pun">.</span><span class="pln">invokeSuper</span><span class="pun">(</span><span class="pln">o</span><span class="pun">,</span><span class="pln">objects</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="hljs-keyword"><span class="kwd">catch</span></span><span class="pln"> </span><span class="pun">(</span><span class="typ">Exception</span><span class="pln"> e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"ex:"</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> e</span><span class="pun">.</span><span class="pln">getMessage</span><span class="pun">());</span><span class="pln">
+            </span><span class="hljs-keyword"><span class="kwd">throw</span></span><span class="pln"> e</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="hljs-keyword"><span class="kwd">finally</span></span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"after in cglib"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//3.客戶端呼叫</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">pattern</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">cglib</span><span class="pun">.</span><span class="typ">DemoMethodInterceptor</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">cglib</span><span class="pun">.</span><span class="pln">proxy</span><span class="pun">.</span><span class="typ">Enhancer</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Client</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">main</span></span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">Enhancer</span><span class="pln"> enhancer </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">Enhancer</span><span class="pun">();</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//Superclass就是目標類</span></span><span class="pln">
+        enhancer</span><span class="pun">.</span><span class="pln">setSuperclass</span><span class="pun">(</span><span class="typ">RealSubject</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//Callback就是要織入的程式碼</span></span><span class="pln">
+        enhancer</span><span class="pun">.</span><span class="pln">setCallback</span><span class="pun">(</span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">DemoMethodInterceptor</span><span class="pun">());</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//通過Enhancer建立代理類</span></span><span class="pln">
+        </span><span class="typ">Subject</span><span class="pln"> subject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Subject</span><span class="pun">)</span><span class="pln">enhancer</span><span class="pun">.</span><span class="pln">create</span><span class="pun">();</span><span class="pln">
+        subject</span><span class="pun">.</span><span class="pln">request</span><span class="pun">();</span><span class="pln">
+        subject</span><span class="pun">.</span><span class="pln">hello</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p><strong>cglib和jdk的主要區別在於：</strong> <br>
+1.JDK動態代理只能針對有介面的類的介面方法進行動態代理 <br>
+2.Cglib基於<font color="red">繼承</font>來是實現代理，無法對static、final類以及private、static方法進行代理</p>
+
+
+
+<h2 id="4spring-aop代理方式的選擇">4.Spring AOP代理方式的選擇</h2>
+
+<p>主要依據以下的原則： <br>
+1.如果目標物件實現了介面，則預設使用JDK動態代理 <br>
+2.如果目標物件沒有實現介面，則採用Cglib動態代理 <br>
+3.如果目標物件實現了介面，且強制cglib代理，則使用cglib動態代理 <br>
+關於第3強制使用cglib代理設定如下：</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-annotation"><span class="lit">@SpringBootApplication</span></span><span class="pln">
+</span><span class="hljs-comment"><span class="com">//強制使用cglib代理</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@EnableAspectJAutoProxy</span></span><span class="pun">(</span><span class="pln">proxyTargetClass </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">true</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ExecutionDemoApplication</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">main</span></span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">ExecutionDemoApplication</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+
+
+<h2 id="5多個aop的疊加責任鏈模式">5.多個AOP的疊加–責任鏈模式</h2>
+
+<p>責任鏈的原理圖如下： <br>
+<img src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/20171121172040778.png" alt="責任鏈模式" title="" referrerpolicy="no-referrer" class="img-fluid"> <br>
+程式碼演示如下：</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs axapta"><span class="hljs-comment"><span class="com">//1.定義Handler</span></span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">chain</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">abstract</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Handler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln">  </span><span class="typ">Handler</span><span class="pln"> successor</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">Handler</span><span class="pln"> getSuccessor</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> successor</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> setSuccessor</span><span class="pun">(</span><span class="typ">Handler</span><span class="pln"> successor</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">this</span></span><span class="pun">.</span><span class="pln">successor </span><span class="pun">=</span><span class="pln"> successor</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-comment"><span class="com">//對外暴露</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> execute</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//先執行自己的handlerProcess</span></span><span class="pln">
+        handlerProcess</span><span class="pun">();</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//遞迴執行handler</span></span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">if</span></span><span class="pun">(</span><span class="pln">successor</span><span class="pun">!=</span><span class="hljs-keyword"><span class="kwd">null</span></span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            successor</span><span class="pun">.</span><span class="pln">execute</span><span class="pun">();</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln">  </span><span class="hljs-keyword"><span class="kwd">abstract</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">();</span><span class="pln">
+
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.客戶端多AOP的作用</span></span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">chain</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Client</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">HandlerA</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Handler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handler by a"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">HandlerB</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Handler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handler by b"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">HandlerC</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Handler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handler by c"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">Handler</span><span class="pln"> handlerA </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">HandlerA</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Handler</span><span class="pln"> handlerB </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">HandlerB</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Handler</span><span class="pln"> handlerC </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">HandlerC</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="hljs-comment"><span class="com">//設定連線關係</span></span><span class="pln">
+        handlerA</span><span class="pun">.</span><span class="pln">setSuccessor</span><span class="pun">(</span><span class="pln">handlerB</span><span class="pun">);</span><span class="pln">
+        handlerB</span><span class="pun">.</span><span class="pln">setSuccessor</span><span class="pun">(</span><span class="pln">handlerC</span><span class="pun">);</span><span class="pln">
+
+        handlerA</span><span class="pun">.</span><span class="pln">execute</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></code></pre>
+
+<p>上述程式碼之間的多個AOP需要進行設定之間的連線，下面將這個步驟封裝，無需設定他們之間的連線，更具靈活性，AOP內部也是這種原理實現。</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs axapta"><span class="hljs-comment"><span class="com">//1.設定Handler</span></span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">chain</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">abstract</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> execute</span><span class="pun">(</span><span class="typ">Chain</span><span class="pln"> chain</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        handlerProcess</span><span class="pun">();</span><span class="pln">
+        chain</span><span class="pun">.</span><span class="pln">proceed</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">abstract</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.封裝多個AOP</span></span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">chain</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">List</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Chain</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">private</span></span><span class="pln"> </span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">ChainHandler</span><span class="pun">&gt;</span><span class="pln"> handlers</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">private</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">int</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">index</span></span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-number"><span class="lit">0</span></span><span class="pun">;</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">Chain</span><span class="pun">(</span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">ChainHandler</span><span class="pun">&gt;</span><span class="pln"> handlers</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">this</span></span><span class="pun">.</span><span class="pln">handlers </span><span class="pun">=</span><span class="pln"> handlers</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> proceed</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">if</span></span><span class="pun">(</span><span class="hljs-keyword"><span class="pln">index</span></span><span class="pun">&gt;=</span><span class="pln">handlers</span><span class="pun">.</span><span class="pln">size</span><span class="pun">())</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> </span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        handlers</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="hljs-keyword"><span class="pln">index</span></span><span class="pun">++).</span><span class="pln">execute</span><span class="pun">(</span><span class="hljs-keyword"><span class="kwd">this</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="hljs-comment"><span class="com">//3.客戶端呼叫</span></span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">chain</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Arrays</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">List</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">Client2</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandlerA</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handle by chain a"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandlerB</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handle by chain b"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandlerC</span></span><span class="pln"> </span><span class="hljs-inheritance"><span class="hljs-keyword"><span class="kwd">extends</span></span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">ChainHandler</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+        </span><span class="lit">@Override</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> handlerProcess</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="hljs-string"><span class="str">"handle by chain c"</span></span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">static</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//利用封裝的方式將chain的方式宣告出來，並且每個chain之間是獨立存在的</span></span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">//Spring AOP內部也是使用的這種方式來實現的，原理類似，從-1開始，這裡從0開始</span></span><span class="pln">
+        </span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">ChainHandler</span><span class="pun">&gt;</span><span class="pln"> handlers </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Arrays</span><span class="pun">.</span><span class="pln">asList</span><span class="pun">(</span><span class="pln">
+          </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">ChainHandlerA</span><span class="pun">(),</span><span class="pln">
+          </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">ChainHandlerB</span><span class="pun">(),</span><span class="pln">
+          </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">ChainHandlerC</span><span class="pun">()</span><span class="pln">
+        </span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Chain</span><span class="pln"> chain </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">Chain</span><span class="pun">(</span><span class="pln">handlers</span><span class="pun">);</span><span class="pln">
+        chain</span><span class="pun">.</span><span class="pln">proceed</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></code></pre>
+
+
+
+<h1 id="四aop應用控制的三大註解">四、AOP應用控制的三大註解</h1>
+
+<p>AOP在整個Spring框架中佔非常重要的作用，這裡主要結合三個註解理解它的控制應用：@Transactional、@PreAuthorize、@Cacheable.</p>
+
+
+
+<h2 id="1-spring利用transactional註解進行事務控制">1. Spring利用@Transactional註解進行事務控制</h2>
+
+<p>關於事務控制已經是老生常談了，這裡簡單的利用Springboot和jpa兩者結合給出比較簡單的程式碼來演示（如對springboot不瞭解的話可以參看springboot的學習記錄）</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs lasso"><span class="pln">    </span><span class="hljs-comment"><span class="com">//插入使用者同時記錄一個日誌</span></span><span class="pln">
+    </span><span class="lit">@Transactional</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-literal"><span class="kwd">void</span></span><span class="pln"> addUser</span><span class="pun">(</span><span class="hljs-built_in"><span class="typ">String</span></span><span class="pln"> name</span><span class="pun">){</span><span class="pln">
+        </span><span class="typ">OperationLog</span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">log</span></span><span class="pln"> </span><span class="hljs-subst"><span class="pun">=</span></span><span class="pln"> </span><span class="hljs-literal"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">OperationLog</span><span class="pun">();</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="pln">log</span></span><span class="hljs-built_in"><span class="pun">.</span></span><span class="pln">setContent</span><span class="pun">(</span><span class="hljs-string"><span class="str">"create user:"</span></span><span class="hljs-subst"><span class="pun">+</span></span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+        operationLogDao</span><span class="hljs-built_in"><span class="pun">.</span></span><span class="pln">save</span><span class="pun">(</span><span class="hljs-keyword"><span class="pln">log</span></span><span class="pun">);</span><span class="pln">
+
+        </span><span class="typ">User</span><span class="pln"> user </span><span class="hljs-subst"><span class="pun">=</span></span><span class="pln"> </span><span class="hljs-literal"><span class="kwd">new</span></span><span class="pln"> </span><span class="typ">User</span><span class="pun">();</span><span class="pln">
+        user</span><span class="hljs-built_in"><span class="pun">.</span></span><span class="pln">setName</span><span class="pun">(</span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+        userDao</span><span class="hljs-built_in"><span class="pun">.</span></span><span class="pln">save</span><span class="pun">(</span><span class="pln">user</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span></code></pre>
+
+<p>即插入使用者時同時插入記錄，只要有一個操作不成功，那麼整個事物進行回滾操作。</p>
+
+
+
+
+
+<p>SpringSecurity安全校驗同樣使用了AOP，首先使用MethodSecurityInterceptor進行攔截，然後這個
+Interceptor又是呼叫的Voter，這個Voter是處理InvocationAuthorizationAdvice這個型別的，再然後這個
+Voter又是呼叫的ExpressionBasePreInvocationAdvice進行判斷，工作圖如下 <br>
+<img src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/20171121194947967.png" alt="@PreAuthorize驗證機制" title="" referrerpolicy="no-referrer" class="img-fluid"> <br>
+這裡以一個簡單的使用者登陸為例，程式碼如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs java"><span class="hljs-comment"><span class="com">//1.配置檔案</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">config</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">beans</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Autowired</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">context</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Configuration</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="pln">authentication</span><span class="pun">.</span><span class="pln">builders</span><span class="pun">.</span><span class="typ">AuthenticationManagerBuilder</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="pln">method</span><span class="pun">.</span><span class="pln">configuration</span><span class="pun">.</span><span class="typ">EnableGlobalMethodSecurity</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">builders</span><span class="pun">.</span><span class="typ">HttpSecurity</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">configuration</span><span class="pun">.</span><span class="typ">EnableWebSecurity</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">configuration</span><span class="pun">.</span><span class="typ">WebSecurityConfigurerAdapter</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-javadoc"><span class="com">/**
+ * Created by cat on 2017-03-12.
+ */</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@Configuration</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@EnableWebSecurity</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@EnableGlobalMethodSecurity</span></span><span class="pun">(</span><span class="pln">prePostEnabled </span><span class="pun">=</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">true</span></span><span class="pun">)</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">SecurityConfig</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">extends</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">WebSecurityConfigurerAdapter</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@Override</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">protected</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">configure</span></span><span class="pun">(</span><span class="typ">HttpSecurity</span><span class="pln"> http</span><span class="pun">)</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">throws</span></span><span class="pln"> </span><span class="typ">Exception</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        http
+                </span><span class="pun">.</span><span class="pln">authorizeRequests</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">antMatchers</span><span class="pun">(</span><span class="hljs-string"><span class="str">"/"</span></span><span class="pun">,</span><span class="pln"> </span><span class="hljs-string"><span class="str">"/index"</span></span><span class="pun">).</span><span class="pln">permitAll</span><span class="pun">()</span><span class="hljs-comment"><span class="com">//這是不需要校驗的，其他的都需要校驗</span></span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">anyRequest</span><span class="pun">().</span><span class="pln">authenticated</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="kwd">and</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">httpBasic</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="kwd">and</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">logout</span><span class="pun">()</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">permitAll</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@Autowired</span></span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">void</span></span><span class="pln"> </span><span class="hljs-title"><span class="pln">configureGlobal</span></span><span class="pun">(</span><span class="typ">AuthenticationManagerBuilder</span><span class="pln"> auth</span><span class="pun">)</span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">throws</span></span><span class="pln"> </span><span class="typ">Exception</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        auth
+                </span><span class="pun">.</span><span class="pln">inMemoryAuthentication</span><span class="pun">()</span><span class="pln">
+                </span><span class="hljs-comment"><span class="com">//預設在記憶體中建立兩個使用者，一個是USER角色的使用者demo,另一個是ADMIN角色的使用者admin</span></span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">withUser</span><span class="pun">(</span><span class="hljs-string"><span class="str">"demo"</span></span><span class="pun">).</span><span class="pln">password</span><span class="pun">(</span><span class="hljs-string"><span class="str">"demo"</span></span><span class="pun">).</span><span class="pln">roles</span><span class="pun">(</span><span class="hljs-string"><span class="str">"USER"</span></span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="kwd">and</span><span class="pun">()</span><span class="pln">
+                </span><span class="hljs-comment"><span class="com">//</span></span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">withUser</span><span class="pun">(</span><span class="hljs-string"><span class="str">"admin"</span></span><span class="pun">).</span><span class="pln">password</span><span class="pun">(</span><span class="hljs-string"><span class="str">"admin"</span></span><span class="pun">).</span><span class="pln">roles</span><span class="pun">(</span><span class="hljs-string"><span class="str">"ADMIN"</span></span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">//2.控制器</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">package</span></span><span class="pln"> com</span><span class="pun">.</span><span class="pln">imooc</span><span class="pun">.</span><span class="pln">controller</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">security</span><span class="pun">.</span><span class="pln">access</span><span class="pun">.</span><span class="pln">prepost</span><span class="pun">.</span><span class="typ">PreAuthorize</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">bind</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">RequestMapping</span><span class="pun">;</span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">import</span></span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">bind</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">RestController</span><span class="pun">;</span><span class="pln">
+
+</span><span class="hljs-javadoc"><span class="com">/**
+ * Created by cat on 2017-03-12.
+ */</span></span><span class="pln">
+</span><span class="hljs-annotation"><span class="lit">@RestController</span></span><span class="pln">
+</span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="hljs-class"><span class="hljs-keyword"><span class="kwd">class</span></span><span class="pln"> </span><span class="hljs-title"><span class="typ">DemoController</span></span><span class="pln"> </span><span class="pun">{</span></span><span class="pln">
+
+    </span><span class="hljs-comment"><span class="com">//這個前面已經設定過了，是不需要攔截的</span></span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@RequestMapping</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"/index"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">String</span><span class="pln"> </span><span class="hljs-title"><span class="pln">index</span></span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> </span><span class="hljs-string"><span class="str">"index"</span></span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@RequestMapping</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"/common"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">String</span><span class="pln"> </span><span class="hljs-title"><span class="pln">commonAccess</span></span><span class="pun">(){</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> </span><span class="hljs-string"><span class="str">"only login can view"</span></span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="hljs-annotation"><span class="lit">@RequestMapping</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"/admin"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-annotation"><span class="lit">@PreAuthorize</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"hasRole('ROLE_ADMIN')"</span></span><span class="pun">)</span><span class="pln">
+    </span><span class="hljs-keyword"><span class="kwd">public</span></span><span class="pln"> </span><span class="typ">String</span><span class="pln"> </span><span class="hljs-title"><span class="pln">admin</span></span><span class="pun">(){</span><span class="pln">
+        </span><span class="hljs-keyword"><span class="kwd">return</span></span><span class="pln"> </span><span class="hljs-string"><span class="str">"only admin can access"</span></span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>這裡index頁面是每個人都可以訪問的，common頁面允許demo使用者訪問，admin頁面只允許admin使用者訪問。</p>
+
+
+
+<h2 id="3-springcache如何利用cacheable進行快取控制">3. SpringCache如何利用@Cacheable進行快取控制</h2>
+
+<p>首先前面有一個AnnotationCacheAspect的定義，然後通過CacheInterceptor來執行邏輯，最後這個Interceptor又是託給CacheAspectSupport來進行快取控制。時序圖如下 <br>
+<img src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/20171121205253955.png" alt="Cacheable時序圖" title="" referrerpolicy="no-referrer" class="img-fluid"> <br>
+程式碼如下</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs avrasm"><span class="com">//</span><span class="hljs-number"><span class="com">1.</span></span><span class="com">快取配置檔案</span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">com</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">imooc</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">service</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">cache</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">annotation</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">Cacheable</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">stereotype</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">Component</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">util</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">Arrays</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">util</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">List</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="hljs-comment"><span class="com">/**
+ * Created by cat on 2017-03-12.
+ */</span></span><span class="pln">
+</span><span class="lit">@Component</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">MenuService</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="com">//@Cacheable是用來宣告方法返回值是可快取的。將結果儲存到快取中以便後續使用相同引數呼叫時不需執行實際的方法。直接從快取中取值。最簡單的格式只需要需要制定快取名稱即可使用。 </span><span class="pln">
+    </span><span class="lit">@Cacheable</span><span class="pun">(</span><span class="pln">cacheNames </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="hljs-string"><span class="str">"menu"</span></span><span class="pun">})</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">String</span><span class="pun">&gt;</span><span class="pln"> getMenuList</span><span class="pun">(){</span><span class="pln">
+        </span><span class="typ">System</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="kwd">out</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">println</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">""</span></span><span class="pun">)</span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+        </span><span class="typ">System</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="kwd">out</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">println</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"mock:get from db"</span></span><span class="pun">)</span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Arrays</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">asList</span></span><span class="pun">(</span><span class="hljs-string"><span class="str">"article"</span></span><span class="pun">,</span><span class="hljs-string"><span class="str">"comment"</span></span><span class="pun">,</span><span class="hljs-string"><span class="str">"admin"</span></span><span class="pun">)</span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="com">//</span><span class="hljs-number"><span class="com">2.</span></span><span class="com">主檔案</span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">com</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">imooc</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">SpringApplication</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">autoconfigure</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">SpringBootApplication</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">cache</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">annotation</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">EnableCaching</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="lit">@SpringBootApplication</span><span class="pln">
+</span><span class="lit">@EnableCaching</span><span class="com">//這個註解不能漏</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">CacheDemoApplication</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">SpringApplication</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">run</span></span><span class="pun">(</span><span class="typ">CacheDemoApplication</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="kwd">class</span></span><span class="pun">,</span><span class="pln"> args</span><span class="pun">)</span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">//</span><span class="hljs-number"><span class="com">3.</span></span><span class="com">測試檔案</span><span class="pln">
+</span><span class="kwd">package</span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">com</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">hhu</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> </span><span class="hljs-keyword"><span class="pln">com</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">hhu</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">service</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">MenuService</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">junit</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">Test</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">junit</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">runner</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">RunWith</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">beans</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">factory</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">annotation</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">Autowired</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">test</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">context</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">SpringBootTest</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">test</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">context</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">junit</span></span><span class="pln">4</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="typ">SpringRunner</span></span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+</span><span class="lit">@RunWith</span><span class="pun">(</span><span class="typ">SpringRunner</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="kwd">class</span></span><span class="pun">)</span><span class="pln">
+</span><span class="lit">@SpringBootTest</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">CacheDemoApplicationTests</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="lit">@Autowired</span><span class="pln">
+    </span><span class="typ">MenuService</span><span class="pln"> menuService</span><span class="hljs-comment"><span class="pun">;</span></span><span class="pln">
+
+    </span><span class="lit">@Test</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> testCache</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">//首次呼叫getMenuList，快取中沒有東西，所以完整執行了   System</span><span class="hljs-preprocessor"><span class="com">.out</span></span><span class="hljs-preprocessor"><span class="com">.println</span></span><span class="com">(</span><span class="hljs-string"><span class="com">"call:"</span></span><span class="com">+menuService</span><span class="hljs-preprocessor"><span class="com">.getMenuList</span></span><span class="com">())</span><span class="hljs-comment"><span class="com">;</span></span><span class="pln">
+    </span><span class="com">//第二次呼叫時，由於註解了快取，所以並沒有直接呼叫方法，而是直接去快取中獲取了第一次呼叫的返回值List，並沒有執行之前的列印文字  System</span><span class="hljs-preprocessor"><span class="com">.out</span></span><span class="hljs-preprocessor"><span class="com">.println</span></span><span class="com">(</span><span class="hljs-string"><span class="com">"call:"</span></span><span class="com">+menuService</span><span class="hljs-preprocessor"><span class="com">.getMenuList</span></span><span class="com">())</span><span class="hljs-comment"><span class="com">;</span></span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="com">//</span><span class="hljs-number"><span class="com">4.</span></span><span class="com">pom檔案</span><span class="pln">
+</span><span class="pun">&lt;</span><span class="pln">project xmlns</span><span class="pun">=</span><span class="hljs-string"><span class="str">"http://maven.apache.org/POM/4.0.0"</span></span><span class="pln"> xmlns</span><span class="pun">:</span><span class="pln">xsi</span><span class="pun">=</span><span class="hljs-string"><span class="str">"http://www.w3.org/2001/XMLSchema-instance"</span></span><span class="pln">
+  xsi</span><span class="pun">:</span><span class="pln">schemaLocation</span><span class="pun">=</span><span class="hljs-string"><span class="str">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span></span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="str">&lt;modelVersion&gt;</span><span class="hljs-number"><span class="lit">4.0</span></span><span class="hljs-number"><span class="pun">.</span><span class="lit">0</span></span><span class="pun">&lt;/</span><span class="pln">modelVersion</span><span class="pun">&gt;</span><span class="pln">
+
+  </span><span class="str">&lt;groupId&gt;</span><span class="hljs-keyword"><span class="pln">com</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">hhu</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">config</span></span><span class="pun">&lt;/</span><span class="pln">groupId</span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="str">&lt;artifactId&gt;</span><span class="typ">SpringAOPTest</span><span class="pun">&lt;/</span><span class="pln">artifactId</span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="str">&lt;version&gt;</span><span class="hljs-number"><span class="lit">0.0</span></span><span class="hljs-number"><span class="pun">.</span><span class="lit">1</span></span><span class="pun">-</span><span class="pln">SNAPSHOT</span><span class="pun">&lt;/</span><span class="pln">version</span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="str">&lt;packaging&gt;</span><span class="pln">jar</span><span class="pun">&lt;/</span><span class="pln">packaging</span><span class="pun">&gt;</span><span class="pln">
+
+  </span><span class="str">&lt;name&gt;</span><span class="typ">SpringAOPTest</span><span class="pun">&lt;/</span><span class="pln">name</span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="str">&lt;url&gt;</span><span class="pln">http</span><span class="pun">:</span><span class="com">//maven</span><span class="hljs-preprocessor"><span class="com">.apache</span></span><span class="hljs-preprocessor"><span class="com">.org</span></span><span class="com">&lt;/url&gt;</span><span class="pln">
+
+  </span><span class="str">&lt;properties&gt;</span><span class="pln">
+    </span><span class="pun">&lt;</span><span class="pln">project</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">build</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">sourceEncoding</span></span><span class="pun">&gt;</span><span class="pln">UTF</span><span class="pun">-</span><span class="hljs-number"><span class="lit">8</span></span><span class="pun">&lt;/</span><span class="pln">project</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">build</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">sourceEncoding</span></span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;</span><span class="pln">project</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">reporting</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">outputEncoding</span></span><span class="pun">&gt;</span><span class="pln">UTF</span><span class="pun">-</span><span class="hljs-number"><span class="lit">8</span></span><span class="pun">&lt;/</span><span class="pln">project</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">reporting</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">outputEncoding</span></span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="pun">&lt;/</span><span class="pln">properties</span><span class="pun">&gt;</span><span class="pln">
+
+    </span><span class="str">&lt;parent&gt;</span><span class="pln">
+        </span><span class="str">&lt;groupId&gt;</span><span class="pln">org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="pun">&lt;/</span><span class="pln">groupId</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="str">&lt;artifactId&gt;</span><span class="pln">spring</span><span class="pun">-</span><span class="pln">boot</span><span class="pun">-</span><span class="pln">starter</span><span class="pun">-</span><span class="pln">parent</span><span class="pun">&lt;/</span><span class="pln">artifactId</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="str">&lt;version&gt;</span><span class="hljs-number"><span class="lit">1.4</span></span><span class="hljs-number"><span class="pun">.</span><span class="lit">2</span></span><span class="hljs-preprocessor"><span class="lit">.RELEASE</span></span><span class="pun">&lt;/</span><span class="pln">version</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="pun">&lt;</span><span class="pln">relativePath</span><span class="pun">/&gt;</span><span class="pln"> </span><span class="pun">&lt;!--</span><span class="pln"> lookup parent </span><span class="kwd">from</span><span class="pln"> repository </span><span class="pun">--&gt;</span><span class="pln">
+    </span><span class="pun">&lt;/</span><span class="pln">parent</span><span class="pun">&gt;</span><span class="pln">
+
+    </span><span class="str">&lt;dependencies&gt;</span><span class="pln">
+        </span><span class="str">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="str">&lt;groupId&gt;</span><span class="pln">org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="pun">&lt;/</span><span class="pln">groupId</span><span class="pun">&gt;</span><span class="pln">
+            </span><span class="str">&lt;artifactId&gt;</span><span class="pln">spring</span><span class="pun">-</span><span class="pln">boot</span><span class="pun">-</span><span class="pln">starter</span><span class="pun">-</span><span class="pln">cache</span><span class="pun">&lt;/</span><span class="pln">artifactId</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="pun">&lt;/</span><span class="pln">dependency</span><span class="pun">&gt;</span><span class="pln">
+
+        </span><span class="str">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="str">&lt;groupId&gt;</span><span class="pln">org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="pun">&lt;/</span><span class="pln">groupId</span><span class="pun">&gt;</span><span class="pln">
+            </span><span class="str">&lt;artifactId&gt;</span><span class="pln">spring</span><span class="pun">-</span><span class="pln">boot</span><span class="pun">-</span><span class="pln">starter</span><span class="pun">-</span><span class="pln">test</span><span class="pun">&lt;/</span><span class="pln">artifactId</span><span class="pun">&gt;</span><span class="pln">
+            </span><span class="str">&lt;scope&gt;</span><span class="pln">test</span><span class="pun">&lt;/</span><span class="pln">scope</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="pun">&lt;/</span><span class="pln">dependency</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;/</span><span class="pln">dependencies</span><span class="pun">&gt;</span><span class="pln">
+
+    </span><span class="str">&lt;build&gt;</span><span class="pln">
+        </span><span class="str">&lt;plugins&gt;</span><span class="pln">
+            </span><span class="str">&lt;plugin&gt;</span><span class="pln">
+                </span><span class="str">&lt;groupId&gt;</span><span class="pln">org</span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">springframework</span></span><span class="hljs-preprocessor"><span class="pun">.</span><span class="pln">boot</span></span><span class="pun">&lt;/</span><span class="pln">groupId</span><span class="pun">&gt;</span><span class="pln">
+                </span><span class="str">&lt;artifactId&gt;</span><span class="pln">spring</span><span class="pun">-</span><span class="pln">boot</span><span class="pun">-</span><span class="pln">maven</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">&lt;/</span><span class="pln">artifactId</span><span class="pun">&gt;</span><span class="pln">
+            </span><span class="pun">&lt;/</span><span class="pln">plugin</span><span class="pun">&gt;</span><span class="pln">
+        </span><span class="pun">&lt;/</span><span class="pln">plugins</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;/</span><span class="pln">build</span><span class="pun">&gt;</span><span class="pln">
+
+</span><span class="pun">&lt;/</span><span class="pln">project</span><span class="pun">&gt;</span></code></pre>
+
+<p>執行結果為</p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs vbnet"><span class="pln">mock</span><span class="pun">:</span><span class="hljs-keyword"><span class="kwd">get</span></span><span class="pln"> </span><span class="hljs-keyword"><span class="kwd">from</span></span><span class="pln"> db
+</span><span class="hljs-keyword"><span class="pln">call</span></span><span class="pun">:[</span><span class="pln">article</span><span class="pun">,</span><span class="pln"> comment</span><span class="pun">,</span><span class="pln"> admin</span><span class="pun">]</span><span class="pln">
+</span><span class="hljs-keyword"><span class="pln">call</span></span><span class="pun">:[</span><span class="pln">article</span><span class="pun">,</span><span class="pln"> comment</span><span class="pun">,</span><span class="pln"> admin</span><span class="pun">]</span></code></pre>
+
+<p>第一次出現了mock標誌，第二次沒有出現mock標誌。</p>
+
+
+
+<h1 id="五綜合案例">五、綜合案例</h1>
+
+<p>以商家產品管理系統為例，需要實現以下功能（非功能性需求） <br>
+1.記錄產品修改的操作記錄 <br>
+2.記錄什麼人在什麼時間修改了哪些產品的哪些欄位以及修改的具體值</p>
+
+<p>思路： <br>
+1.利用qspect攔截增刪改的方法 <br>
+2.利用反射獲取物件的新舊值 <br>
+3.利用@Around註解的Advice去記錄操作記錄</p>
+
+<p>環境：Eclipse + jdk1.8  資料庫：MySQL+MongoDB</p>
+
+<p>主要程式碼片如下：</p>
+
+<p><strong>1.maven的依賴</strong></p>
+
+
+
+<pre class="prettyprint prettyprinted" style=""><code class=" hljs xml"><span class="hljs-pi"><span class="pun">&lt;?</span><span class="pln">xml version</span><span class="pun">=</span><span class="str">"1.0"</span><span class="pln"> encoding</span><span class="pun">=</span><span class="str">"UTF-8"</span><span class="pun">?&gt;</span></span><span class="pln">
+</span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">project</span></span><span class="pln"> </span><span class="hljs-attribute"><span class="atn">xmlns</span></span><span class="pun">=</span><span class="hljs-value"><span class="atv">"http://maven.apache.org/POM/4.0.0"</span></span><span class="pln"> </span><span class="hljs-attribute"><span class="atn">xmlns:xsi</span></span><span class="pun">=</span><span class="hljs-value"><span class="atv">"http://www.w3.org/2001/XMLSchema-instance"</span></span><span class="pln">
+    </span><span class="hljs-attribute"><span class="atn">xsi:schemaLocation</span></span><span class="pun">=</span><span class="hljs-value"><span class="atv">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">modelVersion</span></span><span class="tag">&gt;</span></span><span class="pln">4.0.0</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">modelVersion</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">com.hhu</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">datalog</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">0.0.1-SNAPSHOT</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">packaging</span></span><span class="tag">&gt;</span></span><span class="pln">jar</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">packaging</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">name</span></span><span class="tag">&gt;</span></span><span class="pln">datalog</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">name</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">description</span></span><span class="tag">&gt;</span></span><span class="pln">Demo project for Spring Boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">description</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">parent</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-parent</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">1.5.2.RELEASE</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">relativePath</span></span><span class="tag">/&gt;</span></span><span class="pln"> </span><span class="hljs-comment"><span class="com">&lt;!-- lookup parent from repository --&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">parent</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">properties</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">project.build.sourceEncoding</span></span><span class="tag">&gt;</span></span><span class="pln">UTF-8</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">project.build.sourceEncoding</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">project.reporting.outputEncoding</span></span><span class="tag">&gt;</span></span><span class="pln">UTF-8</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">project.reporting.outputEncoding</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">java.version</span></span><span class="tag">&gt;</span></span><span class="pln">1.8</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">java.version</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">properties</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependencies</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-aop</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-data-jpa</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-comment"><span class="com">&lt;!-- mysql --&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">mysql</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">mysql-connector-java</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+        </span><span class="hljs-comment"><span class="com">&lt;!-- mongodb主要用來儲存使用者的操作記錄 --&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-data-mongodb</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+        </span><span class="hljs-comment"><span class="com">&lt;!-- 主要用於獲取物件bean描述時候用到的 --&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">commons-beanutils</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">commons-beanutils</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">com.alibaba</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">fastjson</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">1.2.28</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">version</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">spring-boot-starter-test</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">artifactId</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">scope</span></span><span class="tag">&gt;</span></span><span class="pln">test</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">scope</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependency</span></span><span class="tag">&gt;</span></span><span class="pln">
+    </span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">dependencies</span></span><span class="tag">&gt;</span></span><span class="pln">
+
+    </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">build</span></span><span class="tag">&gt;</span></span><span class="pln">
+        </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">plugins</span></span><span class="tag">&gt;</span></span><span class="pln">
+            </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">plugin</span></span><span class="tag">&gt;</span></span><span class="pln">
+                </span><span class="hljs-tag"><span class="tag">&lt;</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">org.springframework.boot</span><span class="hljs-tag"><span class="tag">&lt;/</span><span class="hljs-title"><span class="tag">groupId</span></span><span class="tag">&gt;</span></span><span class="pln">
+                </span><span<center><script type="text/javascript" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/scupio2.js"></script><ins id="scupio-sc-4995-18725-396182_dispatcherUnreached" class="scupioadslot" style="display: block; margin: auto; width: 640px; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-cid="18725" data-sca-web="4995" data-sca-category="17" data-sca-slot-type="preroll" data-sca-status="timeout" undefined="2"><ins class="scupioadslot" style="display: block; width: 300px; height: 250px; margin: auto; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17523" data-sca-slot-type="STA" data-sca-status="done" undefined="3"><iframe name="scupioadframe" marginwidth="0" marginheight="0" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px none; padding: 0px; margin: 0px; width: 300px; height: 250px;" id="sc-1622699976061-907167054360_frame_cc882881-5ae9-4e60-918e-a2a2cad4cff9" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad_002.htm" frameborder="0"></iframe></ins></ins><span class="pln">
+</span><script async="" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad.js"></script><span class="pln">
+</span><script><span class="pln">
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            i.height = '';
+            p.appendChild(z({
+                display: 'block',
+                width: '300px',
+                height: '250px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17523',
+                'slot-type': 'STA'
+            }));
+        },
+    });
+    setTimeout(function(){var e;if(!s.Scupioads.init)for(e=d.length-1;0<=e;e--)if(d[e].id===u&&!d[e].dispatcherUnreached){d[e].callback(),d[e].callback=function(){},d[e].dispatcherUnreached=!0,c.getElementById(u).id+='_dispatcherUnreached';break}},1e3);
+})(window, document, 'scupio-sc-4995-18725-396182');
+</span></script><span class="pln">
+</span><ins id="scupio-sc-4995-18726-55273_dispatcherUnreached" class="scupioadslot" style="display: inline-block; width: 100%; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-cid="18726" data-sca-web="4995" data-sca-category="17" data-sca-slot-type="inread" data-sca-fixed="1" data-sca-status="incompatible" undefined="4"><ins class="scupioadslot" style="display: block; width: 300px; height: 250px; margin: auto; background-color: transparent;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17523" data-sca-slot-type="STA" data-sca-status="done" undefined="5"><iframe name="scupioadframe" marginwidth="0" marginheight="0" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px none; padding: 0px; margin: 0px; width: 300px; height: 250px;" id="sc-1622699976065-82844437642_frame_149355d3-4b0f-4653-b063-d073492d3f38" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad_002.htm" frameborder="0"></iframe></ins></ins><span class="pln">
+</span><script async="" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/ad.js"></script><span class="pln">
+</span><script><span class="pln">
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            i.height = '';
+            p.appendChild(z({
+                display: 'block',
+                width: '300px',
+                height: '250px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17523',
+                'slot-type': 'STA'
+            }));
+        }
+    });
+    setTimeout(function(){var e;if(!s.Scupioads.init)for(e=d.length-1;0<=e;e--)if(d[e].id===u&&!d[e].dispatcherUnreached){d[e].callback(),d[e].callback=function(){},d[e].dispatcherUnreached=!0,c.getElementById(u).id+='_dispatcherUnreached';break}},1e3);
+})(window, document, 'scupio-sc-4995-18726-55273');
+</span></script><span class="pln">
+
+ 
+			</span></span<center></code></pre></div><code class=" hljs xml">
+			
+		</code></div><code class=" hljs xml">
+        <div class="related">
+        <h2 class="block-title">相關文章</h2>
+        <hr>
+        <ul>
+   	<li><a href="https://www.itread01.com/content/1549140662.html" target="_blank">基於Springboot的Spring AOP學習記錄</a> </li>
+    	<li><a href="https://www.itread01.com/content/1547308206.html" target="_blank">基於C#的機器學習--目錄</a> </li>
+    	<li><a href="https://www.itread01.com/content/1583746867.html" target="_blank">AOP和spring AOP學習記錄</a> </li>
+    	<li><a href="https://www.itread01.com/content/1579057262.html" target="_blank">基於C#的機器學習--垃圾郵件過濾</a> </li>
+    	<li><a href="https://www.itread01.com/content/1570291323.html" target="_blank">基於C#的機器學習--機器學習建模的基礎</a> </li>
+    	<li><a href="https://www.itread01.com/content/1569931443.html" target="_blank">基於C#的機器學習--c# .NET中直觀的深度學習</a> </li>
+    	<li><a href="https://www.itread01.com/content/1565834644.html" target="_blank">以預測股票漲跌案例入門基於SVM的機器學習</a> </li>
+    	<li><a href="https://www.itread01.com/content/1563346866.html" target="_blank">基於C#的機器學習--微基準測試和啟用功能</a> </li>
+    	<li><a href="https://www.itread01.com/content/1563072962.html" target="_blank">基於C#的機器學習--深層信念網路</a> </li>
+    	<li><a href="https://www.itread01.com/content/1562861464.html" target="_blank">基於C#的機器學習--我應該接受這份工作嗎-使用決策樹</a> </li>
+    	<li><a href="https://www.itread01.com/content/1562846582.html" target="_blank">基於C#的機器學習--旅行推銷員問題</a> </li>
+    	<li><a href="https://www.itread01.com/content/1555526298.html" target="_blank">基於Spark的機器學習實踐 (九) - 聚類算法</a> </li>
+    	<li><a href="https://www.itread01.com/content/1550649984.html" target="_blank">基於TensorFlow的深度學習實戰</a> </li>
+    	<li><a href="https://www.itread01.com/content/1550456121.html" target="_blank">基於Annotation的Spring AOP: @AfterThrowing</a> </li>
+    	<li><a href="https://www.itread01.com/content/1550256314.html" target="_blank">基於Theano的深度學習(Deep Learning)框架Keras學習隨筆-03-優化器</a> </li>
+     
+  </ul>
+        </div>
+		
+		<div class="previous-next-links">
+			<div class="previous-design-link"> </div>
+			<div class="next-design-link"> </div>
+		</div>
+
+	</code></div><code class=" hljs xml">
+</code></div><code class=" hljs xml">
+	
+<!-- 右边栏 -->
+<div class="fivecol last right-column">
+ 
+<style>
+.sidebar-tree .double-li {
+	width:300px;
+}
+.sidebar-tree .double-li li {
+    width: 44%;
+    line-height: 1.5em;
+    border-bottom: 1px solid #ccc;
+    float: left;
+    display: inline;
+}
+</style>
+
+	
+		<div class="sidebar-box re-box re-box-large">
+		<div class="sidebar-box recommend-here" style="margin: 0 auto;">
+			<a href="javascript:void(0);" style="font-size: 16px; color:#64854c;font-weight:bold;"> <i class="fa fa-list" aria-hidden="true"></i> 分類導航</a>
+		</div>
+	<div class="sidebar-box sidebar-cate">
+		
+		<div class="sidebar-tree">
+        
+	    <ul><li style="margin: 0;"><a href="javascript:void(0);" class="tit"> HTML / CSS</a>
+    <ul class="double-li"><li><a title="HTML 教程" href="https://www.itread01.com/study/html-tutorial.html">HTML 教程</a></li>
+    <li><a title="HTML5 教程" href="https://www.itread01.com/study/html5-intro.html">HTML5 教程</a></li>
+    <li><a title="CSS 教程" href="https://www.itread01.com/study/css/css-tutorial.html">CSS 教程</a></li>
+    <li><a title="CSS3 教程" href="https://www.itread01.com/study/css3-tutorial.html">CSS3 教程</a></li>
+    </ul>
+
+    </li><li style="margin: 0;"><a href="javascript:void(0);" class="tit"> JavaScript</a>
+    <ul class="double-li">
+    <li><a title="JavaScript 教程" href="https://www.itread01.com/study/js-tutorial.html">JavaScript 教程</a></li>
+    <li><a title="jQuery 教程" href="https://www.itread01.com/study/jquery-tutorial.html">jQuery 教程</a></li>
+    <li><a title="AngularJS 教程" href="https://www.itread01.com/study/nodejs-tutorial.html">Node.js 教程</a></li>
+    </ul>
+    </li><li style="margin: 0;"><a href="javascript:void(0);" class="tit"> 服務端</a>
+    <ul class="double-li">
+    <li><a title="Python 教程" href="https://www.itread01.com/study/python-tutorial.html">Python 教程</a></li>
+    <li><a title="Python3 教程" href="https://www.itread01.com/study/python3-tutorial.html">Python3 教程</a></li>
+    <li><a title="Linux 教程" href="https://www.itread01.com/study/linux-tutorial.html">Linux 教程</a></li>
+    <li><a title="Docker 教程" href="https://www.itread01.com/study/docker-tutorial.html">Docker 教程</a></li>
+    <li><a title="Ruby 教程" href="https://www.itread01.com/study/ruby-tutorial.html">Ruby 教程</a></li>
+    <li><a title="Java 教程" href="https://www.itread01.com/study/java-tutorial.html">Java 教程</a></li>
+    <li><a title="PHP 教程" href="https://www.itread01.com/study/jsp-tutorial.html">JSP 教程</a></li>
+    <li><a title="C 教程" href="https://www.itread01.com/study/c-tutorial.html">C 教程</a></li>
+    <li><a title="C++ 教程" href="https://www.itread01.com/study/cpp-tutorial.html">C++ 教程</a></li>
+    <li><a title="Perl 教程" href="https://www.itread01.com/study/perl-tutorial.html">Perl 教程</a></li>
+    <li><a title="Go 教程" href="https://www.itread01.com/study/go-tutorial.html">Go 教程</a></li>
+    <li><a title="PHP 教程" href="https://www.itread01.com/study/php-tutorial.html">PHP 教程</a></li>
+    <li><a title="正則表達式" href="https://www.itread01.com/study/regexp-tutorial.html">正則表達式</a></li>
+     </ul>
+    
+    </li><li style="margin: 0;"><a href="javascript:void(0);" class="tit"> 資料庫</a>
+    <ul class="double-li">
+    <li><a title="SQL 教程" href="https://www.itread01.com/study/sql-tutorial.html">SQL 教程</a></li>
+    <li><a title="MySQL 教程" href="https://www.itread01.com/study/mysql-tutorial.html">MySQL 教程</a></li>
+    <li><a title="PostgreSQL 教程" href="https://www.itread01.com/study/postgresql-tutorial.html">PostgreSQL 教程</a></li>
+    <li><a title="SQLite 教程" href="https://www.itread01.com/study/sqlite-tutorial.html">SQLite 教程</a></li>
+    <li><a title="MongoDB 教程" href="https://www.itread01.com/study/mongodb-tutorial.html">MongoDB 教程</a></li>
+    <li><a title="Redis 教程" href="https://www.itread01.com/study/redis-tutorial.html">Redis 教程</a></li>
+    <li><a title="Memcached 教程" href="https://www.itread01.com/study/Memcached-tutorial.html">Memcached 教程</a></li></ul></li>
+    
+    <li style="margin: 0;"><a href="javascript:void(0);" class="tit"> 行動端</a>
+    <ul class="double-li">
+    <li><a title="Android 教程" href="https://www.itread01.com/study/ios-tutorial.html">IOS 教程</a></li>
+    <li><a title="Swift 教程" href="https://www.itread01.com/study/swift-tutorial.html">Swift 教程</a></li>
+    </ul>
+    </li></ul>
+        </div>
+	
+	</div>
+	</div>
+	<br>
+	
+	<div class="sidebar-box re-box re-box-large">
+		<div class="sidebar-box recommend-here">
+			<a href="javascript:void(0);">Advertisement</a>
+		</div>
+		<div class="re-600160" id="sidebar-right-re">
+				<a href="https://www.3du.tw/" style="font-size: 12.15625pt;">三度辭典</a> 
+				</div>
+	</div>
+</div></code></div><code class=" hljs xml">
+</code></div><code class=" hljs xml">
+<!-- 底部 -->
+<div id="footer" class="mar-t50">
+   <div class="runoob-block">
+   </div>
+   <div class="w-1000 copyright">
+     Copyright © 2016-2021    <strong><a href="https://www.itread01.com/content/https//www.itread01.com/" target="_blank">IT閱讀</a></strong>&nbsp;
+    <strong><a href="https://www.itread01.com/" target="_blank">Itread01.com</a></strong> All Rights Reserved. 
+   </div>
+  </div>
+<script src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/main.js"></script>
+
+<div style="display:none"><script type="text/javascript" src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/c.js"></script><script src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/z_stat.php" language="JavaScript"></script><script src="%E5%9F%BA%E6%96%BCSpringboot%E7%9A%84Spring%20AOP%E5%AD%B8%E7%BF%92%E8%A8%98%E9%8C%84%20-%20IT%E9%96%B1%E8%AE%80_files/core.php" charset="utf-8" type="text/javascript"></script><a href="https://www.cnzz.com/stat/website.php?web_id=1275098034" target="_blank" title="站长统计">站长统计</a>
+0.001291036605835</div>
+
+</code></div></body></html>

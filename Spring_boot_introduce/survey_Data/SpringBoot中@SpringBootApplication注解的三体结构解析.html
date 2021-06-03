@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" charset="utf-8" src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/core.php"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.6.55">
+<link href="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/common.css" rel="stylesheet">
+<title>SpringBoot中@SpringBootApplication注解的三体结构解析</title>
+<meta name="description" content="@SpringBootApplication 是一个三体结构，实际上它是一个复合 Annotation： @Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @Inherited @Configuration @EnableAutoConfiguration @ComponentScanpublic @inter">
+</head>
+<body>
+<div id="topbar" class="clearfix">
+<ul id="product-type" class="left">
+<li>
+<a href="http://c.biancheng.net/"><span class="iconfont iconfont-home"></span>首页</a>
+</li>
+<li class="active">
+<a href="http://c.biancheng.net/sitemap/" rel="nofollow"><span class="iconfont iconfont-book"></span>教程</a>
+</li>
+<li>
+<a href="http://fudao.biancheng.net/" rel="nofollow" target="_blank"><span class="iconfont iconfont-fudao"></span>辅导班</a>
+</li>
+<li>
+<a href="http://vip.biancheng.net/p/q2a/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-q2a"></span>一对一答疑</a>
+</li>
+<li>
+<a href="http://vip.biancheng.net/p/points/show.php" rel="nofollow" target="_blank"><span class="iconfont iconfont-points"></span>积分套餐</a>
+</li>
+</ul>
+</div>
+<div id="header" class="clearfix">
+<a id="logo" class="left" href="http://c.biancheng.net/">
+<img src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/logo.png" alt="C语言中文网" height="26">
+</a>
+<ul id="nav-main" class="hover-none left clearfix">
+<li><a href="http://c.biancheng.net/c/">C语言教程</a></li>
+<li><a href="http://c.biancheng.net/cplus/">C++教程</a></li>
+<li><a href="http://c.biancheng.net/python/">Python教程</a></li>
+<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+<li><a href="http://c.biancheng.net/linux_tutorial/">Linux入门</a></li>
+<li><a href="http://c.biancheng.net/sitemap/" title="网站地图">更多&gt;&gt;</a></li>
+</ul>
+<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar">目录 <span class="glyphicon"></span></span>
+<a href="http://vip.biancheng.net/?from=topbar" class="user-info glyphicon glyphicon-user hover-none" target="_blank" rel="nofollow" title="用户中心"></a>
+</div>
+<div id="main" class="clearfix">
+<div id="sidebar" class="toggle-target">
+<div id="contents">
+<dt><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><a href="http://c.biancheng.net/spring_boot/">Spring Boot</a></dt>
+<dd>
+<span class="channel-num">1</span>
+<a href="http://c.biancheng.net/view/4615.html">什么是微服务</a>
+</dd>
+<dd>
+<span class="channel-num">2</span>
+<a href="http://c.biancheng.net/view/4618.html">微服务的好处</a>
+</dd>
+<dd>
+<span class="channel-num">3</span>
+<a href="http://c.biancheng.net/view/4619.html">微服务会带来的挑战</a>
+</dd>
+<dd>
+<span class="channel-num">4</span>
+<a href="http://c.biancheng.net/view/4626.html">Spring框架的起源</a>
+</dd>
+<dd>
+<span class="channel-num">5</span>
+<a href="http://c.biancheng.net/view/4627.html">Spring IoC介绍</a>
+</dd>
+<dd>
+<span class="channel-num">6</span>
+<a href="http://c.biancheng.net/view/4629.html">Spring JavaConfig</a>
+</dd>
+<dd>
+<span class="channel-num">7</span>
+<a href="http://c.biancheng.net/view/4630.html">SpringBoot是什么</a>
+</dd>
+<dd>
+<span class="channel-num">8</span>
+<a href="http://c.biancheng.net/view/4624.html">SpringBoot快速搭建</a>
+</dd>
+<dd class="active">
+<span class="channel-num">9</span>
+<a href="http://c.biancheng.net/view/4625.html">@SpringBootApplication</a>
+</dd>
+<dd>
+<span class="channel-num">10</span>
+<a href="http://c.biancheng.net/view/4632.html">SpringApplication执行流程</a>
+</dd>
+<dd>
+<span class="channel-num">11</span>
+<a href="http://c.biancheng.net/view/4637.html">Spring Boot的自动配置</a>
+</dd>
+<dd>
+<span class="channel-num">12</span>
+<a href="http://c.biancheng.net/view/4638.html">Spring-Boot-Starter</a>
+</dd>
+<dd>
+<span class="channel-num">13</span>
+<a href="http://c.biancheng.net/view/4639.html">spring-boot-starter-logging和spring-boot-starter-web</a>
+</dd>
+<dd>
+<span class="channel-num">14</span>
+<a href="http://c.biancheng.net/view/4641.html">spring-boot-starter-web</a>
+</dd>
+<dd>
+<span class="channel-num">15</span>
+<a href="http://c.biancheng.net/view/4644.html">spring-boot-starter-jdbc</a>
+</dd>
+<dd>
+<span class="channel-num">16</span>
+<a href="http://c.biancheng.net/view/4648.html">spring-boot-starter-aop</a>
+</dd>
+<dd>
+<span class="channel-num">17</span>
+<a href="http://c.biancheng.net/view/4665.html">spring-boot-starter-security</a>
+</dd>
+<dd>
+<span class="channel-num">18</span>
+<a href="http://c.biancheng.net/view/4666.html">spring-boot-starter-actuator</a>
+</dd>
+<dd>
+<span class="channel-num">19</span>
+<a href="http://c.biancheng.net/view/4668.html">基于Dubbo的SpringBoot微服务</a>
+</dd>
+<dd>
+<span class="channel-num">20</span>
+<a href="http://c.biancheng.net/view/4670.html">SpringBoot构建Web API</a>
+</dd>
+<dd>
+<span class="channel-num">21</span>
+<a href="http://c.biancheng.net/view/4671.html">SpringBoot构建其他形式的微服务</a>
+</dd>
+<dd>
+<span class="channel-num">22</span>
+<a href="http://c.biancheng.net/view/4673.html">SpringBoot微服务的发布与部署</a>
+</dd>
+<dd>
+<span class="channel-num">23</span>
+<a href="http://c.biancheng.net/view/4675.html">SpringBoot微服务的注册与发现</a>
+</dd>
+<dd>
+<span class="channel-num">24</span>
+<a href="http://c.biancheng.net/view/4676.html">SpringBoot微服务的监控与运维</a>
+</dd>
+<dd>
+<span class="channel-num">25</span>
+<a href="http://c.biancheng.net/view/4682.html">SpringBoot中使用Scala开发</a>
+</dd>
+<dd>
+<span class="channel-num">26</span>
+<a href="http://c.biancheng.net/view/4683.html">Maven构建基于Scala的SpringBoot微服务</a>
+</dd>
+<dd>
+<span class="channel-num">27</span>
+<a href="http://c.biancheng.net/view/4684.html">简化基于Maven的Scala项目创建</a>
+</dd>
+<dd>
+<span class="channel-num">28</span>
+<a href="http://c.biancheng.net/view/4690.html">简化基于Scala的Web API开发</a>
+</dd>
+<dd>
+<span class="channel-num">29</span>
+<a href="http://c.biancheng.net/view/4692.html">SBT构建基于Scala的SpringBoot微服务</a>
+</dd>
+</div>
+</div>
+<div id="article-wrap">
+<div id="article">
+<div class="arc-info">
+<span class="position"><span class="glyphicon glyphicon-map-marker"></span> <a href="http://c.biancheng.net/">首页</a> &gt; <a href="http://c.biancheng.net/spring_boot/">Spring Boot</a></span>
+<span class="read-num">阅读：65,178</span>
+</div>
+<div id="ad-position-bottom"></div>
+<h1>SpringBoot中@SpringBootApplication注解的三体结构解析</h1>
+<div class="pre-next-page clearfix">
+<span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/4624.html">SpringBoot快速搭建</a></span>
+<span class="next right"><a href="http://c.biancheng.net/view/4632.html">SpringApplication执行流程</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+</div>
+<div id="ad-arc-top"><p class="pic"></p><p class="text" adid="java-1v1q2a"><a href="http://c.biancheng.net/view/7552.html" target="_blank" style="color: #D33428;">Java一对一答疑，帮助有志青年！使用QQ在线辅导，哪里不懂问哪里，整个过程都是一对一，学习更有针对性。和作者直接交流，不但提升技能，还提升 Level；当你决定加入我们，你已然超越了 90% 的程序员。<span style="color:#08c;">猛击这里了解详情。</span></a></p></div>
+<div id="arc-body">@<a href="http://c.biancheng.net/spring_boot/" target="_blank">SpringBoot</a>Application 是一个“三体”结构，实际上它是一个复合 Annotation：<br>
+<p class="info-box">
+@Target(ElementType.TYPE)<br>
+@Retention(RetentionPolicy.RUNTIME)<br>
+@Documented<br>
+@Inherited<br>
+@Configuration<br>
+@EnableAutoConfiguration<br>
+@ComponentScanpublic<br>
+@interface<br>
+<a href="http://c.biancheng.net/spring/" target="_blank">Spring</a>BootApplication{...}</p>
+虽然它的定义使用了多个 Annotation 进行元信息标注，但实际上对于 SpringBoot 应用来说，重要的只有三个 Annotation，而“三体”结构实际上指的就是这三个 Annotation：<br>
+<ul>
+<li>
+@Configuration</li>
+<li>
+@EnableAutoConfiguration</li>
+<li>
+@ComponentScan</li>
+</ul>
+<br>
+所以，如果我们使用如下的 SpringBoot 启动类，整个 SpringBoot 应用依然可以与之前的启动类功能对等：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="#" style="display: none;">复制</a><a class="snippet-text sh_url" href="#">纯文本</a><a class="snippet-window sh_url" href="#">复制</a></pre></div><pre class="java sh_java snippet-formatted sh_sourceCode"><ol class="snippet-num"><li>@Configuration</li><li>@EnableAutoConfiguration</li><li>@ComponentScanpublic</li><li><span class="sh_keyword">class</span><span class="sh_normal"> </span><span class="sh_classname">DemoApplication</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">public</span> <span class="sh_keyword">static</span> <span class="sh_type">void</span> <span class="sh_function">main</span><span class="sh_symbol">(</span>String<span class="sh_symbol">[]</span> args<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        SpringApplication<span class="sh_symbol">.</span><span class="sh_function">run</span><span class="sh_symbol">(</span>DemoApplication<span class="sh_symbol">.</span><span class="sh_keyword">class</span><span class="sh_symbol">,</span> args<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">@Configuration
+@EnableAutoConfiguration
+@ComponentScanpublic
+class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}</pre></div></div>
+但每次都写三个 Annotation 显然过于繁琐，所以写一个 @SpringBootApplication 这样的一站式复合 Annotation 显然更方便些。
+<h2>
+@Configuration 创世纪</h2>
+这里的 @Configuration 对我们来说并不陌生，它就是 <a href="http://c.biancheng.net/java/" target="_blank">Java</a>Config
+ 形式的 Spring IoC 容器的配置类使用的那个 @Configuration，既然 SpringBoot 应用骨子里就是一个 
+Spring 应用，那么，自然也需要加载某个 IoC 容器的配置，而 SpringBoot 社区推荐使用基于 JavaConfig 
+的配置形式，所以，很明显，这里的启动类标注了 @Configuration 之后，本身其实也是一个 IoC 容器的配置类！<br>
+<br>
+很多 SpringBoot 的代码示例都喜欢在启动类上直接标注 @Configuration 或者 
+@SpringBootApplication，对于初接触 SpringBoot 的开发者来说，其实这种做法不便于理解，如果我们将上面的 
+SpringBoot 启动类拆分为两个独立的 Java 类，整个形势就明朗了：
+<pre>@Configuration
+@EnableAutoConfiguration
+@ComponentScan
+public class DemoConfiguration {
+    @Bean
+    public Controller controller() {
+        return new Controller();
+    }
+}
+
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoConfiguration.class, args);
+    }
+}</pre>
+所以，启动类 DemoApplication 其实就是一个标准的 Standalone 类型 Java 程序的 main 
+函数启动类，没有什么特殊的。而 @Configuration 标注的 DemoConfiguration 定义其实也是一个普通的 
+JavaConfig 形式的 IoC 容器配置类。<br>
+<h2>
+@EnableAutoConfiguration 的功效</h2>
+@EnableAutoConfiguration 其实也没啥“创意”，各位是否还记得 Spring 框架提供的各种名字为 @Enable 开头的 Annotation 定义？<br>
+<br>
+比如 @EnableScheduling、@EnableCaching、@EnableMBeanExport 
+等，@EnableAutoConfiguration 的理念和“做事方式”其实一脉相承，简单概括一下就是，借助 @Import 
+的支持，收集和注册特定场景相关的 bean 定义：<br>
+<ul>
+<li>
+@EnableScheduling 是通过 @Import 将 Spring 调度框架相关的 bean 定义都加载到 IoC 容器。</li>
+<li>
+@EnableMBeanExport 是通过 @Import 将 JMX 相关的 bean 定义加载到 IoC 容器。</li>
+</ul>
+<br>
+而 @EnableAutoConfiguration 也是借助 @Import 的帮助，将所有符合自动配置条件的 bean 定义加载到 IoC 容器，仅此而已！<br>
+<br>
+@EnableAutoConfiguration 作为一个复合 Annotation，其自身定义关键信息如下：
+<p class="info-box">
+@Target(ElementType.TYPE)<br>
+@Retention(RetentionPolicy.RUNTIME)<br>
+@Documented<br>
+@Inherited<br>
+@AutoConfigurationPackage<br>
+@Import(EnableAutoConfigurationImportSelector.class)<br>
+public @interface EnableAutoConfiguration {...}</p>
+其中，最关键的要属 @Import（EnableAutoConfigurationImportSelector.class），借助 
+EnableAutoConfigurationImportSelector，@EnableAutoConfiguration 可以帮助 
+SpringBoot 应用将所有符合条件的 @Configuration 配置都加载到当前 SpringBoot 创建并使用的 IoC 
+容器，就跟一只“八爪鱼”一样（如图 1 所示）。
+<div style="text-align: center;">
+<img alt="EnableAutoConfiguration得以生效的关键组件关系图" src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/5-1ZI1093132I5.png"><br>
+图 1&nbsp;&nbsp;EnableAutoConfiguration得以生效的关键组件关系图</div>
+<br>
+借助于 Spring 框架原有的一个工具类：SpringFactoriesLoader 的支持，@EnableAutoConfiguration 可以“智能”地自动配置功效才得以大功告成！<br>
+<h2>
+SpringFactoriesLoader详解</h2>
+SpringFactoriesLoader 属于 Spring 框架私有的一种扩展方案（类似于 Java 的 SPI 方案 
+java.util.ServiceLoader），其主要功能就是从指定的配置文件 META-INF/spring.factories 
+加载配置，spring.factories 是一个典型的 java properties 文件，配置的格式为 Key=Value 形式，只不过 
+Key 和 Value 都是 Java 类型的完整类名（Fully qualified name），比如：<br>
+<br>
+example.MyService=example.MyServiceImpl1,example.MyServiceImpl2 然后框架就可以根据某个类型作为 Key 来查找对应的类型名称列表了：
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: block;"><pre><a class="snippet-copy sh_url" href="#" style="display: none;">复制</a><a class="snippet-text sh_url" href="#">纯文本</a><a class="snippet-window sh_url" href="#">复制</a></pre></div><pre class="java sh_java snippet-formatted sh_sourceCode"><ol class="snippet-num"><li><span class="sh_keyword">public</span> <span class="sh_keyword">abstract</span> <span class="sh_keyword">class</span><span class="sh_normal"> </span><span class="sh_classname">SpringFactoriesLoader</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_comment">// ...</span></li><li>    <span class="sh_keyword">public</span> <span class="sh_keyword">static</span> <span class="sh_symbol">&lt;</span>T<span class="sh_symbol">&gt;</span> <span class="sh_usertype">List&lt;T&gt; loadFactories(Class&lt;T&gt;</span><span class="sh_normal"> </span>factoryClass<span class="sh_symbol">,</span> <span class="sh_usertype">ClassLoader</span><span class="sh_normal"> </span>classLoader<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_symbol">...</span></li><li>    <span class="sh_cbracket">}</span></li><li><span style="display:none;">&nbsp;</span></li><li>    <span class="sh_keyword">public</span> <span class="sh_keyword">static</span> <span class="sh_usertype">List&lt;String&gt; loadFactoryNames(Class&lt;?&gt;</span><span class="sh_normal"> </span>factoryClass<span class="sh_symbol">,</span> <span class="sh_usertype">ClassLoader</span><span class="sh_normal"> </span>classLoader<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        <span class="sh_symbol">...</span></li><li>    <span class="sh_cbracket">}</span></li><li>    <span class="sh_comment">// ...</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">public abstract class SpringFactoriesLoader {
+    // ...
+    public static &lt;T&gt; List&lt;T&gt; loadFactories(Class&lt;T&gt; factoryClass, ClassLoader classLoader) {
+        ...
+    }
+
+    public static List&lt;String&gt; loadFactoryNames(Class&lt;?&gt; factoryClass, ClassLoader classLoader) {
+        ...
+    }
+    // ...
+}</pre></div></div>
+对于 @EnableAutoConfiguration 来说，SpringFactoriesLoader 的用途稍微不同一些，其本意是为了提供 
+SPI 扩展的场景，而在 @EnableAutoConfiguration 的场景中，它更多是提供了一种配置查找的功能支持，即根据 
+@EnableAutoConfiguration 的完整类名 
+org.springframework.boot.autoconfigure.EnableAutoConfiguration 作为查找的 
+Key，获取对应的一组 @Configuration 类：
+<p class="info-box">
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=<br>
+\org.springframework.boot.autoconfigure.admin.SpringApplicationAdmin- JmxAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.MessageSourceAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.PropertyPlaceholderAuto- Configuration,<br>
+\org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.cassandra.CassandraAuto-Configuration,<br>
+\org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.context.ConfigurationProperties-AutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.dao.PersistenceException-TranslationAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.data.cassandra.Cassandra-DataAutoConfiguration,<br>
+\org.springframework.boot.autoconfigure.data.cassandra.Cassandra-RepositoriesAutoConfiguration,<br>
+\...</p>
+以上是从 SpringBoot 的 autoconfigure 依赖包中的 META-INF/spring.factories 配置文件中摘录的一段内容，可以很好地说明问题。<br>
+<br>
+所以，@EnableAutoConfiguration 自动配置的魔法其实就变成了：从 classpath 中搜寻所有 
+META-INF/spring.factories 配置文件，并将其中 
+org.spring-framework.boot.autoconfigure.EnableAutoConfiguration 
+对应的配置项通过反射（Java Reflection）实例化为对应的标注了 @Configuration 的 JavaConfig 形式的 
+IoC 容器配置类，然后汇总为一个并加载到 IoC 容器。<br>
+<h2>
+可有可无的@ComponentScan</h2>
+为啥说 @ComponentScan 是可有可无的？<br>
+<br>
+因为原则上来说，作为 Spring 框架里的“老一辈革命家”，@ComponentScan 的功能其实就是自动扫描并加载符合条件的组件或 
+bean 定义，最终将这些 bean 定义加载到容器中。加载 bean 定义到 Spring 的 IoC 
+容器，我们可以手工单个注册，不一定非要通过批量的自动扫描完成，所以说 @ComponentScan 是可有可无的。<br>
+<br>
+对于 SpringBoot 应用来说，同样如此，比如我们本章的启动类：<br>
+<div class="snippet-container" style="undefined;"><div class="sh_bright snippet-wrap"><div class="snippet-menu sh_sourceCode" style="display: none;"><pre><a class="snippet-copy sh_url" href="#" style="display: none;">复制</a><a class="snippet-text sh_url" href="#">纯文本</a><a class="snippet-window sh_url" href="#">复制</a></pre></div><pre class="java sh_java snippet-formatted sh_sourceCode"><ol class="snippet-num"><li>@Configuration</li><li>@EnableAutoConfiguration</li><li>@ComponentScanpublic</li><li><span class="sh_keyword">class</span><span class="sh_normal"> </span><span class="sh_classname">DemoApplication</span> <span class="sh_cbracket">{</span></li><li>    <span class="sh_keyword">public</span> <span class="sh_keyword">static</span> <span class="sh_type">void</span> <span class="sh_function">main</span><span class="sh_symbol">(</span>String<span class="sh_symbol">[]</span> args<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span></li><li>        SpringApplication<span class="sh_symbol">.</span><span class="sh_function">run</span><span class="sh_symbol">(</span>DemoApplication<span class="sh_symbol">.</span><span class="sh_keyword">class</span><span class="sh_symbol">,</span> args<span class="sh_symbol">);</span></li><li>    <span class="sh_cbracket">}</span></li><li><span class="sh_cbracket">}</span></li></ol></pre><pre class="snippet-textonly sh_sourceCode" style="display:none;">@Configuration
+@EnableAutoConfiguration
+@ComponentScanpublic
+class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}</pre></div></div>
+如果我们当前应用没有任何 bean 定义需要通过 @ComponentScan 加载到当前 SpringBoot 应用对应使用的 IoC 容器，那么，除去 @ComponentScan 的声明，当前 SpringBoot 应用依然可以照常运行，功能对等。</div>
+<div class="pre-next-page clearfix">
+<span class="pre left"><span class="icon">&lt;</span> <span class="text-brief text-brief-pre">上一页</span><a href="http://c.biancheng.net/view/4624.html">SpringBoot快速搭建</a></span>
+<span class="next right"><a href="http://c.biancheng.net/view/4632.html">SpringApplication执行流程</a><span class="text-brief text-brief-next">下一页</span> <span class="icon">&gt;</span></span>
+</div>
+<div id="ad-arc-bottom"></div>
+<div id="ad-bottom-weixin" class="clearfix">
+<div class="left" style="width: 535px;">
+<p><span class="col-red">编程帮</span>，一个分享编程知识的公众号。跟着<a class="col-link" href="http://c.biancheng.net/cpp/about/author/" target="_blank">站长</a>一起学习，每天都有进步。</p>
+<p>通俗易懂，深入浅出，一篇文章只讲一个知识点。</p>
+<p>文章不深奥，不需要钻研，在公交、在地铁、在厕所都可以阅读，随时随地涨姿势。</p>
+<p>文章不涉及代码，不烧脑细胞，人人都可以学习。</p>
+<p>当你决定关注「编程帮」，你已然超越了90%的程序员！</p>
+</div>
+<div class="right" style="width: 150px;">
+<img src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/erweima_biancheng.gif" alt="编程帮二维码" width="150"><br>
+<span class="col-green">微信扫描二维码关注</span>
+</div>
+</div>
+<div id="all-course" class="box-bottom">
+<h4>所有教程</h4>
+<ul class="clearfix">
+<li><a href="http://c.biancheng.net/design_pattern/">设计模式</a></li>
+<li><a href="http://c.biancheng.net/c/">C语言入门</a></li>
+<li><a href="http://c.biancheng.net/compiler/">C语言编译器</a></li>
+<li><a href="http://c.biancheng.net/c/practice/">C语言项目案例</a></li>
+<li><a href="http://c.biancheng.net/data_structure/">数据结构</a></li>
+<li><a href="http://c.biancheng.net/cplus/">C++</a></li>
+<li><a href="http://c.biancheng.net/stl/">STL</a></li>
+<li><a href="http://c.biancheng.net/cplus/11/">C++11</a></li>
+<li><a href="http://c.biancheng.net/socket/">socket</a></li>
+<li><a href="http://c.biancheng.net/gcc/">GCC</a></li>
+<li><a href="http://c.biancheng.net/gdb/">GDB</a></li>
+<li><a href="http://c.biancheng.net/makefile/">Makefile</a></li>
+<li><a href="http://c.biancheng.net/opencv/">OpenCV</a></li>
+<li><a href="http://c.biancheng.net/qt/">Qt教程</a></li>
+<li><a href="http://c.biancheng.net/unity3d/">Unity 3D</a></li>
+<li><a href="http://c.biancheng.net/ue4/">UE4</a></li>
+<li><a href="http://c.biancheng.net/game_engine/">游戏引擎</a></li>
+<li><a href="http://c.biancheng.net/python/">Python</a></li>
+<li><a href="http://c.biancheng.net/python/thread/">Python并发编程</a></li>
+<li><a href="http://c.biancheng.net/tensorflow/">TensorFlow</a></li>
+<li><a href="http://c.biancheng.net/django/">Django</a></li>
+<li><a href="http://c.biancheng.net/python/numpy/">NumPy</a></li>
+<li><a href="http://c.biancheng.net/linux_tutorial/">Linux</a></li>
+<li><a href="http://c.biancheng.net/shell/">Shell</a></li>
+<li><a href="http://c.biancheng.net/java/">Java教程</a></li>
+<li><a href="http://c.biancheng.net/swing/">Java Swing</a></li>
+<li><a href="http://c.biancheng.net/servlet/">Servlet</a></li>
+<li><a href="http://c.biancheng.net/jsp/">JSP教程</a></li>
+<li><a href="http://c.biancheng.net/struts2/">Struts2</a></li>
+<li><a href="http://c.biancheng.net/maven/">Maven</a></li>
+<li><a href="http://c.biancheng.net/spring/">Spring</a></li>
+<li><a href="http://c.biancheng.net/spring_mvc/">Spring MVC</a></li>
+<li><a href="http://c.biancheng.net/spring_boot/">Spring Boot</a></li>
+<li><a href="http://c.biancheng.net/spring_cloud/">Spring Cloud</a></li>
+<li><a href="http://c.biancheng.net/hibernate/">Hibernate</a></li>
+<li><a href="http://c.biancheng.net/mybatis/">Mybatis</a></li>
+<li><a href="http://c.biancheng.net/mysql/">MySQL教程</a></li>
+<li><a href="http://c.biancheng.net/mysql/function/">MySQL函数</a></li>
+<li><a href="http://c.biancheng.net/nosql/">NoSQL</a></li>
+<li><a href="http://c.biancheng.net/redis/">Redis</a></li>
+<li><a href="http://c.biancheng.net/mongodb/">MongoDB</a></li>
+<li><a href="http://c.biancheng.net/hbase/">HBase</a></li>
+<li><a href="http://c.biancheng.net/golang/">Go语言</a></li>
+<li><a href="http://c.biancheng.net/csharp/">C#</a></li>
+<li><a href="http://c.biancheng.net/matlab/">MATLAB</a></li>
+<li><a href="http://c.biancheng.net/js/">JavaScript</a></li>
+<li><a href="http://c.biancheng.net/bootstrap/">Bootstrap</a></li>
+<li><a href="http://c.biancheng.net/html/">HTML</a></li>
+<li><a href="http://c.biancheng.net/css/">CSS教程</a></li>
+<li><a href="http://c.biancheng.net/php/">PHP</a></li>
+<li><a href="http://c.biancheng.net/asm/">汇编语言</a></li>
+<li><a href="http://c.biancheng.net/tcp_ip/">TCP/IP</a></li>
+<li><a href="http://c.biancheng.net/vi/">vi命令</a></li>
+<li><a href="http://c.biancheng.net/android/">Android教程</a></li>
+<li><a href="http://c.biancheng.net/blockchain/">区块链</a></li>
+<li><a href="http://c.biancheng.net/docker/">Docker</a></li>
+<li><a href="http://c.biancheng.net/big_data/">大数据</a></li>
+<li><a href="http://c.biancheng.net/cloud_computing/">云计算</a></li>
+<li><a href="http://c.biancheng.net/skill/">编程笔记</a></li>
+<li><a href="http://c.biancheng.net/download/">资源下载</a></li>
+<li><a href="http://c.biancheng.net/vip_package/">VIP视频</a></li>
+<li><a href="http://c.biancheng.net/1v1q2a/">一对一答疑</a></li>
+<li><a href="http://c.biancheng.net/about/">关于我们</a></li>
+</ul>
+</div>
+<div id="nice-arcs" class="box-bottom">
+<h4>优秀文章</h4>
+<ul class="clearfix">
+<li><a href="http://c.biancheng.net/view/739.html" title="执行Shell脚本（多种方法）">执行Shell脚本（多种方法）</a></li>
+<li><a href="http://c.biancheng.net/view/1513.html" title="C++谓词函数（无师自通）">C++谓词函数（无师自通）</a></li>
+<li><a href="http://c.biancheng.net/view/2555.html" title="MySQL LIMIT：限制查询结果的记录条数">MySQL LIMIT：限制查询结果的记录条数</a></li>
+<li><a href="http://c.biancheng.net/view/3523.html" title="大数据开发涉及到的关键技术有哪些？">大数据开发涉及到的关键技术有哪些？</a></li>
+<li><a href="http://c.biancheng.net/view/4345.html" title="MyBatis ObjectFactory（对象工厂）">MyBatis ObjectFactory（对象工厂）</a></li>
+<li><a href="http://c.biancheng.net/view/4439.html" title="Spring MVC数据验证简介">Spring MVC数据验证简介</a></li>
+<li><a href="http://c.biancheng.net/view/4833.html" title="JSP application.getServletInfo()方法：获取servlet容器的名称和当前版本">JSP application.getServletInfo()方法：获取servlet容器的名称和当前版本</a></li>
+<li><a href="http://c.biancheng.net/view/4994.html" title="JSP JSTL &lt;c:redirect&gt;标签：重定向标签">JSP JSTL &lt;c:redirect&gt;标签：重定向标签</a></li>
+<li><a href="http://c.biancheng.net/view/5203.html" title="Hibernate begin方法：开启事务">Hibernate begin方法：开启事务</a></li>
+<li><a href="http://c.biancheng.net/view/vip_7300.html" title="Go语言是怎么完成编译的">Go语言是怎么完成编译的</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 4625;
+window.arcId = "ea1dD6plup/bYMpW34WlrD3R8VS480ryP/naJRfLpO7M4OiiYPnWp5TFUJg";
+window.typeidChain = "302";
+</script>
+<div id="footer" class="clearfix">
+<div class="info left">
+<p>精美而实用的网站，分享优质编程教程，帮助有志青年。千锤百炼，只为大作；精益求精，处处斟酌；这种教程，看一眼就倾心。</p>
+<p>
+<a href="http://c.biancheng.net/view/8066.html" target="_blank" rel="nofollow">关于网站</a> <span>|</span>
+<a href="http://c.biancheng.net/view/8092.html" target="_blank" rel="nofollow">关于站长</a> <span>|</span>
+<a href="http://c.biancheng.net/view/8097.html" target="_blank" rel="nofollow">如何完成一部教程</a> <span>|</span>
+<a href="http://c.biancheng.net/view/8093.html" target="_blank" rel="nofollow">联系我们</a> <span>|</span>
+<a href="http://c.biancheng.net/sitemap/" target="_blank" rel="nofollow">网站地图</a>
+</p>
+<p>Copyright ©2012-2020 biancheng.net, <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow" style="color:#666;">陕ICP备15000209号</a></p>
+</div>
+<img class="right" src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/logo_bottom.gif" alt="底部Logo">
+<span id="return-top"><b>↑</b></span>
+</div>
+<script type="text/javascript">
+window.siteId = 4;
+window.cmsTemplets = "/templets/new";
+window.cmsTempletsVer = "1.6.55";
+</script>
+<script src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/jquery1.js"></script>
+<script src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/common.js"></script>
+<span style="display:none;"><script src="SpringBoot%E4%B8%AD@SpringBootApplication%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%B8%89%E4%BD%93%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90_files/z_stat.php" type="text/javascript" defer="defer" async="async"></script></span>
+
+</body></html>
