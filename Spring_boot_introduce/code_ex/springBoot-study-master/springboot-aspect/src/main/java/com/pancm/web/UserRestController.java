@@ -2,10 +2,7 @@ package com.pancm.web;
 
 import com.pancm.pojo.User;
 import com.pancm.result.ResultBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,7 @@ public class UserRestController {
 
 
     @GetMapping("/user")
-    public ResultBody findByUser(User  user) {
+    public ResultBody findByUser( User  user) {
         System.out.println("用户查询接口请求的参数:"+user);
         ResultBody resultBody = new ResultBody();
         List<User> userList =new ArrayList<>();
