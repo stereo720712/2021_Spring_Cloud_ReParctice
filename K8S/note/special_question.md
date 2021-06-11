@@ -46,3 +46,9 @@ K8S我沒使用過,之前有稍微了解過,昨天先稍微再複習了一下,�
 至於k8s只是一套Docker container 的 cluser managerment system.
 另外Azure 也有提供K8S的服務
 https://docs.microsoft.com/zh-tw/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli
+
+
+
+# MY-Q:
+
+先從 本地構建練習 k8s 還是直接練習 如何使用 azure 做 微服務?
