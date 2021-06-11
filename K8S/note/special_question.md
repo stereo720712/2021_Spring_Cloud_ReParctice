@@ -6,7 +6,7 @@
 ###　ans:
    1.先補充一點 如果是 單純幾個springboot的應用, 先安裝azure cli工具
    這邊看文件都是利用 maven的 azure外掛 設定一些azure上需要的像
-   是帳號等資訊之後編譯,然後佈屬上傳
+   是帳號等資訊之後編譯,然後佈署上傳
    (實際操作:
     1.1 use maven azure wep app plugin
     mvn com.microsoft.azure:azure-webapp-maven-plugin:1.14.0:config
@@ -23,6 +23,7 @@
    實際上看快速入門的設定大概步驟如下:
      1.package your app with maven.(should have azure maven plugin)
      
+
      ---use az cli tools to work (can use maven cli, IDEA plugin too)
      2.use azure spring cloud service establish a spring cloud instance, then set instance name, resource group name.
      3.establish config server with git
@@ -36,7 +37,7 @@
 
 ## Q2.這個平台PaaS平台管的，跟使用Java Spring Boot 使用K8S來管,
 之間的差異有哪些?
-首先,我對整個完整的Docker佈署經驗並不足,只有稍微一些簡單的打包上船跑這樣的經驗.
+首先,我對整個完整的Docker佈署經驗並不足,只有稍微一些簡單的打包上傳跑這樣的經驗.
 K8S我沒使用過,之前有稍微了解過,昨天先稍微再複習了一下,他是一個對docker container
 做管理發佈的系統.
 那Azure 這個 PaaS呢?我自己稍微看了問題一的資料後,我的認知是:
