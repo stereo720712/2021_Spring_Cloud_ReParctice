@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!-- base href="https://www.cnblogs.com/miskis/p/9816135.html" --><style>body{margin-left:0;margin-right:0;margin-top:0}#bN015htcoyT__google-cache-hdr{background:#f8f9fa;font:13px arial,sans-serif;text-align:left;color:#202124;border:0;margin:0;border-bottom:1px solid #dadce0;line-height:16px;padding:16px 28px 24px 28px}#bN015htcoyT__google-cache-hdr *{display:inline;font:inherit;text-align:inherit;color:inherit;line-height:inherit;background:none;border:0;margin:0;padding:0;letter-spacing:0}#bN015htcoyT__google-cache-hdr a{text-decoration:none;color:#1a0dab}#bN015htcoyT__google-cache-hdr a:hover{text-decoration:underline}#bN015htcoyT__google-cache-hdr a:visited{color:#4b11a8}#bN015htcoyT__google-cache-hdr div{display:block;margin-top:4px}#bN015htcoyT__google-cache-hdr b{font-weight:bold;display:inline-block;direction:ltr}</style></head><body class="no-navbar"><div id="bN015htcoyT__google-cache-hdr"><div><span>這是 Google 對 <a href="https://www.cnblogs.com/miskis/p/9816135.html">https://www.cnblogs.com/miskis/p/9816135.html</a> 的快取。</span>&nbsp;<span>這是該網頁於 2021年6月6日 00:50:05 GMT 顯示時的快照。</span>&nbsp;<span>在此期間，<a href="https://www.cnblogs.com/miskis/p/9816135.html">目前網頁</a>可能已經變更。</span>&nbsp;<a href="http://support.google.com/websearch/bin/answer.py?hl=zh-TW&amp;p=cached&amp;answer=1687222"><span>瞭解更多資訊</span>.</a></div><div><span style="display:inline-block;margin-top:8px;margin-right:104px;white-space:nowrap"><span style="margin-right:28px"><span style="font-weight:bold">完整版</span></span><span style="margin-right:28px"><a href="http://webcache.googleusercontent.com/search?q=cache:xRO11rL3qg8J:https://www.cnblogs.com/miskis/p/9816135.html&amp;newwindow=1&amp;client=firefox-b-d&amp;hl=zh-TW&amp;strip=1&amp;vwsrc=0"><span>純文字版</span></a></span><span style="margin-right:28px"><a href="http://webcache.googleusercontent.com/search?q=cache:xRO11rL3qg8J:https://www.cnblogs.com/miskis/p/9816135.html&amp;newwindow=1&amp;client=firefox-b-d&amp;hl=zh-TW&amp;strip=0&amp;vwsrc=1"><span>檢視原始碼</span></a></span></span></div><span style="display:inline-block;margin-top:8px;color:#70757a"><span>提示：如要在這個網頁上快速尋找您所搜尋的字詞，請按下 <b>Ctrl+F</b> 鍵或 <b>⌘-F</b> 鍵 (Mac)，然後使用尋找列進行搜尋。</span></span></div><div style="position:relative;">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <meta name="description" content="源码地址：https://github.com/YANGKANG01/Spring-Boot-Demo 安装扩展 安装如下两个主要扩展即可，这两个扩展已关联java项目开发主要使用的maven、spr">
+    <meta property="og:description" content="源码地址：https://github.com/YANGKANG01/Spring-Boot-Demo 安装扩展 安装如下两个主要扩展即可，这两个扩展已关联java项目开发主要使用的maven、spr">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VsCode搭建Java开发环境（Spring Boot项目创建、运行、调试） - ice.ko - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <link rel="stylesheet" href="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common_002.htm">
+    
+    <link type="text/css" rel="stylesheet" href="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/custom.htm">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/bundle-coffee-mobile.htm">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/miskis/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/miskis/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/miskis/wlwmanifest.xml">
+    <script>
+        var currentBlogId = 283211;
+        var currentBlogApp = 'miskis';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'coffee';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2018-10-19 02:15';
+        </script>
+    <script src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery-2.htm"></script>
+    <script src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.htm"></script>
+    
+    
+    
+
+
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile formobile">
+            <a href="https://www.aliyun.com/minisite/goods?userCode=swh7dvlt" onclick="ga('send', 'event', 'Link', 'click', 'aliyun-cps-blog-bannerbar-mobile')">
+                <img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/35695-20210428213541700-642740375.htm" alt="">
+            </a>
+        </div>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/logo_002.htm" alt="博客园Logo"></a></li>
+                <li><a href="https://www.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3">
+                        <button type="submit" id="zzk_search_button">
+                            <img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/search.htm" alt="搜索">
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/newpost.htm" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/myblog.htm" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/message.htm" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/avatar-default.htm" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/lite-mode-check.htm" class="hide"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/miskis/"><img id="blogLogo" src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/logo.htm" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/miskis/"></a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/miskis/">
+首页</a>
+</li>
+	<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/ice.ko">
+联系</a></li>
+	<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+	<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/miskis/rss/">
+订阅</a>
+	
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/miskis/rss/">
+    <img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/xml.htm" alt="订阅">
+</a></li>
+</ul>
+
+
+
+			<div class="blogStats">
+				
+				<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/miskis/p/9816135.html">
+    <span>VsCode搭建Java开发环境（Spring Boot项目创建、运行、调试）</span>
+    
+
+
+
+</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<div id="translate_59744">
+<p>源码地址：<a href="https://github.com/YANGKANG01/Spring-Boot-Demo" target="_blank">https://github.com/YANGKANG01/Spring-Boot-Demo</a></p>
+<h4>安装扩展</h4>
+<p>安装如下两个主要扩展即可，这两个扩展已关联java项目开发主要使用的maven、springboot等所需要的扩展。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018140701454-853945200.htm" alt=""></p>
+<p>开始步骤：</p>
+<ol>
+<li>在 Visual Studio Code 中打开扩展视图(Ctrl+Shift+X)。</li>
+<li>输入“java”搜索商店扩展插件。</li>
+<li>找到并安装&nbsp;<a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack" rel="nofollow" target="_blank">Java Extension Pack (Java 扩展包)</a>，如果你已经安装了&nbsp;<a href="https://marketplace.visualstudio.com/items?itemName=redhat.java" rel="nofollow" target="_blank">Language Support for Java(TM) by Red Hat</a>，也可以单独找到并安装&nbsp;<a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug" rel="nofollow" target="_blank">Java Debugger for Visual Studio Code</a>&nbsp;扩展。</li>
+<li>输入“Spring Boot Extension”搜索商店扩展插件。</li>
+<li>找到并安装 “Spring Boot Extension Pack”。安装过程中可能会比较慢，耐心等待即可。</li>
+</ol></div>
+<div id="translate_59745">
+<p>配置Maven：</p>
+<p>点左下角的设置图标-&gt;设置，打开设置内容筛选框，输入maven，然后点击右侧的打开json格式setting：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018142037876-936312706.htm" alt=""></p>
+<p>然后把maven的可执行文件路径配置、maven的setting路径配置、java.home的路径配置，拷贝到右侧的用户设置区域并且设置为自己电脑的实际路径</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018142807301-1282887727.htm" alt=""></p>
+<p>设置内容如下：</p>
+<div class="cnblogs_code">
+<pre><span>{
+    "workbench.iconTheme": "vscode-icons"<span>,
+    "workbench.startupEditor": "newUntitledFile"<span>,
+    "java.errors.incompleteClasspath.severity": "ignore"<span>,
+    "workbench.colorTheme": "Atom One Dark"<span>,
+    "java.home":"D:\\software\\Java\\jdk1.8.0_60"<span>,
+    "java.configuration.maven.userSettings": "D:\\software\\apache-maven-3.3.3-bin\\apache-maven-3.3.3\\conf\\settings.xml"<span>,
+    "maven.executable.path": "D:\\software\\apache-maven-3.3.3-bin\\apache-maven-3.3.3\\bin\\mvn.cmd"<span>,
+    "maven.terminal.useJavaHome": true<span>,
+    "maven.terminal.customEnv"<span>: [
+        {
+            "environmentVariable": "JAVA_HOME"<span>,
+            "value": "D:\\software\\Java\\jdk1.8.0_60"<span>
+        }
+    ],
+}</span></span></span></span></span></span></span></span></span></span></span></span></pre>
+</div>
+<p>如果你的mvn更新包速度很慢，建议使用阿里云的镜像速度会快点（修改maven的setting配置如下）：</p>
+<div class="cnblogs_code">
+<pre> <span style="color: rgba(0, 128, 0, 1)">&lt;!--</span><span style="color: rgba(0, 128, 0, 1)"> 阿里云仓库 </span><span style="color: rgba(0, 128, 0, 1)">--&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>alimaven<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>central<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>aliyun maven<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>http://maven.aliyun.com/nexus/content/repositories/central/<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>nexus-aliyun<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>*<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>Nexus aliyun<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>http://maven.aliyun.com/nexus/content/groups/public<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 128, 0, 1)">&lt;!--</span><span style="color: rgba(0, 128, 0, 1)"> 中央仓库1 </span><span style="color: rgba(0, 128, 0, 1)">--&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>repo1<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>central<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>Human Readable Name for this Mirror.<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>http://repo1.maven.org/maven2/<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+    
+        <span style="color: rgba(0, 128, 0, 1)">&lt;!--</span><span style="color: rgba(0, 128, 0, 1)"> 中央仓库2 </span><span style="color: rgba(0, 128, 0, 1)">--&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>repo2<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">id</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>central<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirrorOf</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>Human Readable Name for this Mirror.<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">name</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+            <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>http://repo2.maven.org/maven2/<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">url</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+        <span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">mirror</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span></pre>
+</div>
+<p>配置完成重启&nbsp;VSCode。</p>
+<h4>创建Spring Boot项目</h4>
+<p>使用快捷键(Ctrl+Shift+P)命令窗口，输入 Spring 选择创建 Maven 项目。 效果如下：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019110527579-986789609.htm" alt=""></p>
+<p>选择需要使用的语言、Group Id、项目名称等，这里选择Java：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019110754155-40455743.htm" alt=""></p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019110856222-1209305730.htm" alt=""></p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019111002777-1987557021.htm" alt=""></p>
+<p>选择Spring Boot版本：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019111039119-440533955.htm" alt=""></p>
+<p>选择需要引入的包，引入如下几个包即可满足web开发：</p>
+<p>DevTools（代码修改热更新，无需重启）、Web（集成tomcat、SpringMVC）、Lombok（智能生成setter、getter、toString等接口，无需手动生成，代码更简介）、Thymeleaf&nbsp;（模板引擎）。</p>
+<p>选择好要引入的包后直接回车，在新弹出的窗口中选择项目路径，至此Spring Boot项目创建完成。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019111826340-254130709.htm" alt=""></p>
+<p>创建好后vscode右下角会有如下提示，点击Open it 即可打开刚才创建的Spring Boot项目。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019112116653-410014195.htm" alt=""></p>
+<h4>&nbsp;项目运行跟调试</h4>
+<p>项目创建后会自动创建DemoApplication.java文件，在DemoApplication 文件目录下新建文件夹 Controller，新建文件HomeController.java。效果如下：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019133810848-1910514658.htm" alt=""></p>
+<p>Ps:SpringBoot项目的Bean装配默认规则是根据DemoApplication类所在的包位置从上往下扫描。所以必须放在同一目录下否则会无法访问报如下所示错误：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018171327250-1855055392.htm" alt=""></p>
+<p>启动工程之前还需要配置下运行环境，如下图，点左边的小虫子图标，然后点上面的下拉箭头，选择添加配置，第一次设置时VS Code会提示选择需要运行的语言环境，选择对应环境后自动创建 launch.json 文件。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018170430790-1469607250.htm" alt=""></p>
+<p>launch.json 调试配置文件如下，默认不修改配置也可使用：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018170816359-2101824580.htm" alt="" width="1389" height="550"></p>
+<p>选择对应的配置环境调式项目如下，默认端口为8080。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018170940292-676370504.htm" alt=""></p>
+<p>启动后可在控制台输出面板查看启动信息，显示如下后，访问：http://localhost:8080即可。</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181018171203180-856160012.htm" alt=""></p>
+<p>&nbsp;最终效果如下：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019135017904-1365099465.htm" alt=""></p>
+<h4>访问HTML页面</h4>
+<p>在spring boot 中访问html需要引入Thymeleaf&nbsp;（模板引擎）包，在创建项目时已引用该包这里不需在重复引用。在resources--&gt;templates目录下创建Index.html文件，效果如下：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019135536794-1609170362.htm" alt=""></p>
+<p>html内容：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 255, 1)">&lt;!</span><span style="color: rgba(255, 0, 255, 1)">DOCTYPE html</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">html </span><span style="color: rgba(255, 0, 0, 1)">lang</span><span style="color: rgba(0, 0, 255, 1)">="en"</span><span style="color: rgba(255, 0, 0, 1)"> xmlns:th</span><span style="color: rgba(0, 0, 255, 1)">="http://www.w3.org/1999/xhtml"</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">head</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+    <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">meta </span><span style="color: rgba(255, 0, 0, 1)">charset</span><span style="color: rgba(0, 0, 255, 1)">="UTF-8"</span><span style="color: rgba(0, 0, 255, 1)">/&gt;</span>
+    <span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">title</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>第一个HTML页面<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">title</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">head</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">body</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">h1</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>Hello Spring Boot!!!<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">h1</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;</span><span style="color: rgba(128, 0, 0, 1)">p </span><span style="color: rgba(255, 0, 0, 1)">th:text</span><span style="color: rgba(0, 0, 255, 1)">="${hello}"</span><span style="color: rgba(0, 0, 255, 1)">&gt;&lt;/</span><span style="color: rgba(128, 0, 0, 1)">p</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">body</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span>
+<span style="color: rgba(0, 0, 255, 1)">&lt;/</span><span style="color: rgba(128, 0, 0, 1)">html</span><span style="color: rgba(0, 0, 255, 1)">&gt;</span></pre>
+</div>
+<p>&nbsp;在controller目录下新建TestController.java文件，代码如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">@Controller
+</span><span style="color: rgba(0, 0, 255, 1)">public</span> <span style="color: rgba(0, 0, 255, 1)">class</span><span style="color: rgba(0, 0, 0, 1)"> TestController {
+
+    </span><span style="color: rgba(0, 128, 0, 1)">/**</span><span style="color: rgba(0, 128, 0, 1)">
+     * 本地访问内容地址 ：</span><span style="color: rgba(0, 128, 0, 1); text-decoration: underline">http://localhost</span><span style="color: rgba(0, 128, 0, 1)">:8080/hello
+     * </span><span style="color: rgba(128, 128, 128, 1)">@param</span><span style="color: rgba(0, 128, 0, 1)"> map
+     * </span><span style="color: rgba(128, 128, 128, 1)">@return</span>
+     <span style="color: rgba(0, 128, 0, 1)">*/</span><span style="color: rgba(0, 0, 0, 1)">
+    @RequestMapping(</span>"/hello"<span style="color: rgba(0, 0, 0, 1)">)
+    </span><span style="color: rgba(0, 0, 255, 1)">public</span> String helloHtml(HashMap&lt;String, Object&gt;<span style="color: rgba(0, 0, 0, 1)"> map) {
+        map.put(</span>"hello", "欢迎进入HTML页面"<span style="color: rgba(0, 0, 0, 1)">);
+        </span><span style="color: rgba(0, 0, 255, 1)">return</span> "/index"<span style="color: rgba(0, 0, 0, 1)">;
+    }
+}</span></pre>
+</div>
+<p>Ps:如果要访问html页面注解必须为Controller不能为RestController。否则无法访问。</p>
+<p><strong>RestController和Controller的区别：</strong></p>
+<p>@RestController is a stereotype annotation that combines @ResponseBody and @Controller.<br>意思是：<br>@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。<br>1)如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面，配置的视图解析器InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。</p>
+<p>例如：本来应该到success.html页面的，则其显示success.</p>
+<p>2)如果需要返回到指定页面，则需要用 @Controller配合视图解析器InternalResourceViewResolver才行。</p>
+<p>3)如果需要返回json或者xml或者自定义mediaType内容到页面，则需要在对应的方法上加上@ResponseBody注解</p>
+<p>效果展示如下：</p>
+<p><img src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/949088-20181019140657585-1350811104.htm" alt=""></p>
+<p>到处基础配置结束，可以愉快的玩耍Spring Boot!</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2018-10-19 14:15</span>&nbsp;
+<a href="https://www.cnblogs.com/miskis/">ice.ko</a>&nbsp;
+阅读(<span id="post_view_count">121318</span>)&nbsp;
+评论(<span id="post_comment_count">11</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=9816135" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(9816135);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '9816135', targetLink: 'https://www.cnblogs.com/miskis/p/9816135.html', title: 'VsCode搭建Java开发环境（Spring Boot项目创建、运行、调试）' })">举报</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+<script src="VsCode%E6%90%AD%E5%BB%BAJava%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88Spring%20Boot%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E8%B0%83%E8%AF%95%EF%BC%89%20-%20ice.ko%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/highlight.htm"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 283211, cb_blogApp = 'miskis', cb_blogUserGuid = '9a7fd509-0711-e611-9fc1-ac853d9f53cc';
+    var cb_entryId = 9816135, cb_entryCreatedDate = '2018-10-19 14:15', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+        <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;"></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="cnblogs_c2" class="under-post-card">
+        <div id="div-gpt-ad-1592366332455-0" style="width: 468px; height: 60px;"></div>
+    </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2021 ice.ko
+<br><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8L-rpLgFVEJMgssCVvNUAjvq22tBjUWZWA04voM7FOGruGSUsHHAmZN1l5Pz4A9oVNt6JoOjm0K4tZhX4RcPqJSZLy7UvRMeZrr7Q1CnmMcIn17LksV--tvkUecUIUi2ByjVa6I0ph4RA03u2VNtWXk">
+
+
+</div></body></html>
